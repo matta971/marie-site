@@ -26,3 +26,4 @@ dist-ssr
 # TypeScript build info
 *.tsbuildinfo
 node_modules/.tmp/
+package-lock.json
