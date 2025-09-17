@@ -12,7 +12,7 @@ export default function Home(): React.JSX.Element {
             <div className="bg-amber-100 rounded-lg overflow-hidden">
               <img 
                 src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1600&auto=format&fit=crop"
-                alt="Marie Émeraude Alcime"
+                alt="Marie-Émeraude Alcime"
                 className="w-full h-[500px] object-cover"
               />
             </div>
@@ -21,7 +21,7 @@ export default function Home(): React.JSX.Element {
           {/* Contenu à droite - Selon maquette */}
           <div className="w-2/3 pl-12 text-ivory text-center">
             <h1 className="text-6xl font-serif mb-4 leading-tight">
-              <em>Marie Émeraude<br />
+              <em>Marie-Émeraude<br />
               Alcime</em>
             </h1>
             <p className="text-2xl text-yellow-300 mb-8 font-light"><em>Artiste lyrique</em></p>

@@ -17,7 +17,7 @@ export default function Header(): React.JSX.Element {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
         {/* Logo/Nom - Style serif comme dans la maquette */}
         <Link to="/" className="font-serif text-lg sm:text-xl tracking-tight hover:text-yellow-300 transition-colors">
-          Marie Émeraude Alcime
+          Marie-Émeraude Alcime
         </Link>
         
         {/* Navigation principale */}
