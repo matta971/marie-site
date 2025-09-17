@@ -4,7 +4,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "module": "ESNext",
-    "moduleResolution": "Node",        // <-- Compat Visual Studio (évite "Bundler")
+    "moduleResolution": "Node",
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
