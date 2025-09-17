@@ -3,7 +3,7 @@ import PressQuote from '../components/PressQuote'
 import EventTable from '../components/EventTable'
 import { videos, press, badges, pastEvents } from '../data/site'
 
-export default function Home(): JSX.Element {
+export default function Home(): React.JSX.Element {
   return (
     <div>
       {/* HERO */}
@@ -115,4 +115,4 @@ export default function Home(): JSX.Element {
       </section>
     </div>
   )
-}
+};

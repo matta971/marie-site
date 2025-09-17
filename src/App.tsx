@@ -10,7 +10,7 @@ import Enseignement from './pages/Enseignement'
 import Contact from './pages/Contact'
 
 
-export default function App(): JSX.Element {
+export default function App(): React.JSX.Element {
 return (
 <div className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col">
 <Header />
@@ -29,4 +29,4 @@ return (
 <Footer />
 </div>
 )
-}
+};

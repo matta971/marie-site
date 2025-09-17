@@ -1,7 +1,7 @@
 import ContactForm from '../components/ContactForm'
 
 
-export default function Contact(): JSX.Element {
+export default function Contact(): React.JSX.Element {
 return (
 <div className="max-w-4xl mx-auto px-6 py-12">
 <h1 className="text-3xl font-bold">Contact / Booking</h1>
@@ -17,4 +17,4 @@ return (
 </div>
 </div>
 )
-}
+};

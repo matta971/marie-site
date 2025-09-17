@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 
-export default function Footer(): JSX.Element {
+export default function Footer(): React.JSX.Element {
 return (
 <footer className="border-t border-neutral-900 mt-16">
 <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid sm:grid-cols-3 gap-8 text-sm text-neutral-400">
@@ -25,4 +25,4 @@ return (
 </div>
 </footer>
 )
-}
+};

@@ -2,7 +2,7 @@ import MediaEmbed from '../components/MediaEmbed'
 import { videos } from '../data/site'
 
 
-export default function Medias(): JSX.Element {
+export default function Medias(): React.JSX.Element {
 return (
 <div className="max-w-6xl mx-auto px-6 py-12">
 <h1 className="text-3xl font-bold">Médias</h1>
@@ -14,4 +14,4 @@ return (
 </div>
 </div>
 )
-}
+};

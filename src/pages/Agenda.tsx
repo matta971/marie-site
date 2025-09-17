@@ -2,7 +2,7 @@ import EventTable from '../components/EventTable'
 import { pastEvents } from '../data/site'
 
 
-export default function Agenda(): JSX.Element {
+export default function Agenda(): React.JSX.Element {
 return (
 <div className="max-w-6xl mx-auto px-6 py-12">
 <h1 className="text-3xl font-bold">Agenda</h1>
@@ -11,4 +11,4 @@ return (
 <p className="mt-4 text-sm text-neutral-400">Prochaines dates à venir.</p>
 </div>
 )
-}
+};

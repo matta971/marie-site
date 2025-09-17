@@ -1,4 +1,4 @@
-export default function Enseignement(): JSX.Element {
+export default function Enseignement(): React.JSX.Element {
 return (
 <div className="max-w-6xl mx-auto px-6 py-12">
 <h1 className="text-3xl font-bold">Enseignement</h1>
@@ -15,4 +15,4 @@ return (
 </div>
 </div>
 )
-}
+};

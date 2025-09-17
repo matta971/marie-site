@@ -1,5 +1,5 @@
 type Props = { url: string; title: string }
-export default function MediaEmbed({ url, title }: Props): JSX.Element {
+export default function MediaEmbed({ url, title }: Props): React.JSX.Element {
 return (
 <div className="aspect-video rounded-2xl overflow-hidden border border-neutral-800 shadow">
 <iframe
@@ -12,4 +12,4 @@ allowFullScreen
 />
 </div>
 )
-}
+};

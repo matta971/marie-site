@@ -1,5 +1,5 @@
 type Props = { quote: string; outlet: string; link: string }
-export default function PressQuote({ quote, outlet, link }: Props): JSX.Element {
+export default function PressQuote({ quote, outlet, link }: Props): React.JSX.Element {
 return (
 <a
 href={link}
@@ -11,4 +11,4 @@ className="group rounded-2xl border border-neutral-800 hover:border-amber-400/60
 <p className="mt-4 text-sm text-neutral-400">— {outlet}</p>
 </a>
 )
-}
+};

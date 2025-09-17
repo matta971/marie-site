@@ -1,4 +1,4 @@
-export default function Biographie(): JSX.Element {
+export default function Biographie(): React.JSX.Element {
 return (
 <div className="max-w-6xl mx-auto px-6 py-12">
 <h1 className="text-3xl font-bold">Biographie</h1>
@@ -24,4 +24,4 @@ Sur scène, on a pu l’entendre dans <em>Les Contes d’Hoffmann</em> d’Offen
 </div>
 </div>
 )
-}
+};

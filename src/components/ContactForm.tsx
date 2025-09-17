@@ -4,7 +4,7 @@ import { useState } from 'react'
 type FormState = { name: string; email: string; phone: string; topic: string; message: string; consent: boolean }
 
 
-export default function ContactForm(): JSX.Element {
+export default function ContactForm(): React.JSX.Element {
 const [form, setForm] = useState<FormState>({ name: '', email: '', phone: '', topic: 'Opéra / Oratorio', message: '', consent: false })
 
 
@@ -70,4 +70,4 @@ Envoyer la demande
 </button>
 </form>
 )
-}
+};

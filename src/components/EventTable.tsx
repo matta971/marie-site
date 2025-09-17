@@ -4,7 +4,7 @@ export type EventItem = { date: string; work: string; role: string; place: strin
 type Props = { events: EventItem[] }
 
 
-export default function EventTable({ events }: Props): JSX.Element {
+export default function EventTable({ events }: Props): React.JSX.Element {
 return (
 <div className="rounded-2xl border border-neutral-800 overflow-hidden">
 <table className="w-full text-left text-sm">
@@ -39,4 +39,4 @@ return (
 </table>
 </div>
 )
-}
+};

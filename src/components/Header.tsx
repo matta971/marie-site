@@ -12,7 +12,7 @@ const links = [
 ]
 
 
-export default function Header(): JSX.Element {
+export default function Header(): React.JSX.Element {
 return (
 <header className="sticky top-0 z-50 border-b border-neutral-900 bg-neutral-950/80 backdrop-blur">
 <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-6">
@@ -44,4 +44,4 @@ Réserver
 </div>
 </header>
 )
-}
+};
