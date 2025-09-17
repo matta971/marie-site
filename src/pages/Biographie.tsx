@@ -9,9 +9,9 @@ export default function Biographie(): React.JSX.Element {
           
           {/* Colonne de gauche - Contenu textuel */}
           <div className="space-y-8">
-            <h1 className="text-5xl font-serif mb-8 leading-tight">Biographie</h1>
+            <h1 className="text-5xl font-serif mb-8 text-ivory">Biographie</h1>
             
-            <div className="space-y-6 text-emerald-100 leading-relaxed">
+            <div className="space-y-6 text-ivory/90 leading-relaxed">
               <p>
                 Marie-Émeraude Alcime est une mezzo-soprano originaire de Guadeloupe. 
                 Issue d'une famille de musiciens, elle débute très tôt le piano, la flûte 

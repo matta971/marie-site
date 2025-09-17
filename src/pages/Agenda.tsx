@@ -1,8 +1,8 @@
-import { JSX } from 'react'
 import EventTable from '../components/EventTable'
 import { pastEvents } from '../data/site'
+import React from 'react'
 
-export default function Agenda(): JSX.Element {
+export default function Agenda(): React.JSX.Element {
   return (
     <div className="bg-white min-h-screen text-black">
       <div className="max-w-6xl mx-auto px-6 py-16">
