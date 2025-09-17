@@ -1,7 +1,7 @@
-import { JSX } from 'react'
 import { press } from '../data/site'
+import React from 'react'
 
-export default function Presse(): JSX.Element {
+export default function Presse(): React.JSX.Element {
   return (
     <div className="bg-white min-h-screen text-black">
       <div className="max-w-6xl mx-auto px-6 py-16">

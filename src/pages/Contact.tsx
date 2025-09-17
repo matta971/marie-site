@@ -1,7 +1,7 @@
-import { JSX } from 'react'
 import ContactForm from '../components/ContactForm'
+import React from 'react'
 
-export default function Contact(): JSX.Element {
+export default function Contact(): React.JSX.Element {
   return (
     <div className="bg-emerald-800 min-h-screen text-white">
       <div className="max-w-6xl mx-auto px-6 py-16">

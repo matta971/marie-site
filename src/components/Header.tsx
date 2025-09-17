@@ -1,4 +1,4 @@
-import { JSX } from 'react'
+import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
 const links = [
@@ -11,7 +11,7 @@ const links = [
   { to: '/contact', label: 'Contact' },
 ]
 
-export default function Header(): JSX.Element {
+export default function Header(): React.JSX.Element {
   return (
     <header className="sticky top-0 z-50 border-b border-emerald-700 bg-emerald-900/95 backdrop-blur text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">

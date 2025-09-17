@@ -1,3 +1,10 @@
 @import "tailwindcss";
 
 html, body, #root { height: 100%; }
+
+/* Couleurs personnalisées */
+:root {
+  --color-ivory: #FAF5EF;
+  --color-ivory-light: #FCFAF8;
+  --color-ivory-dark: #F5F0E8;
+}
