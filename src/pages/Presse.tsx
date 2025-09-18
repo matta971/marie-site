@@ -121,12 +121,14 @@ export default function Presse(): React.JSX.Element {
                     fontFamily: 'Lato, sans-serif'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#046D5D'
-                    e.target.style.color = 'white'
+                    const target = e.target as HTMLButtonElement
+                    target.style.backgroundColor = '#046D5D'
+                    target.style.color = 'white'
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = 'transparent'
-                    e.target.style.color = '#046D5D'
+                    const target = e.target as HTMLButtonElement
+                    target.style.backgroundColor = 'transparent'
+                    target.style.color = '#046D5D'
                   }}
                 >
                   Lire l'article complet →
@@ -158,8 +160,8 @@ export default function Presse(): React.JSX.Element {
                     href="#" 
                     className="flex items-center space-x-3 transition-colors"
                     style={{ fontFamily: 'Lato, sans-serif', color: '#046D5D' }}
-                    onMouseEnter={(e) => e.target.style.color = '#D4AF37'}
-                    onMouseLeave={(e) => e.target.style.color = '#046D5D'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#D4AF37'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#046D5D'}
                   >
                     <span>📄</span>
                     <span className="underline hover:no-underline">Dossier de presse complet (PDF)</span>
@@ -168,8 +170,8 @@ export default function Presse(): React.JSX.Element {
                     href="#" 
                     className="flex items-center space-x-3 transition-colors"
                     style={{ fontFamily: 'Lato, sans-serif', color: '#046D5D' }}
-                    onMouseEnter={(e) => e.target.style.color = '#D4AF37'}
-                    onMouseLeave={(e) => e.target.style.color = '#046D5D'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#D4AF37'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#046D5D'}
                   >
                     <span>📸</span>
                     <span className="underline hover:no-underline">Photos haute résolution (ZIP)</span>
@@ -186,8 +188,8 @@ export default function Presse(): React.JSX.Element {
                     href="mailto:presse@marie-emeraude.com" 
                     className="transition-colors"
                     style={{ color: '#046D5D' }}
-                    onMouseEnter={(e) => e.target.style.color = '#D4AF37'}
-                    onMouseLeave={(e) => e.target.style.color = '#046D5D'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#D4AF37'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#046D5D'}
                   >
                     presse@marie-emeraude.com
                   </a>
@@ -201,12 +203,12 @@ export default function Presse(): React.JSX.Element {
                     fontFamily: 'Lato, sans-serif'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#D4AF37'
-                    e.target.style.color = '#1D1D1D'
+                    (e.target as HTMLElement).style.backgroundColor = '#D4AF37';
+                    (e.target as HTMLElement).style.color = '#1D1D1D'
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#046D5D'
-                    e.target.style.color = 'white'
+                    (e.target as HTMLElement).style.backgroundColor = '#046D5D';
+                    (e.target as HTMLElement).style.color = 'white'
                   }}
                 >
                   Demande d'interview

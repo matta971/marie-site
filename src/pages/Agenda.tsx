@@ -136,12 +136,14 @@ export default function Agenda(): React.JSX.Element {
                     fontFamily: 'Lato, sans-serif'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#D4AF37'
-                    e.target.style.color = '#1D1D1D'
+                    const target = e.currentTarget as HTMLButtonElement;
+                    target.style.backgroundColor = '#D4AF37';
+                    target.style.color = '#1D1D1D';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#046D5D'
-                    e.target.style.color = 'white'
+                    const target = e.currentTarget as HTMLButtonElement;
+                    target.style.backgroundColor = '#046D5D';
+                    target.style.color = 'white';
                   }}
                 >
                   RÉSERVER
@@ -168,12 +170,14 @@ export default function Agenda(): React.JSX.Element {
                     fontFamily: 'Lato, sans-serif'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#D4AF37'
-                    e.target.style.color = '#1D1D1D'
+                    const target = e.currentTarget as HTMLButtonElement;
+                    target.style.backgroundColor = '#D4AF37';
+                    target.style.color = '#1D1D1D';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#046D5D'
-                    e.target.style.color = 'white'
+                    const target = e.currentTarget as HTMLButtonElement;
+                    target.style.backgroundColor = '#046D5D';
+                    target.style.color = 'white';
                   }}
                 >
                   RÉSERVER
@@ -201,12 +205,14 @@ export default function Agenda(): React.JSX.Element {
                     fontFamily: 'Lato, sans-serif'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#D4AF37'
-                    e.target.style.color = '#1D1D1D'
+                    const target = e.target as HTMLButtonElement;
+                    target.style.backgroundColor = '#D4AF37';
+                    target.style.color = '#1D1D1D';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#046D5D'
-                    e.target.style.color = 'white'
+                    const target = e.target as HTMLButtonElement;
+                    target.style.backgroundColor = '#046D5D';
+                    target.style.color = 'white';
                   }}
                 >
                   RÉSERVER
@@ -234,12 +240,14 @@ export default function Agenda(): React.JSX.Element {
                     fontFamily: 'Lato, sans-serif'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#D4AF37'
-                    e.target.style.color = '#1D1D1D'
+                    const target = e.target as HTMLButtonElement;
+                    target.style.backgroundColor = '#D4AF37';
+                    target.style.color = '#1D1D1D';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#046D5D'
-                    e.target.style.color = 'white'
+                    const target = e.target as HTMLButtonElement;
+                    target.style.backgroundColor = '#046D5D';
+                    target.style.color = 'white';
                   }}
                 >
                   RÉSERVER
@@ -287,12 +295,14 @@ export default function Agenda(): React.JSX.Element {
                   fontFamily: 'Lato, sans-serif'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#D4AF37'
-                  e.target.style.color = '#1D1D1D'
+                  const target = e.target as HTMLElement;
+                  target.style.backgroundColor = '#D4AF37'
+                  target.style.color = '#1D1D1D'
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#046D5D'
-                  e.target.style.color = 'white'
+                  const target = e.target as HTMLElement;
+                  target.style.backgroundColor = '#046D5D';
+                  target.style.color = 'white';
                 }}
               >
                 Faire une demande de booking
