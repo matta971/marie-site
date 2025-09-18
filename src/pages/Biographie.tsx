@@ -1,132 +1,224 @@
-import React from "react";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Biographie(): React.JSX.Element {
   return (
-    <div className="bg-emerald-800 min-h-screen text-white">
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        {/* Layout principal - Texte à gauche, image à droite */}
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          
-          {/* Colonne de gauche - Contenu textuel */}
-          <div className="space-y-8">
-            <h1 className="text-5xl font-serif mb-8 text-ivory">Biographie</h1>
+    <div className="section-bg-primary min-h-screen">
+      {/* Breadcrumb */}
+      <div className="section-bg-secondary border-b border-gray-200 py-4">
+        <div className="section-container">
+          <nav className="text-small text-gray-600">
+            <Link to="/" className="link-secondary">ACCUEIL</Link>
+            <span className="mx-2">/</span>
+            <span className="text-accent font-medium">BIOGRAPHIE</span>
+          </nav>
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <section className="section-padding">
+        <div className="section-container">
+          <div className="text-center mb-12">
+            <h1 className="title-hero mb-8">Biographie</h1>
+          </div>
+
+          {/* Layout principal - Image + texte avec lettrine */}
+          <div className="grid lg:grid-cols-5 gap-12 items-start mb-16">
             
-            <div className="space-y-6 text-ivory/90 leading-relaxed">
-              <p>
-                Marie-Émeraude Alcime est une mezzo-soprano originaire de Guadeloupe. 
-                Issue d'une famille de musiciens, elle débute très tôt le piano, la flûte 
-                traversière et les percussions traditionnelles. Après un baccalauréat 
-                littéraire option musique, elle poursuit des études supérieures en 
-                musicologie et métiers de la scène (Rouen, Nancy), avant d'intégrer 
-                le chœur de l'Opéra-Théâtre de Metz Métropole.
-              </p>
-              
-              <p>
-                Sur scène, on a pu l'entendre dans <em>Les Contes d'Hoffmann</em> 
-                d'Offenbach (Metz) et <em>La vie parisienne</em> (Metz, Massy). 
-                Au concert, son répertoire inclut l'<em>Oratorio de Noël</em> 
-                (Saint-Saëns), le <em>Stabat Mater</em> (Pergolèse) et la 
-                <em>Petite messe solennelle</em> (Rossini). Parallèlement, elle 
-                développe une activité de cheffe de chœur et professeure de chant.
-              </p>
-              
-              <p>
-                Formée dans une approche complète de l'art lyrique, Marie-Émeraude 
-                combine technique vocale rigoureuse et sensibilité artistique. 
-                Son parcours, entre tradition caribéenne et formation classique 
-                européenne, nourrit une interprétation personnelle et authentique 
-                du répertoire lyrique français et italien.
-              </p>
+            {/* Image principale à gauche */}
+            <div className="lg:col-span-2">
+              <div className="bg-gray-200 rounded-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=800&auto=format&fit=crop"
+                  alt="Marie Émeraude Alcime - Portrait"
+                  className="w-full h-[600px] object-cover"
+                />
+              </div>
             </div>
             
-            {/* Section parcours professionnel */}
-            <div className="mt-12">
-              <h2 className="text-2xl font-serif text-yellow-300 mb-6">Parcours & Formation</h2>
-              <div className="space-y-4 text-emerald-200">
-                <div className="border-l-2 border-yellow-300 pl-4">
-                  <h3 className="font-semibold text-emerald-100">Formation musicologique</h3>
-                  <p className="text-sm">Université de Rouen & Nancy - Musicologie et métiers de la scène</p>
-                </div>
-                <div className="border-l-2 border-emerald-600 pl-4">
-                  <h3 className="font-semibold text-emerald-100">Opéra-Théâtre de Metz Métropole</h3>
-                  <p className="text-sm">Membre du chœur - Participations dans diverses productions</p>
-                </div>
-                <div className="border-l-2 border-emerald-600 pl-4">
-                  <h3 className="font-semibold text-emerald-100">Activité pédagogique</h3>
-                  <p className="text-sm">Cheffe de chœur et professeure de chant</p>
-                </div>
+            {/* Contenu textuel à droite */}
+            <div className="lg:col-span-3">
+              <div className="text-body space-y-6 leading-relaxed">
+                <p>
+                  <span className="lettrine">A</span>
+                  lors quid autem sunt et ut corpore veritatis sunt blanditiis pariis ut
+                  corporis nobis distinctio quis perferendis soluta ullam. Quid
+                  distinctio libero eos autem eos voluptas sed ullam.
+                </p>
+                <p>
+                  Marie-Émeraude Alcime est une mezzo-soprano originaire de Guadeloupe. 
+                  Issue d'une famille de musiciens, elle débute très tôt le piano, la flûte 
+                  traversière et les percussions traditionnelles. Après un baccalauréat 
+                  littéraire option musique, elle poursuit des études supérieures en 
+                  musicologie et métiers de la scène (Rouen, Nancy), avant d'intégrer 
+                  le chœur de l'Opéra-Théâtre de Metz Métropole.
+                </p>
+                <p>
+                  Sur scène, on a pu l'entendre dans <em>Les Contes d'Hoffmann</em> 
+                  d'Offenbach (Metz) et <em>La vie parisienne</em> (Metz, Massy). 
+                  Au concert, son répertoire inclut l'<em>Oratorio de Noël</em> 
+                  (Saint-Saëns), le <em>Stabat Mater</em> (Pergolèse) et la 
+                  <em>Petite messe solennelle</em> (Rossini). Parallèlement, elle 
+                  développe une activité de cheffe de chœur et professeure de chant.
+                </p>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Section Parcours avec petite image */}
+      <section className="section-bg-secondary section-padding">
+        <div className="section-container">
+          <div className="grid lg:grid-cols-3 gap-12 items-start">
+            
+            {/* Contenu Parcours */}
+            <div className="lg:col-span-2">
+              <h2 className="title-section">Parcours</h2>
+              
+              <div className="mb-8">
+                <h3 className="title-subsection">Formation</h3>
+                <p className="text-body italic mb-6">
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                </p>
+                <p className="text-body leading-relaxed">
+                  Formée dans une approche complète de l'art lyrique, Marie-Émeraude 
+                  combine technique vocale rigoureuse et sensibilité artistique. 
+                  Son parcours, entre tradition caribéenne et formation classique 
+                  européenne, nourrit une interprétation personnelle et authentique 
+                  du répertoire lyrique français et italien.
+                </p>
+              </div>
+
+              <div className="mb-8">
+                <h3 className="title-subsection">Scènes & Collaborations</h3>
+                <p className="text-body leading-relaxed">
+                  Membre du chœur de l'Opéra-Théâtre de Metz Métropole, elle se produit 
+                  sur scène dans diverses productions et développe en parallèle une activité 
+                  de cheffe de chœur et pédagogue. Ses collaborations s'étendent aux grandes 
+                  institutions lyriques françaises.
+                </p>
+              </div>
+
+              <div className="mb-8">
+                <h3 className="title-subsection">Prix / Distinctions</h3>
+                <p className="text-body leading-relaxed">
+                  Recognition de la critique spécialisée pour ses interprétations dans 
+                  le répertoire français et italien. Lauréate de plusieurs concours 
+                  internationaux de chant lyrique.
+                </p>
+              </div>
+            </div>
+
+            {/* Petite image à droite */}
+            <div className="lg:col-span-1">
+              <div className="bg-gray-800 rounded-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1516575150278-77136aed6920?q=80&w=400&auto=format&fit=crop"
+                  alt="Marie Émeraude Alcime en concert"
+                  className="w-full h-[300px] object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Presse avec citations */}
+      <section className="section-bg-primary section-padding">
+        <div className="section-container">
+          <h2 className="title-section text-center mb-12">Presse</h2>
           
-          {/* Colonne de droite - Image */}
-          <div className="flex justify-center md:justify-end">
-            <div className="bg-amber-100 rounded-2xl overflow-hidden max-w-md w-full">
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Citation 1 */}
+            <blockquote className="border-l-4 border-accent pl-6 py-4">
+              <p className="text-body italic text-lg mb-4">
+                "Une voix délicate qui touche et captive le public dès les premières mesures."
+              </p>
+              <footer className="text-small font-medium text-accent">
+                LE MONDE
+              </footer>
+            </blockquote>
+
+            {/* Citation 2 */}
+            <blockquote className="border-l-4 border-accent pl-6 py-4">
+              <p className="text-body italic text-lg mb-4">
+                "Un moment d'émotion pur, magnifiquement servi par une technique irréprochable."
+              </p>
+              <footer className="text-small font-medium text-accent">
+                THE AGE
+              </footer>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      {/* Section galerie photos */}
+      <section className="section-bg-secondary section-padding">
+        <div className="section-container">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* Photo 1 */}
+            <div className="bg-gray-300 rounded-lg overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1600&auto=format&fit=crop"
-                alt="Marie Émeraude Alcime"
-                className="w-full h-[600px] object-cover"
+                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=400&auto=format&fit=crop"
+                alt="Performance 1"
+                className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Photo 2 */}
+            <div className="bg-gray-300 rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=400&auto=format&fit=crop"
+                alt="Performance 2"
+                className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Photo 3 - Grande photo sur mobile, visible uniquement sur desktop */}
+            <div className="hidden lg:block bg-gray-800 rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?q=80&w=400&auto=format&fit=crop"
+                alt="Performance 3"
+                className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
               />
             </div>
           </div>
         </div>
-        
-        {/* Section téléchargements - En bas */}
-        <div className="mt-16 border-t border-emerald-700 pt-12">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-serif text-yellow-300 mb-4">Téléchargements</h3>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="flex items-center space-x-2 text-emerald-200 hover:text-yellow-300 transition-colors">
-                    <span className="text-yellow-300">📄</span>
-                    <span>Biographie courte (PDF)</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center space-x-2 text-emerald-200 hover:text-yellow-300 transition-colors">
-                    <span className="text-yellow-300">📸</span>
-                    <span>Photos haute définition (ZIP)</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center space-x-2 text-emerald-200 hover:text-yellow-300 transition-colors">
-                    <span className="text-yellow-300">🎵</span>
-                    <span>Liste du répertoire (PDF)</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-serif text-yellow-300 mb-4">Langues de travail</h3>
-              <ul className="text-emerald-200 space-y-2">
-                <li>• Français (langue maternelle)</li>
-                <li>• Italien (opéra)</li>
-                <li>• Anglais (professionnel)</li>
-                <li>• Allemand (répertoire)</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-serif text-yellow-300 mb-4">Contact professionnel</h3>
-              <div className="space-y-2 text-emerald-200">
-                <p>
-                  <a href="mailto:booking@example.com" className="hover:text-yellow-300 transition-colors">
-                    booking@example.com
-                  </a>
-                </p>
-                <p className="text-sm">Disponible pour :</p>
-                <ul className="text-sm space-y-1">
-                  <li>• Productions lyriques</li>
-                  <li>• Concerts & récitals</li>
-                  <li>• Master-classes</li>
-                </ul>
+      </section>
+
+      {/* Section signature */}
+      <section className="section-bg-primary section-padding">
+        <div className="section-container">
+          <div className="text-center">
+            <div className="mb-6">
+              <div className="signature text-4xl">MA</div>
+              <div className="text-small">
+                <div className="font-medium">Marie Emeraude Alcime</div>
+                <div className="text-gray-600">Cantatrice</div>
               </div>
+            </div>
+            <div className="text-small text-gray-600 uppercase tracking-wider">
+              NOM DU JOURNAL
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* CTA Buttons */}
+      <section className="section-bg-secondary section-padding">
+        <div className="section-container">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link to="/medias" className="btn-secondary w-full sm:w-auto text-center">
+              Voir médias
+            </Link>
+            <Link to="/repertoire" className="btn-secondary w-full sm:w-auto text-center">
+              Répertoire
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   )
-};
+}

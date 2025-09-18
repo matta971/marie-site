@@ -1,78 +1,91 @@
-import React from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { NavLink, Link, useLocation } from 'react-router-dom'
 
 const links = [
   { to: '/', label: 'Accueil' },
   { to: '/biographie', label: 'Biographie' },
-  { to: '/medias', label: 'Médias' },
-  { to: '/agenda', label: 'Agenda' },
-  { to: '/presse', label: 'Presse' },
+  { to: '/repertoire', label: 'Répertoire' },
   { to: '/enseignement', label: 'Enseignement' },
+  { to: '/medias', label: 'Médias' },
+    { to: '/agenda', label: 'Agenda' },
+    { to: '/presse', label: 'Presse' },
   { to: '/contact', label: 'Contact' },
 ]
 
 export default function Header(): React.JSX.Element {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const location = useLocation()
+  const isHomePage = location.pathname === '/'
+
   return (
-    <header className="sticky top-0 z-50 border-b border-emerald-700 bg-emerald-900/95 backdrop-blur text-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-        {/* Logo/Nom - Style serif comme dans la maquette */}
-        <Link to="/" className="font-serif text-lg sm:text-xl tracking-tight hover:text-yellow-300 transition-colors">
-          Marie-Émeraude Alcime
+    <header className={`header-bg ${isHomePage ? 'home' : 'other'}`}>
+      <div className="section-container py-4 flex items-center justify-between">
+        
+        {/* Logo ME */}
+        <Link to="/" className="flex items-center group">
+          <div className="logo-circle group-hover:scale-105">
+            <span className="text-white font-title text-xl italic font-bold">ME</span>
+          </div>
+          <div className="logo-text">
+            <div className="logo-name">Marie Emeraude Alcime</div>
+            <div className="text-sm text-gray-500 uppercase tracking-widest font-medium">FR</div>
+          </div>
         </Link>
         
-        {/* Navigation principale */}
-        <nav className="hidden md:flex gap-6 text-sm">
-          {links.map((l) => (
+        {/* Navigation principale - Desktop */}
+        <nav className="hidden lg:flex items-center gap-8">
+          {links.map((link) => (
             <NavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) =>
-                `px-3 py-2 rounded-lg transition-colors ${
-                  isActive 
-                    ? 'text-yellow-300 bg-emerald-800' 
-                    : 'text-emerald-100 hover:text-yellow-300 hover:bg-emerald-800'
-                }`
-              }
-              end={l.to === '/'}
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              end={link.to === '/'}
             >
-              {l.label}
+              {link.label}
             </NavLink>
           ))}
         </nav>
-        
-        {/* Bouton CTA */}
-        <div className="flex items-center gap-4">
-          
-          {/* Bouton Réserver */}
-          <Link
-            to="/contact"
-            className="rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-2 text-sm font-semibold transition-colors"
-          >
-            Réserver
-          </Link>
-        </div>
+
+        {/* Bouton hamburger - Mobile */}
+        <button
+          className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Menu de navigation"
+          aria-expanded={mobileMenuOpen}
+        >
+          <div className="w-6 h-6 flex flex-col justify-center items-center">
+            <div className={`w-5 h-0.5 bg-emerald-800 transition-all duration-300 ${
+              mobileMenuOpen ? 'rotate-45 translate-y-0.5' : 'mb-1'
+            }`}></div>
+            <div className={`w-5 h-0.5 bg-emerald-800 transition-all duration-300 ${
+              mobileMenuOpen ? 'opacity-0' : 'mb-1'
+            }`}></div>
+            <div className={`w-5 h-0.5 bg-emerald-800 transition-all duration-300 ${
+              mobileMenuOpen ? '-rotate-45 -translate-y-0.5' : ''
+            }`}></div>
+          </div>
+        </button>
       </div>
       
-      {/* Version mobile (optionnelle) */}
-      <div className="md:hidden border-t border-emerald-700 bg-emerald-900">
-        <nav className="flex flex-wrap gap-1 p-4">
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) =>
-                `px-3 py-1 rounded text-xs transition-colors ${
-                  isActive 
-                    ? 'text-yellow-300 bg-emerald-800' 
-                    : 'text-emerald-100 hover:text-yellow-300'
-                }`
-              }
-              end={l.to === '/'}
-            >
-              {l.label}
-            </NavLink>
-          ))}
-        </nav>
+      {/* Menu mobile déroulant */}
+      <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+        mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+      }`}>
+        <div className="bg-white border-t border-gray-200 shadow-lg">
+          <nav className="py-4 px-6 space-y-1">
+            {links.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) => `nav-mobile-item ${isActive ? 'active' : ''}`}
+                end={link.to === '/'}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   )

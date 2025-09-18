@@ -8,6 +8,7 @@ import Agenda from './pages/Agenda'
 import Presse from './pages/Presse'
 import Enseignement from './pages/Enseignement'
 import Contact from './pages/Contact'
+import Repertoire from './pages/Repertoire'
 
 
 export default function App(): React.JSX.Element {
@@ -18,6 +19,7 @@ return (
 <Routes>
 <Route path="/" element={<Home />} />
 <Route path="/biographie" element={<Biographie />} />
+<Route path="/repertoire" element={<Repertoire />} />
 <Route path="/medias" element={<Medias />} />
 <Route path="/agenda" element={<Agenda />} />
 <Route path="/presse" element={<Presse />} />
