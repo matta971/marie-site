@@ -1,36 +1,5 @@
 import React, { useState } from 'react'
 
-// Données d'exemple pour les événements passés
-const pastEvents = [
-  {
-    date: "15 mars 2024",
-    city: "Lyon",
-    work: "Norma",
-    role: "Title role",
-    place: "Opéra National de Lyon"
-  },
-  {
-    date: "22 avril 2024", 
-    city: "London",
-    work: "Rigoletto",
-    role: "Gilda",
-    place: "Royal Opera House"
-  },
-  {
-    date: "10 mai 2024",
-    city: "Paris",
-    work: "Pelléas et Mélisande",
-    role: "Mélisande",
-    place: "François-Xavier Roth"
-  },
-  {
-    date: "5 juin 2024",
-    city: "Madrid", 
-    work: "Die Zauberflöte",
-    role: "First Lady",
-    place: "Teatro Real, TBA"
-  }
-]
 
 // Composant pour les filtres
 function AgendaFilters() {
