@@ -18,7 +18,7 @@ export default function Header(): React.JSX.Element {
   const isHomePage = location.pathname === '/'
 
   return (
-    <header className={`header-bg ${isHomePage ? 'home' : 'other'}`}>
+    <header className={`header ${isHomePage ? 'home' : 'other'}`}>
       <div className="section-container py-4 flex items-center justify-between">
         
         {/* Logo ME */}
