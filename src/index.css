@@ -1121,3 +1121,225 @@ body {
     margin-bottom: 1.5rem;
   }
 }
+
+/* =========================
+   AJOUTS POUR HEADER HARMONISÉ
+   À ajouter à votre index.css existant
+========================= */
+
+/* Classes manquantes pour le header */
+.header-bg.transparent {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.header-bg.solid {
+  background-color: var(--color-white);
+  border-bottom-color: #e5e7eb;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-subtitle {
+  font-family: var(--font-text);
+  font-size: 0.75rem;
+  color: #666666;
+  margin: 0;
+}
+
+/* Variables utilitaires manquantes */
+.text-accent { color: var(--color-emerald-deep); }
+.text-gold { color: var(--color-gold-light); }
+.text-secondary { color: #666666; }
+.text-white { color: var(--color-white); }
+
+.bg-accent { background-color: var(--color-emerald-deep); }
+.bg-light { background-color: var(--color-gray-light-alt); }
+.bg-white { background-color: var(--color-white); }
+
+.border-accent { border-color: var(--color-emerald-deep); }
+.border-light { border-color: #e5e7eb; }
+
+/* =========================
+   MENU MOBILE - À ajouter à votre index.css
+========================= */
+
+/* Classes pour masquer/afficher selon la taille d'écran */
+@media (min-width: 1024px) {
+  .lg\:hidden {
+    display: none;
+  }
+  .lg\:flex {
+    display: flex;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hidden {
+    display: none;
+  }
+}
+
+/* Styles pour le bouton hamburger et le menu mobile */
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+.transition-colors {
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.rotate-45 {
+  transform: rotate(45deg);
+}
+
+.-rotate-45 {
+  transform: rotate(-45deg);
+}
+
+.translate-y-0\.5 {
+  transform: translateY(2px);
+}
+
+.-translate-y-0\.5 {
+  transform: translateY(-2px);
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+.max-h-0 {
+  max-height: 0;
+}
+
+.max-h-96 {
+  max-height: 24rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Styles pour les éléments du menu mobile */
+.bg-opacity-10 {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.bg-opacity-20 {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.border-opacity-20 {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Espacements */
+.p-2 {
+  padding: 0.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.space-y-1 > * + * {
+  margin-top: 0.25rem;
+}
+
+/* Dimensions */
+.w-5 {
+  width: 1.25rem;
+}
+
+.h-0\.5 {
+  height: 0.125rem;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+/* Flexbox */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.block {
+  display: block;
+}
+
+/* Background */
+.bg-white {
+  background-color: white;
+}
+
+.border-t {
+  border-top-width: 1px;
+}
+
+.border-white {
+  border-color: white;
+}
