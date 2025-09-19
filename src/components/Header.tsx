@@ -3,11 +3,15 @@ import { NavLink, Link } from 'react-router-dom'
 
 const links = [
   { to: '/', label: 'Accueil' },
-  { to: '/services', label: 'Services' },
-  { to: '/medias', label: 'Médias' },
+    { to: '/biographie', label: 'Biographie' },
+  { to: '/repertoire', label: 'Répertoire' },
+
   { to: '/enseignement', label: 'Enseignement' },
-  { to: '/biographie', label: 'Biographie' },
-  { to: '/contact', label: 'Contact / Réservation' },
+  { to: '/services', label: 'Services' },
+  { to: '/agenda', label: 'Agenda' },
+    { to: '/presse', label: 'Presse' },
+  { to: '/medias', label: 'Médias' },
+  { to: '/contact', label: 'Contact' },
 ]
 
 export default function Header(): React.JSX.Element {
@@ -18,17 +22,43 @@ export default function Header(): React.JSX.Element {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY
-      // Déclencher l'effet après 50px de scroll
       setIsScrolled(scrollTop > 50)
     }
 
     window.addEventListener('scroll', handleScroll)
     
-    // Nettoyage de l'événement
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+  // Fermer le menu mobile quand on redimensionne vers desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  // Empêcher le scroll du body quand le menu mobile est ouvert
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [mobileMenuOpen])
 
   return (
     <header 
@@ -36,7 +66,9 @@ export default function Header(): React.JSX.Element {
     >
       <div className="header-content">
         <Link to="/" className="logo">Marie-Émeraude Alcime</Link>
-        <nav>
+        
+        {/* Navigation desktop - visible seulement sur desktop */}
+        <nav className="desktop-nav">
           <ul className="nav">
             {links.map((link) => (
               <li key={link.to}>
@@ -52,11 +84,12 @@ export default function Header(): React.JSX.Element {
           </ul>
         </nav>
         
-        {/* Bouton menu mobile */}
+        {/* Bouton menu mobile - visible seulement sur mobile */}
         <button
           className="mobile-menu-btn"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Menu de navigation"
+          aria-expanded={mobileMenuOpen}
         >
           <div className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}>
             <span></span>
@@ -66,23 +99,25 @@ export default function Header(): React.JSX.Element {
         </button>
       </div>
       
-      {/* Menu mobile */}
-      <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
-        <ul>
-          {links.map((link) => (
-            <li key={link.to}>
-              <NavLink
-                to={link.to}
-                className={({ isActive }) => isActive ? 'active' : ''}
-                onClick={() => setMobileMenuOpen(false)}
-                end={link.to === '/'}
-              >
-                {link.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Menu mobile - s'affiche seulement quand ouvert ET en mode mobile */}
+      {mobileMenuOpen && (
+        <div className="mobile-menu open">
+          <ul>
+            {links.map((link) => (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  className={({ isActive }) => isActive ? 'active' : ''}
+                  onClick={() => setMobileMenuOpen(false)}
+                  end={link.to === '/'}
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </header>
   )
 }
