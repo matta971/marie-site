@@ -1,109 +1,87 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
 const links = [
   { to: '/', label: 'Accueil' },
-  { to: '/biographie', label: 'Biographie' },
-  { to: '/repertoire', label: 'Répertoire' },
-  { to: '/enseignement', label: 'Enseignement' },
+  { to: '/services', label: 'Services' },
   { to: '/medias', label: 'Médias' },
-  { to: '/agenda', label: 'Agenda' },
-  { to: '/presse', label: 'Presse' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/enseignement', label: 'Enseignement' },
+  { to: '/biographie', label: 'Biographie' },
+  { to: '/contact', label: 'Contact / Réservation' },
 ]
 
 export default function Header(): React.JSX.Element {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
+  // Écouter le scroll pour déclencher l'effet de transparence
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      // Déclencher l'effet après 50px de scroll
+      setIsScrolled(scrollTop > 50)
+    }
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false)
-  }
+    window.addEventListener('scroll', handleScroll)
+    
+    // Nettoyage de l'événement
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
-    <header className="header">
+    <header 
+      className={`header ${isScrolled ? 'header-scrolled' : 'header-top'}`}
+    >
       <div className="header-content">
-        
-        {/* Logo - utilise votre classe .logo existante */}
-        <Link to="/" className="logo" onClick={closeMobileMenu}>
-          Marie Émeraude Alcime
-        </Link>
-        
-        {/* Navigation principale - Desktop - utilise vos classes .nav existantes */}
-        <nav className="nav hidden lg:flex">
-          {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) => isActive ? 'active' : ''}
-              end={link.to === '/'}
-            >
-              {link.label}
-            </NavLink>
-          ))}
+        <Link to="/" className="logo">Marie-Émeraude Alcime</Link>
+        <nav>
+          <ul className="nav">
+            {links.map((link) => (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  className={({ isActive }) => isActive ? 'active' : ''}
+                  end={link.to === '/'}
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
         </nav>
-
-        {/* Bouton hamburger - Mobile */}
+        
+        {/* Bouton menu mobile */}
         <button
-          className="lg:hidden p-2 hover:bg-opacity-20 rounded-lg transition-colors"
-          onClick={toggleMobileMenu}
+          className="mobile-menu-btn"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Menu de navigation"
-          aria-expanded={mobileMenuOpen}
         >
-          <div className="w-6 h-6 flex flex-col justify-center items-center">
-            <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-              mobileMenuOpen ? 'rotate-45 translate-y-0.5' : 'mb-1'
-            }`}></div>
-            <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-              mobileMenuOpen ? 'opacity-0' : 'mb-1'
-            }`}></div>
-            <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-              mobileMenuOpen ? '-rotate-45 -translate-y-0.5' : ''
-            }`}></div>
+          <div className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}>
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </button>
       </div>
       
-      {/* Menu mobile déroulant */}
-      <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-        mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-      }`}>
-        <div 
-          className="border-t border-white border-opacity-20 shadow-lg"
-          style={{ backgroundColor: 'var(--color-emerald-deep)' }}
-        >
-          <nav className="py-4 px-6 space-y-1">
-            {links.map((link) => (
+      {/* Menu mobile */}
+      <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+        <ul>
+          {links.map((link) => (
+            <li key={link.to}>
               <NavLink
-                key={link.to}
                 to={link.to}
-                className={({ isActive }) => 
-                  `block px-4 py-3 rounded-lg transition-colors ${
-                    isActive 
-                      ? 'bg-opacity-20' 
-                      : 'hover:bg-opacity-10'
-                  }`
-                }
-                style={{ 
-                  color: 'white',
-                  fontFamily: 'var(--font-text)',
-                  fontSize: '0.9rem',
-                  fontWeight: '500',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px',
-                  textDecoration: 'none'
-                }}
+                className={({ isActive }) => isActive ? 'active' : ''}
+                onClick={() => setMobileMenuOpen(false)}
                 end={link.to === '/'}
-                onClick={closeMobileMenu}
               >
                 {link.label}
               </NavLink>
-            ))}
-          </nav>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </header>
   )
