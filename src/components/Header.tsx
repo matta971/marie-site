@@ -6,8 +6,8 @@ const links = [
     { to: '/biographie', label: 'Biographie' },
   { to: '/repertoire', label: 'Répertoire' },
 
-  { to: '/enseignement', label: 'Enseignement' },
-  { to: '/services', label: 'Services' },
+  { to: '/enseignement', label: 'Services' },
+ // { to: '/services', label: 'Services' },
   { to: '/agenda', label: 'Agenda' },
     { to: '/presse', label: 'Presse' },
   { to: '/medias', label: 'Médias' },
