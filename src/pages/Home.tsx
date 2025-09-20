@@ -12,7 +12,7 @@ export default function Home(): React.JSX.Element {
     {
       id: 1,
       title: "Ponchielli — Voce di donna o d'angelo",
-      thumbnail: "https://img.youtube.com/vi/hCBhh4J9J_8/maxresdefault.jpg",
+      thumbnail: "/images/hero-bg.png",
       videoUrl: "https://www.youtube.com/watch?v=hCBhh4J9J_8",
       type: "video",
       duration: "4:32",
