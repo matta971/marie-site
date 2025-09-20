@@ -146,6 +146,22 @@ body {
   z-index: 1;
 }
 
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  backdrop-filter: blur(4px);
+  z-index: 3;
+}
+
 .hero-content {
   position: relative;
   z-index: 2;
@@ -228,6 +244,23 @@ body {
   background-position: center;
   color: white;
   position: relative;
+  overflow: hidden;
+}
+
+.services::before {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 109, 93, 0) 0%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  backdrop-filter: blur(6px);
+  z-index: 1;
 }
 
 /* Effet de flou subtil sur l'arrière-plan */
@@ -238,7 +271,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(2px);
   pointer-events: none;
   z-index: 0;
 }
@@ -390,6 +423,7 @@ body {
   background-position: center;
   color: white;
   position: relative;
+  overflow: hidden;
 }
 
 /* Effet de bandes diagonales supplémentaires */
@@ -403,7 +437,23 @@ body {
   background: 
     linear-gradient(45deg, transparent 40%, rgba(212, 175, 55, 0.1) 45%, transparent 50%),
     linear-gradient(-45deg, transparent 40%, rgba(4, 109, 93, 0.2) 45%, transparent 50%);
-  z-index: 1;
+    z-index: 1;
+}
+
+.medias::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 109, 93, 0) 0%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  backdrop-filter: blur(6px);
+  z-index: 3;
 }
 
 .video-container {
@@ -481,6 +531,7 @@ body {
   background-position: center right;
   color: white;
   position: relative;
+  overflow: hidden;
 }
 
 /* Effet de vignette subtile */
@@ -493,6 +544,22 @@ body {
   bottom: 0;
   background: radial-gradient(ellipse at 30% 50%, transparent 0%, rgba(4, 109, 93, 0.3) 80%);
   z-index: 1;
+}
+
+.biography::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 109, 93, 0) 0%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  backdrop-filter: blur(6px);
+  z-index: 3;
 }
 
 .bio-content {
@@ -624,6 +691,23 @@ body {
   background-position: center;
   color: white;
   position: relative;
+  overflow: hidden;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(4, 109, 93, 0) 100%
+  );
+  backdrop-filter: blur(6px);
+  z-index: 1;
 }
 
 .contact-form {
@@ -1717,6 +1801,8 @@ body {
 .hero {
   margin-top: -60px;
   padding-top: 60px;
+  position: relative;
+  overflow: hidden;
 }
 
 /* =========================
@@ -2351,5 +2437,120 @@ body {
   
   .media-image-container {
     height: 160px;
+  }
+}
+
+/* Conteneur global pour les effets de transition */
+.page-sections {
+  position: relative;
+}
+
+/* Séparateurs avec effet de blur entre chaque section */
+.section-separator {
+  position: relative;
+  height: 80px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Effet de blur dégradé entre sections */
+.section-separator::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: 0;
+  right: 0;
+  height: 160px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 100%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1;
+}
+
+/* Effet de blur spécifique pour les transitions émeraude */
+.section-separator.emerald-to-white::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 109, 93, 0) 0%,
+    rgba(4, 109, 93, 0.1) 25%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.1) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(12px);
+}
+
+/* Effet de blur pour transition white-to-emerald */
+.section-separator.white-to-emerald::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(4, 109, 93, 0.8) 50%,
+    rgba(4, 109, 93, 0.1) 75%,
+    rgba(4, 109, 93, 0) 100%
+  );
+  backdrop-filter: blur(12px);
+}
+
+/* Effet de glassmorphism pour les cartes dans les sections blur */
+.card-blur {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Effet de parallax blur pour améliorer la profondeur */
+.parallax-blur {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-blur::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(1px);
+  transform: scale(1.1);
+  z-index: -1;
+}
+
+/* Responsive - Réduire les effets de blur sur mobile pour les performances */
+@media (max-width: 768px) {
+  .section-separator::before,
+  .hero::after,
+  .services::before,
+  .services::after,
+  .medias::after,
+  .biography::after,
+  .contact::before {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+/* Support pour les navigateurs qui ne supportent pas backdrop-filter */
+@supports not (backdrop-filter: blur()) {
+  .section-separator::before,
+  .hero::after,
+  .services::before,
+  .services::after,
+  .medias::after,
+  .biography::after,
+  .contact::before {
+    background: rgba(255, 255, 255, 0.9);
   }
 }

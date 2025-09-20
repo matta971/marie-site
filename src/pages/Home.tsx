@@ -73,6 +73,9 @@ export default function Home(): React.JSX.Element {
         </div>
       </section>
 
+      {/* Séparateur avec effet de blur */}
+      <div className="section-separator white-to-emerald"></div>
+      
       {/* Services Section */}
       <section className="services section">
         <div className="container">
