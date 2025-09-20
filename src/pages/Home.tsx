@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, EffectCoverflow, Autoplay } from 'swiper/modules'
 
-// Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/navigation'  
-import 'swiper/css/effect-coverflow'
 
 export default function Home(): React.JSX.Element {
   // Données des médias de Marie-Émeraude
