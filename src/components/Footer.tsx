@@ -6,35 +6,6 @@ export default function Footer(): React.JSX.Element {
     <footer className="footer-bg">
       <div className="footer-container">
         {/* Navigation principale */}
-        <nav className="footer-nav">
-          <ul className="footer-nav-list">
-            <li>
-              <Link to="/biographie" className="footer-nav-link">
-                Biographie
-              </Link>
-            </li>
-            <li>
-              <Link to="/repertoire" className="footer-nav-link">
-                Répertoire
-              </Link>
-            </li>
-            <li>
-              <Link to="/medias" className="footer-nav-link">
-                Médias
-              </Link>
-            </li>
-            <li>
-              <Link to="/presse" className="footer-nav-link">
-                Actualités
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="footer-nav-link">
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
 
         {/* Icônes réseaux sociaux */}
         <div className="footer-social">
