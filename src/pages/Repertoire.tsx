@@ -128,8 +128,8 @@ export default function Repertoire(): React.JSX.Element {
       <section className="section-padding">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h1 className="title-hero mb-6">Répertoire</h1>
-            <p className="text-body max-w-3xl mx-auto leading-relaxed">
+            <h1 className="hero-title mb-6">Répertoire</h1>
+            <p className="text-body mx-auto leading-relaxed">
               Découvrez l'étendue artistique de Marie-Émeraude Alcime à travers ses rôles 
               d'opéra, ses interprétations de musique sacrée et ses récitals. Un parcours 
               qui allie tradition et modernité, entre répertoire français, italien et allemand.
@@ -324,7 +324,7 @@ export default function Repertoire(): React.JSX.Element {
             <h2 className="title-section text-white mb-6">Programmez Marie-Émeraude</h2>
             <p className="text-body text-white/90 max-w-2xl mx-auto mb-8">
               Disponible pour productions lyriques, concerts, récitals et masterclasses. 
-              Contactez notre équipe pour étudier votre projet artistique.
+              Contactez nous pour étudier votre projet artistique.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact" className="btn-primary bg-white text-accent hover:bg-gray-100">

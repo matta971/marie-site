@@ -159,7 +159,7 @@ export default function Medias(): React.JSX.Element {
       <section className="section-padding">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h1 className="title-hero mb-8">Médias</h1>
+            <h1 className="hero-title mb-8">Médias</h1>
             
             {/* Filtres principaux - Types de médias */}
             <div className="flex justify-center gap-6 mb-8">

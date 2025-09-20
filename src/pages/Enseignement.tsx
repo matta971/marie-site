@@ -76,7 +76,7 @@ export default function Enseignement(): React.JSX.Element {
       {/* Header de page */}
       <div className="section-bg-primary border-b border-gray-200 py-8">
         <div className="section-container">
-          <h1 className="title-section mb-6">Enseignement</h1>
+          <h1 className="hero-title mb-6">Enseignement</h1>
           
           {/* Tabs de navigation */}
           <div className="flex space-x-8">

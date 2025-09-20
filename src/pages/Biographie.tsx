@@ -19,7 +19,7 @@ export default function Biographie(): React.JSX.Element {
       <section className="section-padding">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h1 className="title-hero mb-8">Biographie</h1>
+            <h1 className="hero-title mb-8">Biographie</h1>
           </div>
 
           {/* Layout principal - Image + texte avec lettrine */}

@@ -66,7 +66,7 @@ export default function Footer(): React.JSX.Element {
         {/* Copyright et langues */}
         <div className="footer-bottom">
           <div className="footer-copyright">
-            © {new Date().getFullYear()} Marie Émeraude Alcime — Tous droits réservés
+            © {new Date().getFullYear()} Marie Émeraude Alcime — © Tous droits réservés
           </div>
           
           <div className="footer-lang">
