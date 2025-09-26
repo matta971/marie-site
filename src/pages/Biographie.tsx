@@ -18,9 +18,7 @@ export default function Biographie(): React.JSX.Element {
       {/* Hero Section */}
       <section className="section-padding">
         <div className="section-container">
-          <div className="text-center mb-12">
-            <h1 className="hero-title mb-8">Biographie</h1>
-          </div>
+          
 
           {/* Layout principal - Image + texte avec lettrine */}
           <div className="grid lg:grid-cols-5 gap-12 items-start mb-16">
@@ -38,6 +36,9 @@ export default function Biographie(): React.JSX.Element {
             
             {/* Contenu textuel à droite */}
             <div className="lg:col-span-3">
+              <div className="text-center mb-12">
+            <h1 className="hero-title mb-8">Biographie</h1>
+          </div>
               <div className="text-body space-y-6 leading-relaxed">
                 <p>
                   <span className="lettrine">A</span>
