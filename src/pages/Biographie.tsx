@@ -4,16 +4,6 @@ import { Link } from 'react-router-dom'
 export default function Biographie(): React.JSX.Element {
   return (
     <div className="section-bg-primary min-h-screen">
-      {/* Breadcrumb */}
-      <div className="section-bg-secondary border-b border-gray-200 py-4">
-        <div className="section-container">
-          <nav className="text-small text-gray-600">
-            <Link to="/" className="link-secondary">ACCUEIL</Link>
-            <span className="mx-2">/</span>
-            <span className="text-accent font-medium">BIOGRAPHIE</span>
-          </nav>
-        </div>
-      </div>
 
       {/* Hero Section */}
       <section className="section-padding">
@@ -130,21 +120,25 @@ export default function Biographie(): React.JSX.Element {
 
             {/* Colonne droite - Galerie d'images */}
             <div className="bio-gallery-column">
-              <div className="bio-gallery-image">
-                <img 
-                  src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=500&auto=format&fit=crop"
-                  alt="Performance 1"
-                />
+              {/* Deux images côte à côte en haut */}
+              <div className="bio-gallery-row">
+                <div className="bio-gallery-image bio-image-small">
+                  <img 
+                    src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=500&auto=format&fit=crop"
+                    alt="Performance 1"
+                  />
+                </div>
+
+                <div className="bio-gallery-image bio-image-small">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=500&auto=format&fit=crop"
+                    alt="Performance 2"
+                  />
+                </div>
               </div>
 
-              <div className="bio-gallery-image">
-                <img 
-                  src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=500&auto=format&fit=crop"
-                  alt="Performance 2"
-                />
-              </div>
-
-              <div className="bio-gallery-image">
+              {/* Une grande image en bas */}
+              <div className="bio-gallery-image bio-image-large">
                 <img 
                   src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?q=80&w=500&auto=format&fit=crop"
                   alt="Performance 3"

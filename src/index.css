@@ -774,28 +774,53 @@ body {
 }
 
 /* Galerie d'images */
+/* Galerie d'images */
 .bio-gallery-column {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
+}
+
+.bio-gallery-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
 .bio-gallery-image {
   background-color: #e5e7eb;
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.bio-image-small {
+  height: 12rem;
+}
+
+.bio-image-large {
+  height: 16rem;
 }
 
 .bio-gallery-image img {
   width: 100%;
-  height: 18rem;
+  height: 100%;
   object-fit: cover;
   transition: transform 300ms ease;
 }
 
 .bio-gallery-image:hover img {
   transform: scale(1.05);
+}
+
+@media (max-width: 1024px) {
+  .bio-gallery-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .bio-image-small {
+    height: 16rem;
+  }
 }
 
 /* Boutons CTA de la biographie */
