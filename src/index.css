@@ -774,7 +774,6 @@ body {
 }
 
 /* Galerie d'images */
-/* Galerie d'images */
 .bio-gallery-column {
   display: flex;
   flex-direction: column;
@@ -847,6 +846,40 @@ body {
   
   .bio-cta-buttons .btn-secondary {
     width: 100%;
+  }
+}
+
+/* Page Biographie avec fond parallax sur toute la page */
+.biographie-page {
+  min-height: 100vh;
+  background-image: url('/images/biography-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Effet parallax */
+  position: relative;
+}
+
+.biographie-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95); /* Overlay blanc pour la lisibilité */
+  z-index: 0;
+}
+
+.biographie-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive - désactiver parallax sur mobile */
+@media (max-width: 768px) {
+  .biographie-page {
+    background-attachment: scroll;
   }
 }
 

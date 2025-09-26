@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom'
 
 export default function Biographie(): React.JSX.Element {
   return (
-    <div className="section-bg-primary min-h-screen">
+    <div className="biographie-page">
 
       {/* Hero Section */}
       <section className="section-padding">
         <div className="section-container">
           
-
           {/* Layout principal - Image + texte avec lettrine */}
           <div className="grid lg:grid-cols-5 gap-12 items-start mb-16">
             
@@ -27,8 +26,8 @@ export default function Biographie(): React.JSX.Element {
             {/* Contenu textuel à droite */}
             <div className="lg:col-span-3">
               <div className="text-center mb-12">
-            <h1 className="hero-title mb-8">Biographie</h1>
-          </div>
+                <h1 className="hero-title mb-8">Biographie</h1>
+              </div>
               <div className="text-body space-y-6 leading-relaxed">
                 <p>
                   <span className="lettrine">A</span>
@@ -59,7 +58,7 @@ export default function Biographie(): React.JSX.Element {
       </section>
 
       {/* Contenu en deux colonnes - Parcours/Presse à gauche, Images à droite */}
-      <section className="section-bg-primary section-padding">
+      <section className="section-padding">
         <div className="section-container">
           <div className="bio-two-columns">
             
@@ -150,7 +149,7 @@ export default function Biographie(): React.JSX.Element {
       </section>
 
       {/* CTA Buttons côte à côte */}
-      <section className="section-bg-primary section-padding pt-0">
+      <section className="section-padding pt-0">
         <div className="section-container">
           <div className="bio-cta-buttons">
             <Link to="/medias" className="btn-secondary">
