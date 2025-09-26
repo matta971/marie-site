@@ -16,7 +16,7 @@ export default function Biographie(): React.JSX.Element {
             <div className="lg:col-span-2">
               <div className="bg-gray-200 rounded-lg overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=800&auto=format&fit=crop"
+                  src="/images/portrait-face-main-buste.jpg"
                   alt="Marie Émeraude Alcime - Portrait"
                   className="w-full h-[600px] object-cover"
                 />
