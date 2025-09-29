@@ -154,12 +154,12 @@ export default function Medias(): React.JSX.Element {
   const filteredMedia = getFilteredMedia()
 
   return (
-    <div className="section-bg-primary min-h-screen">
+    <div className="medias-page min-h-screen">
       {/* Hero Section */}
       <section className="section-padding">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h1 className="hero-title mb-8">Médias</h1>
+            <h1 className="hero-title">Médias</h1>
             
             {/* Filtres principaux - Types de médias */}
             <div className="flex justify-center gap-6 mb-8">
@@ -198,7 +198,7 @@ export default function Medias(): React.JSX.Element {
       </section>
 
       {/* Contenu des médias */}
-      <section className="section-bg-secondary section-padding">
+      <section className="section-padding">
         <div className="section-container">
           
           {/* Grille des vidéos */}
@@ -323,78 +323,82 @@ export default function Medias(): React.JSX.Element {
       </section>
 
       {/* Section informations et crédits */}
-      <section className="section-bg-primary section-padding">
+      <section className="medias-info-section">
         <div className="section-container">
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="medias-info-grid">
             
             {/* Crédits et informations */}
-            <div>
-              <h2 className="title-section">Crédits & Informations</h2>
-              <div className="space-y-6">
-                <div>
-                  <h3 className="title-card text-accent mb-2">Photos</h3>
-                  <p className="text-body">
-                    Photos de concert : © Photographe Officiel<br/>
-                    Photos de studio : © Studio Portrait<br/>
-                    Utilisation presse autorisée avec mention des crédits
-                  </p>
-                </div>
-                <div>
-                  <h3 className="title-card text-accent mb-2">Vidéos</h3>
-                  <p className="text-body">
-                    Enregistrements live et extraits d'opéra disponibles en HD. 
-                    Tous droits réservés pour usage commercial.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="title-card text-accent mb-2">Audios</h3>
-                  <p className="text-body">
-                    Enregistrements studio et live. Qualité CD et Hi-Res disponibles 
-                    sur demande pour les professionnels.
-                  </p>
-                </div>
+            <div className="medias-info-block">
+              <h2 className="medias-info-title">Crédits & Informations</h2>
+              
+              <div className="medias-credit-item">
+                <h3 className="medias-credit-subtitle">Photos</h3>
+                <p className="medias-credit-text">
+                  Photos de concert : © Photographe Officiel<br/>
+                  Photos de studio : © Studio Portrait<br/>
+                  Utilisation presse autorisée avec mention des crédits
+                </p>
+              </div>
+              
+              <div className="medias-credit-item">
+                <h3 className="medias-credit-subtitle">Vidéos</h3>
+                <p className="medias-credit-text">
+                  Enregistrements live et extraits d'opéra disponibles en HD. 
+                  Tous droits réservés pour usage commercial.
+                </p>
+              </div>
+              
+              <div className="medias-credit-item">
+                <h3 className="medias-credit-subtitle">Audios</h3>
+                <p className="medias-credit-text">
+                  Enregistrements studio et live. Qualité CD et Hi-Res disponibles 
+                  sur demande pour les professionnels.
+                </p>
               </div>
             </div>
 
             {/* Demandes médias */}
-            <div>
-              <h2 className="title-section">Demandes médias</h2>
-              <div className="card">
-                <p className="text-body mb-6">
+            <div className="medias-info-block">
+              <h2 className="medias-info-title">Demandes médias</h2>
+              
+              <div className="medias-request-card">
+                <p className="medias-request-text">
                   Pour obtenir des photos haute résolution, des enregistrements 
                   professionnels ou organiser une séance photo, contactez notre équipe.
                 </p>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm">📧</span>
+                
+                <div className="medias-contact-info">
+                  <div className="medias-contact-item">
+                    <div className="medias-contact-icon">
+                      <span>📧</span>
                     </div>
                     <div>
-                      <div className="text-small font-medium">Email médias</div>
-                      <div className="text-small text-gray-600">
-                        <a href="mailto:medias@marie-emeraude.com" className="link-primary">
+                      <div className="medias-contact-label">Email médias</div>
+                      <div className="medias-contact-value">
+                        <a href="mailto:medias@marie-emeraude.com" className="medias-contact-link">
                           medias@marie-emeraude.com
                         </a>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm">⏱️</span>
+                  
+                  <div className="medias-contact-item">
+                    <div className="medias-contact-icon">
+                      <span>⏱️</span>
                     </div>
                     <div>
-                      <div className="text-small font-medium">Délai de réponse</div>
-                      <div className="text-small text-gray-600">48h ouvrables</div>
+                      <div className="medias-contact-label">Délai de réponse</div>
+                      <div className="medias-contact-value">48h ouvrables</div>
                     </div>
                   </div>
                 </div>
-                <div className="mt-6">
-                  <Link to="/contact" className="btn-primary w-full text-center">
-                    Demande de médias
-                  </Link>
-                </div>
+                
+                <Link to="/contact" className="btn-medias-request">
+                  Demande de médias
+                </Link>
               </div>
             </div>
+            
           </div>
         </div>
       </section>
