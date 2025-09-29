@@ -853,7 +853,7 @@ body {
 }
 
 /* Page Biographie avec fond parallax sur toute la page */
-.biographie-page, .repertoire-page {
+.biographie-page, .repertoire-page, .enseignement-page {
   min-height: 100vh;
   background-image: url('/images/biography-bg.jpg');
   background-size: cover;
@@ -863,7 +863,7 @@ body {
   position: relative;
 }
 
-.biographie-page::before, .repertoire-page::before {
+.biographie-page::before, .repertoire-page::before, .enseignement-page::before {
   content: '';
   position: absolute;
   top: 0;
@@ -874,7 +874,7 @@ body {
   z-index: 0;
 }
 
-.biographie-page > *, .repertoire-page > * {
+.biographie-page > *, .repertoire-page > *, .enseignement-page > * {
   position: relative;
   z-index: 1;
 }
@@ -900,6 +900,10 @@ body {
   font-weight: 600;
   color: var(--color-emerald-deep);
   margin-bottom: 2rem;
+}
+
+.repertoire-page .hero-title{
+  color : var(--color-emerald-deep)
 }
 
 .repertoire-subsections {
@@ -2821,5 +2825,215 @@ body {
   .biography::after,
   .contact::before {
     background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* =========================
+   PAGE ENSEIGNEMENT
+========================= */
+.enseignement-page {
+  min-height: 100vh;
+  background-color: var(--color-white);
+}
+
+/* Hero Section */
+.enseignement-hero {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+}
+
+.enseignement-page .hero-title{
+  color : var(--color-emerald-deep)
+}
+
+.enseignement-title {
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: 4rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+/* Navigation Tabs */
+.enseignement-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.enseignement-tab {
+  position: relative;
+  padding-bottom: 0.5rem;
+  font-family: var(--font-text);
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: #4a4a4a;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.enseignement-tab.active {
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  border-bottom-color: var(--color-emerald-deep);
+}
+
+.enseignement-tab:hover {
+  color: var(--color-emerald-deep);
+}
+
+/* Services Section */
+.enseignement-services {
+  padding-top: 0;
+  padding-bottom: 4rem;
+}
+
+.enseignement-services-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.service-card {
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.service-card-last {
+  grid-column: span 2;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.service-card-title {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  margin-bottom: 1rem;
+}
+
+.service-card-description {
+  font-family: var(--font-text);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #4a4a4a;
+}
+
+/* Testimonials Section */
+.enseignement-testimonials {
+  background-color: var(--color-gray-light-alt);
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.enseignement-testimonials-title {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  position: relative;
+  padding: 2rem;
+  background-color: var(--color-white);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-quote-icon {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-emerald-deep);
+  opacity: 0.2;
+}
+
+.testimonial-text {
+  position: relative;
+  z-index: 10;
+  font-family: var(--font-text);
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: #2a2a2a;
+  padding-left: 3rem;
+  margin-bottom: 1rem;
+}
+
+.testimonial-author {
+  font-family: var(--font-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .enseignement-title {
+    font-size: 2.5rem;
+  }
+
+  .enseignement-tabs {
+    gap: 1rem;
+  }
+
+  .enseignement-tab {
+    font-size: 1rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .service-card-last {
+    grid-column: auto !important;
+    max-width: 100% !important;
+  }
+
+  .service-card-title {
+    font-size: 1.5rem;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .enseignement-title {
+    font-size: 3rem;
   }
 }

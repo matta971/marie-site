@@ -1,260 +1,194 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-export default function Enseignement(): React.JSX.Element {
-  const [activeTab, setActiveTab] = useState('cours')
-  const [selectedDate, setSelectedDate] = useState(7)
-
-  // Données simulées pour le calendrier
-  const calendarData = {
-    month: 'April 2024',
-    dates: [
-      { date: 1, available: true },
-      { date: 2, available: true },
-      { date: 3, available: true },
-      { date: 4, available: true },
-      { date: 5, available: true },
-      { date: 7, available: false }, // Sélectionné
-      { date: 8, available: true },
-      { date: 9, available: true },
-      { date: 10, available: false },
-      { date: 11, available: true },
-      { date: 12, available: true },
-      { date: 13, available: true },
-      { date: 14, available: true },
-      { date: 15, available: true },
-      { date: 16, available: true },
-      { date: 17, available: true },
-      { date: 18, available: true },
-      { date: 19, available: true },
-      { date: 20, available: true },
-      { date: 21, available: true },
-      { date: 23, available: true },
-      { date: 24, available: false },
-      { date: 25, available: true },
-      { date: 27, available: true },
-      { date: 28, available: true },
-      { date: 29, available: true },
-      { date: 30, available: true },
-    ]
-  }
-
-  const coursTypes = [
+const servicesData = {
+  cours: [
     {
-      id: 'particuliers',
-      title: 'Cours particuliers',
-      subtitle: 'Connaître à vous particuliers',
-      icon: '👤'
+      title: "Cours particuliers",
+      description: "Cours de chant adaptés à votre niveau et vos objectifs. Travail personnalisé sur la technique vocale, la respiration, l'interprétation et le répertoire."
     },
     {
-      id: 'coaching',
-      title: 'Coaching vocal',
-      subtitle: 'Assister au technique respiratoire',
-      icon: '🎤'
+      title: "Coaching vocal",
+      description: "Sessions de coaching pour préparer concerts à la (rego iréméts. Accompagnement ciblé sur l'expression scénique et la gestion du trac."
     },
     {
-      id: 'technique',
-      title: 'Technique respiratoire',
-      subtitle: 'En savoir polus',
-      icon: '🫁'
+      title: "Technique respiratoire",
+      description: "Cours thématiques sur la respiration et le soutien vocal. Apprentissage des fondamentaux pour une voix saine et projetée."
     },
     {
-      id: 'interpretation',
-      title: 'Interprétation',
-      subtitle: 'Preparer au en savoir plus',
-      icon: '🎭'
+      title: "Interprétation",
+      description: "Modules d'interprétation en solo ou étroite collabo alit. Exploration approfondie du texte, de la musicalité et de l'émotion."
     },
     {
-      id: 'audition',
-      title: 'Préparation audition/concours',
-      subtitle: 'En savoir plus',
-      icon: '📋'
+      title: "Préparation audition/concours",
+      description: "Conseils et accompagnement pour réussir vos auditions et concours. Stratégies de préparation mentale et techniques de présentation."
+    }
+  ],
+  masterclasses: [
+    {
+      title: "Masterclass Répertoire Français",
+      description: "Immersion dans le répertoire lyrique français de Massenet, Gounod et Bizet. Analyse stylistique et technique d'interprétation authentique."
+    },
+    {
+      title: "Masterclass Opéra Italien",
+      description: "Exploration des grands rôles du bel canto et du vérisme italien. Travail sur la ligne de chant, l'ornementation et l'expression dramatique."
+    },
+    {
+      title: "Masterclass Musique Sacrée",
+      description: "Approche spirituelle des oratorios, messes et requiem. Équilibre entre virtuosité technique et profondeur émotionnelle."
+    },
+    {
+      title: "Masterclass Art Scénique",
+      description: "Perfectionnement de la présence scénique et du jeu d'acteur lyrique. Techniques de déplacement, gestuelle et interaction avec l'espace."
+    }
+  ],
+  ateliers: [
+    {
+      title: "Atelier Découverte du Chant",
+      description: "Initiation au chant lyrique pour débutants. Découverte ludique de la voix, des bases de la technique vocale et du plaisir de chanter."
+    },
+    {
+      title: "Atelier Ensemble Vocal",
+      description: "Pratique collective du chant d'ensemble et des duos d'opéra. Développement de l'écoute, du blend vocal et de la musicalité de groupe."
+    },
+    {
+      title: "Atelier Préparation de Rôle",
+      description: "Construction complète d'un rôle d'opéra ou d'oratorio. De l'analyse du livret à la mise en scène, en passant par le coaching musical."
+    },
+    {
+      title: "Atelier Récital et Mélodie",
+      description: "Art du récital et interprétation de la mélodie française. Travail sur la diction, la poésie musicale et la communication avec le public."
     }
   ]
+}
+
+const testimonials = {
+  cours: [
+    {
+      text: "Grâce aux cours de Marie-Émeraude, j'ai découvert le vrai potentiel de ma voix. Sa patience et sa pédagogie m'ont permis de progresser rapidement.",
+      author: "Sophie M."
+    },
+    {
+      text: "Un enseignement rigoureux mais toujours bienveillant. Marie-Émeraude sait transmettre sa passion du chant lyrique avec générosité.",
+      author: "Thomas L."
+    }
+  ],
+  masterclasses: [
+    {
+      text: "La masterclass sur le répertoire français a été une révélation. J'ai compris l'importance du style et de la langue dans l'interprétation.",
+      author: "Claire D."
+    },
+    {
+      text: "Une expérience enrichissante avec une artiste qui partage généreusement son expertise et son amour de l'opéra.",
+      author: "Marc B."
+    }
+  ],
+  ateliers: [
+    {
+      text: "L'atelier ensemble vocal m'a appris à écouter les autres chanteurs et à fusionner ma voix avec le groupe. Une belle aventure humaine.",
+      author: "Isabelle P."
+    },
+    {
+      text: "Participer à l'atelier de préparation de rôle m'a donné confiance pour mes auditions. Un accompagnement sur-mesure et professionnel.",
+      author: "Antoine R."
+    }
+  ]
+}
+
+export default function Enseignement() {
+  const [activeTab, setActiveTab] = useState<'cours' | 'masterclasses' | 'ateliers'>('cours')
+
+  const currentServices = servicesData[activeTab]
+  const currentTestimonials = testimonials[activeTab]
 
   return (
-    <div className="section-bg-primary min-h-screen">
-      {/* Header de page */}
-      <div className="section-bg-primary border-b border-gray-200 py-8">
+    <div className="enseignement-page">
+      
+      {/* Hero Section */}
+      <section className="enseignement-hero">
         <div className="section-container">
-          <h1 className="hero-title mb-6">Enseignement</h1>
-          
-          {/* Tabs de navigation */}
-          <div className="flex space-x-8">
+          <div className="text-center mb-12">
+            <h1 className="hero-title">Enseignement</h1>
+          </div>
+
+          {/* Navigation tabs */}
+          <div className="enseignement-tabs">
             <button
               onClick={() => setActiveTab('cours')}
-              className={`tab ${activeTab === 'cours' ? 'active' : 'inactive'}`}
+              className={`enseignement-tab ${activeTab === 'cours' ? 'active' : ''}`}
             >
               Cours
             </button>
             <button
               onClick={() => setActiveTab('masterclasses')}
-              className={`tab ${activeTab === 'masterclasses' ? 'active' : 'inactive'}`}
+              className={`enseignement-tab ${activeTab === 'masterclasses' ? 'active' : ''}`}
             >
               Masterclasses
             </button>
             <button
               onClick={() => setActiveTab('ateliers')}
-              className={`tab ${activeTab === 'ateliers' ? 'active' : 'inactive'}`}
+              className={`enseignement-tab ${activeTab === 'ateliers' ? 'active' : ''}`}
             >
               Ateliers
             </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="section-container section-padding">
-        <div className="grid lg:grid-cols-2 gap-12">
-          
-          {/* Colonne gauche - Types de cours */}
-          <div>
-            <div className="space-y-4">
-              {coursTypes.map((cours) => (
-                <div key={cours.id} className="card smooth-hover cursor-pointer">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center text-white text-xl">
-                      <span>{cours.icon}</span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="title-card text-accent mb-1">{cours.title}</h3>
-                      <p className="text-small text-gray-600">{cours.subtitle}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Agenda des cours */}
-            <div className="mt-12">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="title-subsection">Agenda des cours</h2>
-                <div className="flex items-center space-x-2">
-                  <button className="p-2 hover:bg-gray-100 rounded">
-                    <span className="text-gray-600">‹</span>
-                  </button>
-                  <span className="text-body font-medium">{calendarData.month}</span>
-                  <button className="p-2 hover:bg-gray-100 rounded">
-                    <span className="text-gray-600">›</span>
-                  </button>
-                </div>
+      {/* Services Grid */}
+      <section className="enseignement-services">
+        <div className="enseignement-services-container">
+          <div className="services-grid">
+            {currentServices.map((service, index) => (
+              <div 
+                key={index} 
+                className={`service-card ${currentServices.length % 2 !== 0 && index === currentServices.length - 1 ? 'service-card-last' : ''}`}
+              >
+                <h2 className="service-card-title">{service.title}</h2>
+                <p className="service-card-description">{service.description}</p>
               </div>
-
-              {/* Calendrier */}
-              <div className="card">
-                <div className="grid grid-cols-7 gap-1 mb-4">
-                  {['S', 'MA', 'ME', 'JE', 'VE', 'S', 'D'].map((day) => (
-                    <div key={day} className="text-center text-caption text-gray-500 py-2">
-                      {day}
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-7 gap-1">
-                  {calendarData.dates.map((dateObj) => (
-                    <button
-                      key={dateObj.date}
-                      onClick={() => setSelectedDate(dateObj.date)}
-                      className={`calendar-date ${
-                        selectedDate === dateObj.date
-                          ? 'selected'
-                          : dateObj.available
-                          ? 'available'
-                          : 'unavailable'
-                      }`}
-                      disabled={!dateObj.available}
-                    >
-                      {dateObj.date}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <a href="#" className="link-primary text-small">
-                  Voir le calendrier
-                </a>
-              </div>
-            </div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          {/* Colonne droite - Témoignages et Contact */}
-          <div className="space-y-12">
-            
-            {/* Citation d'élève */}
-            <div className="bg-light p-6 rounded-lg">
-              <p className="text-body italic mb-4">
-                "Lorem ipsum dolor sit amet, consectetur adipisiring elit."
-              </p>
-              <div className="border-b border-gray-300 w-16 mb-4"></div>
-              <h3 className="title-subsection">Témoignages élèves</h3>
-              <p className="text-small text-gray-600 mb-4">
-                "Je suis sortie de sa classe aussi une non cansformée."
-              </p>
-              <div className="text-small text-gray-500">
-                <div className="font-medium">N. D.</div>
-                <a href="#" className="link-primary">Lire les avis</a>
+      {/* Testimonials Section */}
+      <section className="enseignement-testimonials">
+        <div className="section-container">
+          <h2 className="enseignement-testimonials-title">Témoignages élèves</h2>
+          
+          <div className="testimonials-grid">
+            {currentTestimonials.map((testimonial, index) => (
+              <div key={index} className="testimonial-card">
+                <svg 
+                  className="testimonial-quote-icon"
+                  viewBox="0 0 24 24" 
+                  fill="currentColor"
+                >
+                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+                </svg>
+                
+                <p className="testimonial-text">"{testimonial.text}"</p>
+                <footer className="testimonial-author">{testimonial.author}</footer>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* FAQ */}
-            <div>
-              <h3 className="title-subsection">FAQ</h3>
-              <p className="text-small text-gray-600 mb-4">
-                Réponses aux questions fréquentes
-              </p>
-              <a href="#" className="link-primary text-small">
-                Consulter
-              </a>
-            </div>
-
-            {/* Formulaire de contact */}
-            <div>
-              <h3 className="title-subsection mb-6">Contact pour cours</h3>
-              <form className="space-y-4">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Votre nom"
-                    className="form-input"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Objet"
-                    className="form-input"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Adresse email"
-                    className="form-input"
-                  />
-                </div>
-                <div>
-                  <textarea
-                    placeholder="Message"
-                    rows={4}
-                    className="form-textarea"
-                  ></textarea>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <input
-                    type="checkbox"
-                    id="consent"
-                    className="form-checkbox mt-1"
-                  />
-                  <label htmlFor="consent" className="text-small text-gray-600">
-                    J'accepte que mes données soient utilisées pour me recontacter
-                  </label>
-                </div>
-                <button type="submit" className="btn-primary w-full">
-                  Réserver un cours
-                </button>
-              </form>
+      {/* CTA Section */}
+      <section className="section-padding">
+        <div className="section-container">
+          <div className="text-center">
+            <div className="bio-cta-buttons">
+              <Link to="/contact" className="btn-secondary">
+                Contactez Marie-Émeraude
+              </Link>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
     </div>
   )
 }
