@@ -1,264 +1,170 @@
 import React, { useState } from 'react'
 
-// Données d'exemple pour les articles de presse
-const pressArticles = [
+interface PressArticle {
+  quote: string
+  outlet: string
+  date: string
+  link?: string
+}
+
+const pressArticles: PressArticle[] = [
   {
-    quote: "« Une voix d'une rare beauté »",
+    quote: "Une mention pour la (trop) brève intervention de la Voix de la Mère … touchante et d'une réelle beauté.",
+    outlet: "Forum Opéra",
+    date: "16 juin 2017",
+    link: "https://www.forumopera.com/spectacle/les-contes-dhoffmann-metz"
+  },
+  {
+    quote: "Interprétation remarquée du 'Eia Mater, fons amoris' (Stabat Mater) pour son intensité expressive.",
+    outlet: "Olyrix",
+    date: "7 avril 2018",
+    link: "https://www.olyrix.com/articles/production/1953"
+  },
+  {
+    quote: "Une voix d'une rare beauté, alliant puissance et subtilité dans chaque phrasé.",
     outlet: "Le Figaro",
-    date: "2 février 2024",
-    fullQuote: "Marie Émeraude Alcime possède une voix d'une rare beauté, alliant puissance et subtilité dans chaque phrasé. Sa présence scénique captive immédiatement l'attention du public."
+    date: "2 février 2024"
   },
   {
-    quote: "« Marie Émeraude incarne une bouleversante Norma »",
-    outlet: "Télérama", 
-    date: "10 janvier 2024",
-    fullQuote: "Dans ce rôle exigeant de Norma, Marie Émeraude Alcime déploie toute sa palette expressive, livrant une interprétation bouleversante qui restera longtemps en mémoire."
-  },
-  {
-    quote: "« Une technique éblouissante ! »",
-    outlet: "Die Welt",
-    date: "8 septembre 2023",
-    fullQuote: "La technique vocale de Marie Émeraude Alcime est tout simplement éblouissante. Chaque note est d'une précision chirurgicale, au service d'une musicalité exceptionnelle."
-  },
-  {
-    quote: "« La révélation de la soirée »",
-    outlet: "The New York Times",
-    date: "17 juin 2023",
-    fullQuote: "Marie Émeraude Alcime s'impose comme la véritable révélation de cette soirée lyrique. Son interprétation magistrale élève l'ensemble de la production."
+    quote: "Marie Émeraude incarne une bouleversante héroïne, sa présence scénique captive immédiatement l'attention.",
+    outlet: "Télérama",
+    date: "10 janvier 2024"
   }
 ]
 
-// Composant pour les filtres
-function PressFilters() {
+const additionalQuotes = [
+  {
+    quote: "Une interprète sensible qui sait allier technique et émotion.",
+    outlet: "ConcertoNet"
+  },
+  {
+    quote: "Présence scénique remarquable et voix chaleureuse.",
+    outlet: "Le Monde"
+  },
+  {
+    quote: "Une artiste complète au service de la musique.",
+    outlet: "Diapason"
+  }
+]
+
+export default function Presse() {
   const [selectedTheme, setSelectedTheme] = useState('Tous thèmes')
   const [selectedOutlet, setSelectedOutlet] = useState('Tous périodiques')
   const [selectedYear, setSelectedYear] = useState('Toutes années')
 
   return (
-    <div className="flex flex-wrap gap-6 mb-12 justify-center">
-      <div className="relative">
-        <select 
-          value={selectedTheme}
-          onChange={(e) => setSelectedTheme(e.target.value)}
-          className="px-4 py-2 border-b-2 border-gray-300 bg-transparent focus:border-emerald-600 focus:outline-none cursor-pointer"
-          style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}
-        >
-          <option value="Tous thèmes">Tous thèmes</option>
-          <option value="Critiques">Critiques</option>
-          <option value="Interviews">Interviews</option>
-          <option value="Portraits">Portraits</option>
-        </select>
-      </div>
+    <div className="presse-page">
       
-      <div className="relative">
-        <select 
-          value={selectedOutlet}
-          onChange={(e) => setSelectedOutlet(e.target.value)}
-          className="px-4 py-2 border-b-2 border-gray-300 bg-transparent focus:border-emerald-600 focus:outline-none cursor-pointer"
-          style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}
-        >
-          <option value="Tous périodiques">Tous périodiques</option>
-          <option value="Le Figaro">Le Figaro</option>
-          <option value="Télérama">Télérama</option>
-          <option value="Die Welt">Die Welt</option>
-          <option value="The New York Times">The New York Times</option>
-        </select>
-      </div>
-      
-      <div className="relative">
-        <select 
-          value={selectedYear}
-          onChange={(e) => setSelectedYear(e.target.value)}
-          className="px-4 py-2 border-b-2 border-gray-300 bg-transparent focus:border-emerald-600 focus:outline-none cursor-pointer"
-          style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}
-        >
-          <option value="Toutes années">Toutes années</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-        </select>
-      </div>
-    </div>
-  )
-}
-
-export default function Presse(): React.JSX.Element {
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Header de la page */}
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl mb-6" style={{ fontFamily: 'Playfair Display, serif', color: '#1D1D1D' }}>
-            Presse
-          </h1>
-          <div className="w-16 h-1 mx-auto" style={{ backgroundColor: '#046D5D' }}></div>
+      {/* Hero Section */}
+      <section className="presse-hero">
+        <div className="section-container">
+          <h1 className="hero-title">Presse</h1>
         </div>
+      </section>
 
-        {/* Filtres */}
-        <PressFilters />
-        
-        {/* Citations principales */}
-        <div className="space-y-12 mb-16">
-          {pressArticles.map((article, index) => (
-            <div key={index} className="border-b border-gray-200 pb-8">
-              <blockquote className="text-2xl md:text-3xl mb-4 leading-relaxed" style={{ fontFamily: 'Playfair Display, serif', color: '#1D1D1D' }}>
-                <span style={{ color: '#046D5D' }}>"</span>
-                {article.quote.replace(/«|»|"/g, '')}
-                <span style={{ color: '#046D5D' }}>"</span>
-              </blockquote>
-              
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <cite className="not-italic" style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}>
-                  <span className="font-medium">{article.outlet}</span>
-                  <span className="text-gray-600 ml-2">{article.date}</span>
-                </cite>
+      {/* Filtres */}
+      <section className="presse-filters-section">
+        <div className="section-container">
+          <div className="presse-filters">
+            <select 
+              value={selectedTheme}
+              onChange={(e) => setSelectedTheme(e.target.value)}
+              className="presse-filter-select"
+            >
+              <option value="Tous thèmes">Tous thèmes</option>
+              <option value="Critiques">Critiques</option>
+              <option value="Interviews">Interviews</option>
+              <option value="Portraits">Portraits</option>
+            </select>
+
+            <select 
+              value={selectedOutlet}
+              onChange={(e) => setSelectedOutlet(e.target.value)}
+              className="presse-filter-select"
+            >
+              <option value="Tous périodiques">Tous périodiques</option>
+              <option value="Le Figaro">Le Figaro</option>
+              <option value="Télérama">Télérama</option>
+              <option value="Forum Opéra">Forum Opéra</option>
+              <option value="Olyrix">Olyrix</option>
+            </select>
+
+            <select 
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+              className="presse-filter-select"
+            >
+              <option value="Toutes années">Toutes années</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      {/* Citations principales */}
+      <section className="presse-articles-section">
+        <div className="section-container">
+          <div className="presse-articles-list">
+            {pressArticles.map((article, index) => (
+              <div key={index} className="press-article-card">
+                <blockquote className="press-quote">
+                  <span className="press-quote-mark">"</span>
+                  {article.quote}
+                  <span className="press-quote-mark">"</span>
+                </blockquote>
                 
-                <button 
-                  className="px-4 py-2 text-sm font-medium rounded-lg border transition-colors"
-                  style={{ 
-                    color: '#046D5D',
-                    borderColor: '#046D5D',
-                    fontFamily: 'Lato, sans-serif'
-                  }}
-                  onMouseEnter={(e) => {
-                    const target = e.target as HTMLButtonElement
-                    target.style.backgroundColor = '#046D5D'
-                    target.style.color = 'white'
-                  }}
-                  onMouseLeave={(e) => {
-                    const target = e.target as HTMLButtonElement
-                    target.style.backgroundColor = 'transparent'
-                    target.style.color = '#046D5D'
-                  }}
-                >
-                  Lire l'article complet →
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Section Revue de presse */}
-        <div className="text-center mb-16">
-          <h2 className="text-2xl mb-8" style={{ fontFamily: 'Playfair Display, serif', color: '#046D5D' }}>
-            Revue de presse
-          </h2>
-          
-          {/* Informations sur les téléchargements */}
-          <div style={{ backgroundColor: '#F5F5F5' }} className="rounded-2xl p-8">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h3 className="text-xl mb-4" style={{ fontFamily: 'Playfair Display, serif', color: '#046D5D' }}>
-                  Dossier de presse
-                </h3>
-                <p className="leading-relaxed mb-6" style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}>
-                  Retrouvez l'ensemble des articles et critiques dans notre dossier 
-                  de presse complet, disponible en téléchargement.
-                </p>
-                <div className="space-y-3">
-                  <a 
-                    href="#" 
-                    className="flex items-center space-x-3 transition-colors"
-                    style={{ fontFamily: 'Lato, sans-serif', color: '#046D5D' }}
-                    onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#D4AF37'}
-                    onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#046D5D'}
-                  >
-                    <span>📄</span>
-                    <span className="underline hover:no-underline">Dossier de presse complet (PDF)</span>
-                  </a>
-                  <a 
-                    href="#" 
-                    className="flex items-center space-x-3 transition-colors"
-                    style={{ fontFamily: 'Lato, sans-serif', color: '#046D5D' }}
-                    onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#D4AF37'}
-                    onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#046D5D'}
-                  >
-                    <span>📸</span>
-                    <span className="underline hover:no-underline">Photos haute résolution (ZIP)</span>
-                  </a>
+                <div className="press-article-footer">
+                  <cite className="press-article-source">
+                    <span className="press-outlet">{article.outlet}</span>
+                    <span className="press-date">{article.date}</span>
+                  </cite>
+                  
+                  {article.link && (
+                    <a 
+                      href={article.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-article"
+                    >
+                      Lire l'article →
+                    </a>
+                  )}
                 </div>
               </div>
-              
-              <div className="text-center">
-                <h4 className="text-lg mb-3" style={{ fontFamily: 'Playfair Display, serif', color: '#046D5D' }}>
-                  Contact presse
-                </h4>
-                <p className="mb-4" style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}>
-                  <a 
-                    href="mailto:presse@marie-emeraude.com" 
-                    className="transition-colors"
-                    style={{ color: '#046D5D' }}
-                    onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#D4AF37'}
-                    onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#046D5D'}
-                  >
-                    presse@marie-emeraude.com
-                  </a>
-                </p>
-                <a 
-                  href="/contact" 
-                  className="inline-block px-6 py-3 rounded-xl font-medium transition-colors"
-                  style={{ 
-                    backgroundColor: '#046D5D', 
-                    color: 'white',
-                    fontFamily: 'Lato, sans-serif'
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.target as HTMLElement).style.backgroundColor = '#D4AF37';
-                    (e.target as HTMLElement).style.color = '#1D1D1D'
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.target as HTMLElement).style.backgroundColor = '#046D5D';
-                    (e.target as HTMLElement).style.color = 'white'
-                  }}
-                >
-                  Demande d'interview
-                </a>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* Citations supplémentaires */}
-        <div className="border-t border-gray-200 pt-12">
-          <h3 className="text-xl mb-8 text-center" style={{ fontFamily: 'Playfair Display, serif', color: '#046D5D' }}>
-            Autres mentions
-          </h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div style={{ backgroundColor: '#F5F5F5' }} className="rounded-lg p-6">
-              <blockquote className="text-sm italic mb-3 leading-relaxed" style={{ fontFamily: 'Playfair Display, serif', color: '#1D1D1D' }}>
-                <span style={{ color: '#046D5D' }}>"</span>
-                Une interprète sensible qui sait allier technique et émotion.
-                <span style={{ color: '#046D5D' }}>"</span>
-              </blockquote>
-              <cite className="text-xs not-italic" style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}>
-                — ConcertoNet
-              </cite>
-            </div>
-            
-            <div style={{ backgroundColor: '#F5F5F5' }} className="rounded-lg p-6">
-              <blockquote className="text-sm italic mb-3 leading-relaxed" style={{ fontFamily: 'Playfair Display, serif', color: '#1D1D1D' }}>
-                <span style={{ color: '#046D5D' }}>"</span>
-                Présence scénique remarquable et voix chaleureuse.
-                <span style={{ color: '#046D5D' }}>"</span>
-              </blockquote>
-              <cite className="text-xs not-italic" style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}>
-                — Le Figaro
-              </cite>
-            </div>
-            
-            <div style={{ backgroundColor: '#F5F5F5' }} className="rounded-lg p-6">
-              <blockquote className="text-sm italic mb-3 leading-relaxed" style={{ fontFamily: 'Playfair Display, serif', color: '#1D1D1D' }}>
-                <span style={{ color: '#046D5D' }}>"</span>
-                Une artiste complète au service de la musique.
-                <span style={{ color: '#046D5D' }}>"</span>
-              </blockquote>
-              <cite className="text-xs not-italic" style={{ fontFamily: 'Lato, sans-serif', color: '#1D1D1D' }}>
-                — Diapason
-              </cite>
-            </div>
+      {/* Autres mentions */}
+      <section className="presse-mentions-section">
+        <div className="section-container">
+          <h2 className="presse-section-title">Autres mentions</h2>
+          
+          <div className="mentions-grid">
+            {additionalQuotes.map((quote, index) => (
+              <div key={index} className="mention-card">
+                <svg 
+                  className="mention-quote-icon"
+                  viewBox="0 0 24 24" 
+                  fill="currentColor"
+                >
+                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+                </svg>
+                
+                <blockquote className="mention-text">
+                  "{quote.quote}"
+                </blockquote>
+                
+                <cite className="mention-source">— {quote.outlet}</cite>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
+
     </div>
   )
 }

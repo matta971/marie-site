@@ -853,7 +853,7 @@ body {
 }
 
 /* Page Biographie avec fond parallax sur toute la page */
-.biographie-page, .repertoire-page, .enseignement-page, .agenda-page {
+.biographie-page, .repertoire-page, .enseignement-page, .agenda-page, .presse-page {
   min-height: 100vh;
   background-image: url('/images/biography-bg.jpg');
   background-size: cover;
@@ -863,7 +863,7 @@ body {
   position: relative;
 }
 
-.biographie-page::before, .repertoire-page::before, .enseignement-page::before, .agenda-page::before {
+.biographie-page::before, .repertoire-page::before, .enseignement-page::before, .agenda-page::before, .presse-page::before {
   content: '';
   position: absolute;
   top: 0;
@@ -874,7 +874,7 @@ body {
   z-index: 0;
 }
 
-.biographie-page > *, .repertoire-page > *, .enseignement-page > *, .agenda-page > * {
+.biographie-page > *, .repertoire-page > *, .enseignement-page > *, .agenda-page > *, .presse-page > * {
   position: relative;
   z-index: 1;
 }
@@ -3253,5 +3253,263 @@ body {
 @media (min-width: 769px) and (max-width: 1024px) {
   .agenda-title {
     font-size: 3rem;
+  }
+}
+
+
+/* =========================
+   PAGE PRESSE
+========================= */
+.presse-page {
+  min-height: 100vh;
+  background-color: var(--color-white);
+}
+
+/* Hero Section */
+.presse-hero {
+  padding-top: 5rem;
+  padding-bottom: 2rem;
+}
+
+.presse-page .hero-title {
+  text-align: center;
+  color: var(--color-emerald-deep);
+}
+
+/* Filtres */
+.presse-filters-section {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.presse-filters {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.presse-filter-select {
+  font-family: var(--font-text);
+  font-size: 1rem;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--color-anthracite);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231D1D1D' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+}
+
+.presse-filter-select:hover {
+  border-bottom-color: var(--color-emerald-deep);
+}
+
+.presse-filter-select:focus {
+  outline: none;
+  border-bottom-color: var(--color-emerald-deep);
+}
+
+/* Articles principaux */
+.presse-articles-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.presse-articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.press-article-card {
+  padding: 2.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid var(--color-emerald-deep);
+  transition: all 0.3s ease;
+}
+
+.press-article-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.press-quote {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-anthracite);
+  margin-bottom: 1.5rem;
+}
+
+.press-quote-mark {
+  color: var(--color-emerald-deep);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.press-article-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.press-article-source {
+  font-family: var(--font-text);
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.press-outlet {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+}
+
+.press-date {
+  font-size: 0.875rem;
+  color: #999;
+}
+
+/* Bouton Article */
+.btn-article {
+  font-family: var(--font-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.625rem 1.5rem;
+  color: var(--color-emerald-deep);
+  border: 1px solid var(--color-emerald-deep);
+  border-radius: 0.375rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-article:hover {
+  background-color: var(--color-emerald-deep);
+  color: var(--color-white);
+  transform: translateX(3px);
+}
+
+/* Section Mentions */
+.presse-mentions-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  background-color: var(--color-gray-light-alt);
+}
+
+.presse-section-title {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.mentions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.mention-card {
+  position: relative;
+  padding: 2rem;
+  background-color: var(--color-white);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.mention-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.mention-quote-icon {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-emerald-deep);
+  opacity: 0.15;
+}
+
+.mention-text {
+  font-family: var(--font-text);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: #2a2a2a;
+  margin-bottom: 1rem;
+  padding-left: 2.5rem;
+}
+
+.mention-source {
+  font-family: var(--font-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-style: normal;
+  color: var(--color-emerald-deep);
+  text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .presse-title {
+    font-size: 2.5rem;
+  }
+
+  .presse-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .presse-filter-select {
+    width: 100%;
+  }
+
+  .press-quote {
+    font-size: 1.25rem;
+  }
+
+  .press-article-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-article {
+    width: 100%;
+    text-align: center;
+  }
+
+  .mentions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .presse-title {
+    font-size: 3rem;
+  }
+
+  .press-quote {
+    font-size: 1.35rem;
   }
 }
