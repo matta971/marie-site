@@ -853,7 +853,7 @@ body {
 }
 
 /* Page Biographie avec fond parallax sur toute la page */
-.biographie-page {
+.biographie-page, .repertoire-page {
   min-height: 100vh;
   background-image: url('/images/biography-bg.jpg');
   background-size: cover;
@@ -863,7 +863,7 @@ body {
   position: relative;
 }
 
-.biographie-page::before {
+.biographie-page::before, .repertoire-page::before {
   content: '';
   position: absolute;
   top: 0;
@@ -874,16 +874,73 @@ body {
   z-index: 0;
 }
 
-.biographie-page > * {
+.biographie-page > *, .repertoire-page > * {
   position: relative;
   z-index: 1;
 }
 
 /* Responsive - désactiver parallax sur mobile */
 @media (max-width: 768px) {
-  .biographie-page {
+  .biographie-page, .repertoire-page {
     background-attachment: scroll;
   }
+}
+
+/* =========================
+   PAGE REPERTOIRE
+========================= */
+.repertoire-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.repertoire-section-title {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  margin-bottom: 2rem;
+}
+
+.repertoire-subsections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.repertoire-subsection-title {
+  font-family: var(--font-text);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  margin-bottom: 1rem;
+}
+
+.style-subsection-title {
+  font-family: var(--font-text);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  margin-top: 1rem;
+}
+
+.specialite-subsection-title {
+  font-family: var(--font-text);
+  font-size: 1.125rem;
+  color: var(--color-emerald-deep);
+  margin-bottom: 1rem;
+}
+
+.langue-subsection-title {
+  font-family: var(--font-text);
+  font-size: 1.125rem;
+  color: var(--color-emerald-deep);
+}
+
+.langue-subsection-img {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 /* =========================

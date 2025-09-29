@@ -112,17 +112,7 @@ export default function Repertoire(): React.JSX.Element {
   const filteredRepertoire = getFilteredRepertoire()
 
   return (
-    <div className="section-bg-primary min-h-screen">
-      {/* Breadcrumb */}
-      <div className="section-bg-secondary border-b border-gray-200 py-4">
-        <div className="section-container">
-          <nav className="text-small text-gray-600">
-            <Link to="/" className="link-secondary">ACCUEIL</Link>
-            <span className="mx-2">/</span>
-            <span className="text-accent font-medium">RÉPERTOIRE</span>
-          </nav>
-        </div>
-      </div>
+    <div className="repertoire-page min-h-screen">
 
       {/* Hero Section */}
       <section className="section-padding">
@@ -155,7 +145,7 @@ export default function Repertoire(): React.JSX.Element {
       </section>
 
       {/* Liste du répertoire */}
-      <section className="section-bg-secondary section-padding">
+      <section className="section-padding">
         <div className="section-container">
           <div className="grid gap-6">
             {filteredRepertoire.map((item, index) => (
@@ -193,18 +183,15 @@ export default function Repertoire(): React.JSX.Element {
       </section>
 
       {/* Section Spécialités */}
-      <section className="section-bg-primary section-padding">
+      <section className="section-padding">
         <div className="section-container">
-          <h2 className="title-section text-center mb-12">Spécialités & Affinités</h2>
+          <h2 className="repertoire-section-title text-center mb-12">Spécialités & Affinités</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             
             {/* Répertoire français */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🇫🇷</span>
-              </div>
-              <h3 className="title-subsection">Répertoire français</h3>
+              <h3 className="specialite-subsection-title">Répertoire français</h3>
               <p className="text-body">
                 Spécialiste des mélodies françaises et de l'opéra-comique. 
                 Interprétations reconnues dans Bizet, Massenet et Gounod.
@@ -213,10 +200,7 @@ export default function Repertoire(): React.JSX.Element {
 
             {/* Musique sacrée */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">⛪</span>
-              </div>
-              <h3 className="title-subsection">Musique sacrée</h3>
+              <h3 className="specialite-subsection-title">Musique sacrée</h3>
               <p className="text-body">
                 Oratorios, messes et stabat mater. Une approche spirituelle 
                 et intimiste du répertoire sacré baroque et romantique.
@@ -225,10 +209,7 @@ export default function Repertoire(): React.JSX.Element {
 
             {/* Pédagogie */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🎓</span>
-              </div>
-              <h3 className="title-subsection">Pédagogie vocale</h3>
+              <h3 className="specialite-subsection-title">Pédagogie vocale</h3>
               <p className="text-body">
                 Transmission du savoir-faire lyrique. Masterclasses et 
                 coaching vocal pour développer la technique et l'expression.
@@ -239,16 +220,16 @@ export default function Repertoire(): React.JSX.Element {
       </section>
 
       {/* Section Langues et tessiture */}
-      <section className="section-bg-secondary section-padding">
+      <section className="section-padding">
         <div className="section-container">
           <div className="grid md:grid-cols-2 gap-12">
             
             {/* Tessiture et caractéristiques vocales */}
             <div>
-              <h2 className="title-section">Tessiture & Style</h2>
+              <h2 className="repertoire-section-title">Tessiture & Style</h2>
               <div className="space-y-6">
                 <div>
-                  <h3 className="title-card text-accent mb-2">Mezzo-soprano</h3>
+                  <h3 className="style-subsection-title">Mezzo-soprano</h3>
                   <p className="text-body">
                     Voix de mezzo-soprano lyrique avec une extension dans le grave. 
                     Timbre chaleureux et expressif, particulièrement adapté aux rôles 
@@ -256,7 +237,7 @@ export default function Repertoire(): React.JSX.Element {
                   </p>
                 </div>
                 <div>
-                  <h3 className="title-card text-accent mb-2">Caractéristiques</h3>
+                  <h3 className="style-subsection-title">Caractéristiques</h3>
                   <ul className="text-body space-y-2">
                     <li>• Tessiture : Sol2 - Sol5</li>
                     <li>• Couleur : Timbre chaud et velouté</li>
@@ -269,45 +250,45 @@ export default function Repertoire(): React.JSX.Element {
 
             {/* Langues de travail */}
             <div>
-              <h2 className="title-section">Langues de travail</h2>
+              <h2 className="repertoire-section-title">Langues de travail</h2>
               <div className="space-y-4">
                 
                 <div className="flex items-center space-x-4">
-                  <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+                  <div className="langue-subsection-img w-8 h-8 bg-accent rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">FR</span>
                   </div>
                   <div>
-                    <div className="title-card">Français</div>
+                    <div className="langue-subsection-title text-accent mb-2">Français</div>
                     <div className="text-small text-gray-600">Langue maternelle - Répertoire mélodique et lyrique</div>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+                  <div className="langue-subsection-img w-8 h-8 bg-accent rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">IT</span>
                   </div>
                   <div>
-                    <div className="title-card">Italien</div>
+                    <div className="langue-subsection-title text-accent mb-2">Italien</div>
                     <div className="text-small text-gray-600">Opéra italien - Belcanto et verismo</div>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+                  <div className="langue-subsection-img w-8 h-8 bg-accent rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">DE</span>
                   </div>
                   <div>
-                    <div className="title-card">Allemand</div>
+                    <div className="langue-subsection-title text-accent mb-2">Allemand</div>
                     <div className="text-small text-gray-600">Lieder et oratorios - Niveau professionnel</div>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+                  <div className="langue-subsection-img w-8 h-8 bg-accent rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">EN</span>
                   </div>
                   <div>
-                    <div className="title-card">Anglais</div>
+                    <div className="langue-subsection-title text-accent mb-2">Anglais</div>
                     <div className="text-small text-gray-600">Répertoire contemporain et oratorios anglais</div>
                   </div>
                 </div>
@@ -318,19 +299,14 @@ export default function Repertoire(): React.JSX.Element {
       </section>
 
       {/* CTA Section */}
-      <section className="section-bg-accent section-padding">
+      <section className="section-padding">
         <div className="section-container">
           <div className="text-center">
-            <h2 className="title-section text-white mb-6">Programmez Marie-Émeraude</h2>
-            <p className="text-body text-white/90 max-w-2xl mx-auto mb-8">
-              Disponible pour productions lyriques, concerts, récitals et masterclasses. 
-              Contactez nous pour étudier votre projet artistique.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact" className="btn-primary bg-white text-accent hover:bg-gray-100">
-                Contact booking
+            <div className="bio-cta-buttons">
+              <Link to="/contact" className="btn-secondary">
+                Programmez Marie-Émeraude
               </Link>
-              <Link to="/medias" className="btn-secondary border-white text-white hover:bg-white hover:text-accent">
+              <Link to="/medias" className="btn-secondary">
                 Écouter des extraits
               </Link>
             </div>
