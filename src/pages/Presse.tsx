@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 
 interface PressArticle {
   quote: string
@@ -161,6 +161,37 @@ export default function Presse() {
                 <cite className="mention-source">— {quote.outlet}</cite>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Dossier de presse */}
+      <section className="presse-dossier-section">
+        <div className="section-container">
+          <h2 className="presse-section-title">Revue de presse</h2>
+          
+          <div className="dossier-content">
+            <div className="dossier-text">
+              <h3 className="dossier-subtitle">Dossier de presse</h3>
+              <p className="dossier-description">
+                Retrouvez l'ensemble des articles et critiques dans notre dossier 
+                de presse complet, disponible en téléchargement.
+              </p>
+              <button className="btn-download">
+                Télécharger le dossier (PDF)
+              </button>
+            </div>
+            
+            <div className="dossier-text">
+              <h3 className="dossier-subtitle">Contact presse</h3>
+              <p className="dossier-description">
+                Pour toute demande d'interview, de photos haute résolution ou 
+                d'informations complémentaires, contactez notre attachée de presse.
+              </p>
+              <button className="btn-contact">
+                Demande d'interview
+              </button>
+            </div>
           </div>
         </div>
       </section>
