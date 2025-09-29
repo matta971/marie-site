@@ -2227,6 +2227,15 @@ body {
   background: var(--color-white);
 }
 
+.contact-section-title {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-emerald-deep);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

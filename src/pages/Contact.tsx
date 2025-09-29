@@ -143,7 +143,7 @@ export default function Contact(): React.JSX.Element {
             <div className="contact-info">
               {/* Coordonnées professionnelles */}
               <div className="info-block">
-                <h2 className="title-section">Coordonnées professionnelles</h2>
+                <h2 className="contact-section-title">Coordonnées professionnelles</h2>
                 
                 <div className="contact-details">
                   <div className="contact-item">
@@ -208,7 +208,7 @@ export default function Contact(): React.JSX.Element {
             {/* Colonne de droite - Formulaire */}
             <div className="contact-form-section">
               <div className="form-container">
-                <h2 className="title-section">Formulaire de contact</h2>
+                <h2 className="contact-section-title">Formulaire de contact</h2>
                 <ContactForm />
               </div>
             </div>
