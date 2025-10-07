@@ -1,13 +1,10 @@
 import  { useState } from 'react'
+import { useNotionData } from '../hooks/useNotionData';
+import { getConcerts } from '../services/notionService';
+import { formatDate } from '../utils/dateUtils';
 
-interface Event {
-  title: string
-  role: string
-  venue: string
-  date: string
-}
 
-const upcomingEvents: Event[] = [
+/*const upcomingEvents: Event[] = [
   {
     title: 'Norma',
     role: 'Title role',
@@ -32,9 +29,18 @@ const upcomingEvents: Event[] = [
     venue: 'Teatro Real, TBA (Mozart)',
     date: '5 juin 2024'
   }
-]
+]*/
 
 export default function Agenda() {
+  const { data: concerts/*, loading: loadingConcerts*/ } = useNotionData(getConcerts);
+
+  const upcomingEvents = concerts?.slice(0, 3).map(concert => ({
+      date: concert.date,
+      title: concert.title,
+      location: concert.location,
+      ville: concert.ville,        
+      role: concert.role
+    })) || [];
   const [selectedMonth, setSelectedMonth] = useState('Mois')
   const [selectedYear, setSelectedYear] = useState('Année')
   const [selectedCity, setSelectedCity] = useState('Ville')
@@ -102,8 +108,8 @@ export default function Agenda() {
                   <h3 className="event-title">
                     {event.role}, <em>{event.title}</em>
                   </h3>
-                  <p className="event-venue">{event.venue}</p>
-                  <p className="event-date">{event.date}</p>
+                  <p className="event-venue">{event.location}</p>
+                  <p className="event-date">{formatDate(event.date)}</p>
                 </div>
                 <div className="event-action">
                   <button className="btn-reserve">RÉSERVER</button>
