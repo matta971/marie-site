@@ -1,7 +1,11 @@
-import  { useState } from 'react'
+import  { useState, useMemo } from 'react'
 import { useNotionData } from '../hooks/useNotionData';
-import { getConcerts } from '../services/notionService';
-import { formatDate } from '../utils/dateUtils';
+import { getConcerts, getFutureConcerts } from '../services/notionService';
+import { formatDate, getMonth, getYear } from '../utils/dateUtils';
+import EventTable from '../components/EventTable';
+import type { EventItem } from '../components/EventTable';
+import type { ConcertData } from '../types/notion.types';
+
 
 
 /*const upcomingEvents: Event[] = [
@@ -32,18 +36,115 @@ import { formatDate } from '../utils/dateUtils';
 ]*/
 
 export default function Agenda() {
-  const { data: concerts/*, loading: loadingConcerts*/ } = useNotionData(getConcerts);
+  const { data: concerts, loading, error } = useNotionData(getConcerts);
 
-  const upcomingEvents = concerts?.slice(0, 3).map(concert => ({
-      date: concert.date,
-      title: concert.title,
-      location: concert.location,
-      ville: concert.ville,        
-      role: concert.role
-    })) || [];
-  const [selectedMonth, setSelectedMonth] = useState('Mois')
-  const [selectedYear, setSelectedYear] = useState('Année')
-  const [selectedCity, setSelectedCity] = useState('Ville')
+  const [selectedMonth, setSelectedMonth] = useState('Tous les mois')
+  const [selectedYear, setSelectedYear] = useState('Toutes les années')
+  const [selectedCity, setSelectedCity] = useState('Toutes les villes')
+
+  // Séparer concerts futurs et passés
+  const now = new Date();
+
+  // Filtrer les concerts à afficher
+  const visibleConcerts = concerts?.filter(c => c.display) || [];
+  
+  // Concerts à venir (format pour les event cards)
+  const upcomingConcerts = visibleConcerts?.filter(
+    concert => new Date(concert.date) >= now
+  ).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()) || [];
+
+  // Concerts passés
+  const pastConcerts  = visibleConcerts?.filter(
+    concert => new Date(concert.date) < now
+  ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  /*
+  .map(concert => ({
+    date: formatDate(concert.date),
+    work: concert.title,
+    role: concert.role || '',
+    place: concert.location,
+    city: concert.ville || '',
+    ticketUrl: concert.ticketLink
+  })) || [];*/
+  // Extraire les valeurs uniques pour les filtres basés sur TOUS les concerts
+  const availableMonths = useMemo(() => {
+    const months = new Set<string>();
+    visibleConcerts.forEach(concert => {
+      months.add(getMonth(concert.date));
+    });
+    return Array.from(months).sort((a, b) => {
+      const monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 
+                         'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+      return monthNames.indexOf(a.toLowerCase()) - monthNames.indexOf(b.toLowerCase());
+    });
+  }, [visibleConcerts]);
+
+  const availableYears = useMemo(() => {
+    const years = new Set<string>();
+    visibleConcerts.forEach(concert => {
+      years.add(getYear(concert.date));
+    });
+    return Array.from(years).sort((a, b) => parseInt(b) - parseInt(a));
+  }, [visibleConcerts]);
+
+  const availableCities = useMemo(() => {
+    const cities = new Set<string>();
+    visibleConcerts.forEach(concert => {
+      if (concert.ville) {
+        cities.add(concert.ville);
+      }
+    });
+    return Array.from(cities).sort();
+  }, [visibleConcerts]);
+
+  // Filtrer les concerts à afficher selon les sélections
+  const filteredUpcomingConcerts = useMemo(() => {
+    return upcomingConcerts.filter(concert => {
+      const matchMonth = selectedMonth === 'Tous les mois' || getMonth(concert.date) === selectedMonth;
+      const matchYear = selectedYear === 'Toutes les années' || getYear(concert.date) === selectedYear;
+      const matchCity = selectedCity === 'Toutes les villes' || concert.ville === selectedCity;
+      return matchMonth && matchYear && matchCity;
+    });
+  }, [upcomingConcerts, selectedMonth, selectedYear, selectedCity]);
+
+  const filteredPastConcerts = useMemo(() => {
+    return pastConcerts.filter(concert => {
+      const matchMonth = selectedMonth === 'Tous les mois' || getMonth(concert.date) === selectedMonth;
+      const matchYear = selectedYear === 'Toutes les années' || getYear(concert.date) === selectedYear;
+      const matchCity = selectedCity === 'Toutes les villes' || concert.ville === selectedCity;
+      return matchMonth && matchYear && matchCity;
+    });
+  }, [pastConcerts, selectedMonth, selectedYear, selectedCity]);
+
+  // Affichage du chargement
+  if (loading) {
+    return (
+      <div className="agenda-page">
+        <section className="agenda-hero">
+          <div className="section-container">
+            <h1 className="hero-title">Agenda</h1>
+            <p className="text-center mt-4">Chargement des événements...</p>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  // Gestion des erreurs
+  if (error) {
+    return (
+      <div className="agenda-page">
+        <section className="agenda-hero">
+          <div className="section-container">
+            <h1 className="hero-title">Agenda</h1>
+            <p className="text-center mt-4 text-red-600">
+              Erreur lors du chargement des événements. Veuillez réessayer plus tard.
+            </p>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="agenda-page">
@@ -55,6 +156,8 @@ export default function Agenda() {
         </div>
       </section>
 
+      {/* Section Événements à venir */}
+        <>
       {/* Filtres */}
       <section className="agenda-filters-section">
         <div className="section-container">
@@ -64,13 +167,12 @@ export default function Agenda() {
               onChange={(e) => setSelectedMonth(e.target.value)}
               className="agenda-filter-select"
             >
-              <option value="Mois">Mois</option>
-              <option value="Janvier">Janvier</option>
-              <option value="Février">Février</option>
-              <option value="Mars">Mars</option>
-              <option value="Avril">Avril</option>
-              <option value="Mai">Mai</option>
-              <option value="Juin">Juin</option>
+              <option value="Tous les mois">Tous les mois</option>
+              {availableMonths.map(month => (
+                <option key={month} value={month}>
+                  {month.charAt(0).toUpperCase() + month.slice(1)}
+                </option>
+              ))}
             </select>
 
             <select 
@@ -78,9 +180,10 @@ export default function Agenda() {
               onChange={(e) => setSelectedYear(e.target.value)}
               className="agenda-filter-select"
             >
-              <option value="Année">Année</option>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
+              <option value="Toutes les années">Toutes les années</option>
+              {availableYears.map(year => (
+                <option key={year} value={year}>{year}</option>
+              ))}
             </select>
 
             <select 
@@ -88,37 +191,100 @@ export default function Agenda() {
               onChange={(e) => setSelectedCity(e.target.value)}
               className="agenda-filter-select"
             >
-              <option value="Ville">Ville</option>
-              <option value="Paris">Paris</option>
-              <option value="Lyon">Lyon</option>
-              <option value="Londres">Londres</option>
-              <option value="Madrid">Madrid</option>
+              <option value="Toutes les villes">Toutes les villes</option>
+              {availableCities.map(city => (
+                <option key={city} value={city}>{city}</option>
+              ))}
             </select>
           </div>
         </div>
       </section>
 
-      {/* Liste des événements */}
-      <section className="agenda-events-section">
-        <div className="section-container">
-          <div className="agenda-events-list">
-            {upcomingEvents.map((event, index) => (
-              <div key={index} className="event-card">
-                <div className="event-info">
-                  <h3 className="event-title">
-                    {event.role}, <em>{event.title}</em>
-                  </h3>
-                  <p className="event-venue">{event.location}</p>
-                  <p className="event-date">{formatDate(event.date)}</p>
+      {/* Liste des événements à venir */}
+      {filteredUpcomingConcerts.length > 0 && (
+          <section className="agenda-events-section">
+          <div className="section-container">
+            <h2 className="agenda-section-title">Événements à venir</h2>
+            <div className="agenda-events-list">
+              {filteredUpcomingConcerts.map((event) => (
+                <div key={event.id} className="event-card">
+                  <div className="event-info">
+                    <h3 className="event-title">
+                      {event.role && <>{event.role}, </>}
+                      <em>{event.title}</em>
+                    </h3>
+                    <p className="event-venue">{event.location}</p>
+                    {event.ville && <p className="event-city">{event.ville}</p>}
+                    <p className="event-date">{formatDate(event.date)}</p>
+                    {event.description && (
+                      <p className="event-description mt-2 text-sm">{event.description}</p>
+                    )}
+                  </div>
+                  <div className="event-action">
+                    {event.ticketLink ? (
+                      <a 
+                        href={event.ticketLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="btn-reserve"
+                      >
+                        RÉSERVER
+                      </a>
+                    ) : (
+                      <button className="btn-reserve" disabled>BIENTÔT</button>
+                    )}
+                  </div>
                 </div>
-                <div className="event-action">
-                  <button className="btn-reserve">RÉSERVER</button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Message si aucun événement à venir */}
+      {filteredUpcomingConcerts.length === 0 && filteredPastConcerts.length === 0 && (
+        <section className="agenda-events-section">
+          <div className="section-container text-center">
+            <p className="text-gray-600 italic">
+              Aucun événement ne correspond aux critères sélectionnés.
+            </p>
+            <button 
+              onClick={() => {
+                setSelectedMonth('Tous les mois');
+                setSelectedYear('Toutes les années');
+                setSelectedCity('Toutes les villes');
+              }}
+              className="btn mt-4"
+            >
+              Réinitialiser les filtres
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* Section Concerts passés */}
+      {filteredPastConcerts.length > 0 && (
+        <section className="agenda-events-section agenda-past-section">
+          <div className="section-container">
+            <h2 className="agenda-section-title">Concerts passés</h2>
+            <div className="agenda-events-list">
+              {filteredPastConcerts.map((event) => (
+                <div key={event.id} className="event-card past-event">
+                  <div className="event-info">
+                    <h3 className="event-title">
+                      {event.role && <>{event.role}, </>}
+                      <em>{event.title}</em>
+                    </h3>
+                    <p className="event-venue">{event.location}</p>
+                    {event.ville && <p className="event-city">{event.ville}</p>}
+                    <p className="event-date">{formatDate(event.date)}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Section À venir / Projets */}
       <section className="agenda-projects-section">
@@ -132,7 +298,7 @@ export default function Agenda() {
           </div>
         </div>
       </section>
-
+      </>
     </div>
   )
 }

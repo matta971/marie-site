@@ -3745,3 +3745,7 @@ body {
     font-size: 1.5rem;
   }
 }
+
+.card .img-audio-icon {
+  margin-right: 1em;
+}

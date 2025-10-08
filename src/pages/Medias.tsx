@@ -1,157 +1,115 @@
-import React, { useState } from 'react'
+// src/pages/Medias.tsx
+import React, { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { useNotionData } from '../hooks/useNotionData'
+import { getMedias } from '../services/notionService'
+import type { MediaData } from '../types/notion.types'
+
+// Types de médias disponibles
+const mediaTypes = [
+  { id: 'videos', label: 'Vidéos' },
+  { id: 'audios', label: 'Audios' },
+  { id: 'photos', label: 'Photos' }
+]
+
+// Catégories disponibles (à adapter selon vos besoins)
+const categories = [
+  { id: 'tous', label: 'Tous' },
+  { id: 'recital', label: 'Récital' },
+  { id: 'baroque', label: 'Baroque' },
+  { id: 'mozart', label: 'Mozart' },
+  { id: 'sacre', label: 'Sacré' }
+]
 
 export default function Medias(): React.JSX.Element {
+  const { data: medias, loading, error } = useNotionData(getMedias)
+  
   const [activeMediaType, setActiveMediaType] = useState('videos')
   const [activeCategory, setActiveCategory] = useState('tous')
 
-  // Types de médias
-  const mediaTypes = [
-    { id: 'videos', label: 'Vidéos' },
-    { id: 'audios', label: 'Audios' },
-    { id: 'photos', label: 'Photos' }
-  ]
+  // Trier les médias par ordre
+  const sortedMedias = useMemo(() => {
+    return medias?.sort((a, b) => a.order - b.order) || []
+  }, [medias])
 
-  // Catégories de contenu
-  const categories = [
-    { id: 'tous', label: 'Tous' },
-    { id: 'mozart', label: 'Mozart' },
-    { id: 'recital', label: 'Récital' },
-    { id: 'sacre', label: 'Sacré' },
-    { id: 'baroque', label: 'Baroque' }
-  ]
+  // Extraire les catégories disponibles depuis les descriptions (ou ajouter un champ category dans Notion)
+  const availableCategories = useMemo(() => {
+    // Pour l'instant, on utilise les catégories statiques
+    // Vous pouvez adapter cela selon comment vous stockez les catégories dans Notion
+    return categories
+  }, [])
 
-  // Données des médias
-  const mediasData = {
-    videos: [
-      {
-        id: 1,
-        title: 'Ponchielli — Voce di donna o d\'angelo (La Cieca)',
-        category: 'recital',
-        thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=400&auto=format&fit=crop',
-        url: 'https://www.youtube.com/embed/hCBhh4J9J_8',
-        duration: '4:32'
-      },
-      {
-        id: 2,
-        title: 'Rossini — Di tanti palpiti (Tancredi)',
-        category: 'baroque',
-        thumbnail: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=400&auto=format&fit=crop',
-        url: 'https://www.youtube.com/embed/7LEYnKna9XU',
-        duration: '3:45'
-      },
-      {
-        id: 3,
-        title: 'Verdi — Ulrica, Re dell\'abisso (Il ballo in maschera)',
-        category: 'recital',
-        thumbnail: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=400&auto=format&fit=crop',
-        url: 'https://www.youtube.com/embed/gM1b4WjahMI',
-        duration: '5:12'
-      },
-      {
-        id: 4,
-        title: 'Mozart — Laudate Dominum',
-        category: 'mozart',
-        thumbnail: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?q=80&w=400&auto=format&fit=crop',
-        url: 'https://www.youtube.com/embed/example1',
-        duration: '4:18'
-      },
-      {
-        id: 5,
-        title: 'Bach — Erbarme dich (Passion selon Saint-Matthieu)',
-        category: 'sacre',
-        thumbnail: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=400&auto=format&fit=crop',
-        url: 'https://www.youtube.com/embed/example2',
-        duration: '6:24'
-      },
-      {
-        id: 6,
-        title: 'Interview — Talents d\'Outre-Mer',
-        category: 'tous',
-        thumbnail: 'https://images.unsplash.com/photo-1516575150278-77136aed6920?q=80&w=400&auto=format&fit=crop',
-        url: 'https://www.youtube.com/embed/_S2GjuBozJg',
-        duration: '8:15'
+  // Filtrer les médias selon le type actif et la catégorie
+  const filteredMedia = useMemo(() => {
+    return sortedMedias.filter(media => {
+      // Mapping des types - ATTENTION aux majuscules et accents de Notion
+      const typeMap: { [key: string]: string[] } = {
+        'videos': ['video', 'vidéo', 'Vidéo', 'Video'], // Plusieurs variantes possibles
+        'audios': ['audio', 'Audio'], 
+        'photos': ['photo', 'Photo', 'image', 'Image']
       }
-    ],
-    audios: [
-      {
-        id: 1,
-        title: 'Stabat Mater — Pergolèse',
-        category: 'sacre',
-        duration: '45:30',
-        format: 'MP3 320kbps'
-      },
-      {
-        id: 2,
-        title: 'Récital de mélodies françaises',
-        category: 'recital',
-        duration: '52:15',
-        format: 'FLAC'
-      },
-      {
-        id: 3,
-        title: 'Mozart — Requiem (extrait)',
-        category: 'mozart',
-        duration: '12:44',
-        format: 'MP3 320kbps'
-      }
-    ],
-    photos: [
-      {
-        id: 1,
-        title: 'Concert à l\'Opéra de Metz',
-        category: 'recital',
-        thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=400&auto=format&fit=crop',
-        photographer: '© Studio Photo'
-      },
-      {
-        id: 2,
-        title: 'Portrait studio 2023',
-        category: 'tous',
-        thumbnail: 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=400&auto=format&fit=crop',
-        photographer: '© Photographe Officiel'
-      },
-      {
-        id: 3,
-        title: 'Récital Bach - Cathédrale',
-        category: 'sacre',
-        thumbnail: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?q=80&w=400&auto=format&fit=crop',
-        photographer: '© Concert Photography'
-      },
-      {
-        id: 4,
-        title: 'Les Contes d\'Hoffmann',
-        category: 'recital',
-        thumbnail: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=400&auto=format&fit=crop',
-        photographer: '© Opéra de Metz'
-      },
-      {
-        id: 5,
-        title: 'Portrait en robe de concert',
-        category: 'tous',
-        thumbnail: 'https://images.unsplash.com/photo-1516575150278-77136aed6920?q=80&w=400&auto=format&fit=crop',
-        photographer: '© Studio Portrait'
-      },
-      {
-        id: 6,
-        title: 'Master-class vocal',
-        category: 'tous',
-        thumbnail: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=400&auto=format&fit=crop',
-        photographer: '© Conservatoire'
-      }
-    ]
-  }
+      
+      // Vérifier si le type du média correspond (insensible à la casse)
+      const mediaTypeLower = media.type?.toLowerCase() || ''
+      const acceptedTypes = typeMap[activeMediaType] || []
+      const matchType = acceptedTypes.some(t => t.toLowerCase() === mediaTypeLower)
+      
+      // Filtre par catégorie (à adapter selon votre structure de données)
+      const matchCategory = activeCategory === 'tous' || 
+                           // Vous pouvez ajouter une logique de catégorie ici
+                           true
+      
+      return matchType && matchCategory
+    })
+  }, [sortedMedias, activeMediaType, activeCategory])
 
-  // Filtrage des médias
-  const getFilteredMedia = () => {
-    const currentMedia = mediasData[activeMediaType as keyof typeof mediasData]
-    if (activeCategory === 'tous') {
-      return currentMedia
+  // Convertir les URLs YouTube en format embed et extraire les infos
+  const getVideoInfo = (url: string) => {
+    let videoId = ''
+    if (url.includes('youtube.com/watch')) {
+      videoId = url.split('v=')[1]?.split('&')[0] || ''
+    } else if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1]?.split('?')[0] || ''
+    } else if (url.includes('youtube.com/embed/')) {
+      videoId = url.split('embed/')[1]?.split('?')[0] || ''
     }
-    return currentMedia.filter(item => item.category === activeCategory)
+    
+    return {
+      embedUrl: videoId ? `https://www.youtube.com/embed/${videoId}` : url,
+      thumbnail: videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '/images/video-placeholder.jpg',
+      watchUrl: videoId ? `https://www.youtube.com/watch?v=${videoId}` : url
+    }
   }
 
-  const filteredMedia = getFilteredMedia()
+  if (loading) {
+    return (
+      <div className="medias-page min-h-screen">
+        <section className="section-padding">
+          <div className="section-container">
+            <div className="text-center">
+              <h1 className="hero-title">Médias</h1>
+              <p className="mt-4">Chargement des médias...</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="medias-page min-h-screen">
+        <section className="section-padding">
+          <div className="section-container">
+            <div className="text-center">
+              <h1 className="hero-title">Médias</h1>
+              <p className="mt-4 text-red-600">Erreur lors du chargement des médias.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    )
+  }
 
   return (
     <div className="medias-page min-h-screen">
@@ -179,7 +137,7 @@ export default function Medias(): React.JSX.Element {
 
             {/* Filtres secondaires - Catégories */}
             <div className="flex flex-wrap justify-center gap-4">
-              {categories.map((category) => (
+              {availableCategories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
@@ -204,48 +162,57 @@ export default function Medias(): React.JSX.Element {
           {/* Grille des vidéos */}
           {activeMediaType === 'videos' && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMedia.map((video: any) => (
-                <div key={video.id} className="card smooth-hover group cursor-pointer">
-                  <div className="relative mb-4">
-                    <img 
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    {/* Play button overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg group-hover:bg-black/30 transition-colors">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <svg className="w-6 h-6 text-accent ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
-                        </svg>
+              {filteredMedia.map((video) => {
+                const videoInfo = getVideoInfo(video.url)
+                return (
+                  <div key={video.id} className="card smooth-hover group cursor-pointer">
+                    <div className="relative mb-4">
+                      <img 
+                        src={videoInfo.thumbnail}
+                        alt={video.title}
+                        className="w-full h-48 object-cover rounded-lg"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/images/video-placeholder.jpg'
+                        }}
+                      />
+                      {/* Play button overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg group-hover:bg-black/30 transition-colors">
+                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <svg className="w-6 h-6 text-accent ml-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
+                        </div>
                       </div>
                     </div>
-                    {/* Duration badge */}
-                    <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                      {video.duration}
+                    <h3 className="title-card text-accent mb-2">{video.title}</h3>
+                    <div className="flex justify-between items-center">
+                      <span className="text-small text-gray-600">
+                        {video.description ? video.description.substring(0, 30) : 'Vidéo'}
+                      </span>
+                      <a 
+                        href={videoInfo.watchUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-small text-accent hover:text-gold transition-colors"
+                      >
+                        Regarder →
+                      </a>
                     </div>
                   </div>
-                  <h3 className="title-card text-accent mb-2">{video.title}</h3>
-                  <div className="flex justify-between items-center">
-                    <span className="text-small text-gray-600 capitalize">{video.category}</span>
-                    <button className="text-small text-accent hover:text-gold transition-colors">
-                      Regarder →
-                    </button>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
 
           {/* Liste des audios */}
           {activeMediaType === 'audios' && (
             <div className="space-y-4">
-              {filteredMedia.map((audio: any) => (
+              {filteredMedia.map((audio) => (
                 <div key={audio.id} className="card smooth-hover">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       {/* Audio icon */}
-                      <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center img-audio-icon">
                         <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
                         </svg>
@@ -253,23 +220,27 @@ export default function Medias(): React.JSX.Element {
                       <div>
                         <h3 className="title-card text-accent">{audio.title}</h3>
                         <div className="flex space-x-4 text-small text-gray-600">
-                          <span>{audio.duration}</span>
-                          <span>•</span>
-                          <span>{audio.format}</span>
-                          <span>•</span>
-                          <span className="capitalize">{audio.category}</span>
+                          {audio.description && (
+                            <span>{audio.description.substring(0, 50)}</span>
+                          )}
+                          {audio.date && (
+                            <>
+                              <span>&nbsp;•&nbsp;</span>                              
+                            <span>{new Date(audio.date).toLocaleDateString('fr-FR')}</span>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
                     <div className="flex space-x-2">
-                      <button className="btn-outline text-small">
+                      <a 
+                        href={audio.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="btn-outline text-small"
+                      >
                         Écouter
-                      </button>
-                      <button className="text-accent hover:text-gold transition-colors">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 16l-6-6h12l-6 6z"/>
-                        </svg>
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -280,27 +251,36 @@ export default function Medias(): React.JSX.Element {
           {/* Galerie photos */}
           {activeMediaType === 'photos' && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMedia.map((photo: any) => (
+              {filteredMedia.map((photo) => (
                 <div key={photo.id} className="card smooth-hover group cursor-pointer">
                   <div className="relative mb-4">
                     <img 
-                      src={photo.thumbnail}
+                      src={photo.url}
                       alt={photo.title}
                       className="w-full h-64 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                     />
                     {/* Overlay with info */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
                       <div className="absolute bottom-4 left-4 right-4 text-white">
-                        <p className="text-small font-medium">{photo.photographer}</p>
+                        <p className="text-small font-medium">
+                          {photo.description || '© Marie-Émeraude Alcime'}
+                        </p>
                       </div>
                     </div>
                   </div>
                   <h3 className="title-card text-accent mb-2">{photo.title}</h3>
                   <div className="flex justify-between items-center">
-                    <span className="text-small text-gray-600 capitalize">{photo.category}</span>
-                    <button className="text-small text-accent hover:text-gold transition-colors">
+                    <span className="text-small text-gray-600">
+                      {photo.date ? new Date(photo.date).toLocaleDateString('fr-FR') : 'Photo'}
+                    </span>
+                    <a 
+                      href={photo.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-small text-accent hover:text-gold transition-colors"
+                    >
                       Agrandir →
-                    </button>
+                    </a>
                   </div>
                 </div>
               ))}
