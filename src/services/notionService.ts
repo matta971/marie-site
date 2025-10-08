@@ -8,7 +8,7 @@ import type {
 } from '../types/notion.types';
 
 // URL du backend
-const API_URL = import.meta.env.DEV 
+const API_URL = (import.meta.env.PROD || import.meta.env.DEV)
   ? 'https://backend-site-marie-emeraude.matta971.workers.dev/api'  // Remplacez par votre URL Worker
   : 'http://localhost:3001/api';  // Backend local pour le développement
 
