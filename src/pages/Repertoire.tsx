@@ -1,11 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { useNotionData } from '../hooks/useNotionData'
+import { getRepertoire } from '../services/notionService'
+import type { RepertoireData } from '../types/notion.types'
 
 export default function Repertoire(): React.JSX.Element {
+  const { data: repertoire, loading, error } = useNotionData(getRepertoire)
   const [activeCategory, setActiveCategory] = useState('tous')
+  const [selectedComposer, setSelectedComposer] = useState('Tous les compositeurs')
+  const [selectedYear, setSelectedYear] = useState('Toutes les années')
+  const [selectedLanguage, setSelectedLanguage] = useState('Toutes les langues')
+  // Fonction helper pour normaliser les types
+  const normalizeType = (type: string): string => {
+    const typeLower = type?.toLowerCase() || ''
+    
+    // Mapping des types vers les catégories
+    if (typeLower.includes('opéra') || typeLower.includes('opera') || 
+        typeLower.includes('opérette') || typeLower.includes('operette')) {
+      return 'opera'
+    }
+    if (typeLower.includes('oratorio')) {
+      return 'oratorio'
+    }
+    if (typeLower.includes('mélodie') || typeLower.includes('melodie') || 
+        typeLower.includes('lied') || typeLower.includes('lieder')) {
+      return 'melodie'
+    }
+    if (typeLower.includes('sacré') || typeLower.includes('sacre') || 
+        typeLower.includes('messe') || typeLower.includes('requiem') || 
+        typeLower.includes('stabat')) {
+      return 'sacred'
+    }
+    if (typeLower.includes('récital') || typeLower.includes('recital') || 
+        typeLower.includes('concert')) {
+      return 'recital'
+    }
+    
+    return typeLower
+  }
 
   // Données du répertoire organisées par catégories
-  const repertoireData = {
+  /*const repertoireData = {
     opera: [
       {
         title: 'Les Contes d\'Hoffmann',
@@ -109,7 +144,119 @@ export default function Repertoire(): React.JSX.Element {
     return repertoireData[activeCategory as keyof typeof repertoireData] || []
   }
 
-  const filteredRepertoire = getFilteredRepertoire()
+  const filteredRepertoire = getFilteredRepertoire()*/
+
+  // Extraire les catégories uniques depuis les données
+  const categories = useMemo(() => {
+    if (!repertoire) return []
+    
+    // Compter les œuvres par type normalisé
+    const counts: { [key: string]: number } = {
+      opera: 0,
+      oratorio: 0,
+      melodie: 0,
+      sacred: 0,
+      recital: 0
+    }
+    
+    repertoire.forEach(item => {
+      const normalizedType = normalizeType(item.type || '')
+      if (normalizedType && counts[normalizedType] !== undefined) {
+        counts[normalizedType]++
+      }
+    })
+
+    // Retourner les catégories avec leurs compteurs
+    return [
+      { id: 'tous', label: 'Tout le répertoire', count: repertoire.length },
+      { id: 'opera', label: 'Opéra & Opérette', count: counts.opera },
+      { id: 'sacred', label: 'Musique sacrée', count: counts.sacred },
+      { id: 'oratorio', label: 'Oratorios', count: counts.oratorio },
+      { id: 'melodie', label: 'Mélodies & Lieder', count: counts.melodie },
+      { id: 'recital', label: 'Récitals & Concerts', count: counts.recital }
+    ].filter(cat => cat.id === 'tous' || cat.count > 0)
+  }, [repertoire])
+
+  // Extraire les valeurs uniques pour les filtres
+  const availableComposers = useMemo(() => {
+    if (!repertoire) return []
+    const composers = new Set<string>()
+    repertoire.forEach(item => {
+      if (item.composer) composers.add(item.composer)
+    })
+    return Array.from(composers).sort()
+  }, [repertoire])
+
+  const availableYears = useMemo(() => {
+    if (!repertoire) return []
+    const years = new Set<string>()
+    repertoire.forEach(item => {
+      if (item.year) years.add(item.year)
+    })
+    return Array.from(years).sort((a, b) => b.localeCompare(a))
+  }, [repertoire])
+
+  const availableLanguages = useMemo(() => {
+    if (!repertoire) return []
+    const languages = new Set<string>()
+    repertoire.forEach(item => {
+      if (item.language) languages.add(item.language)
+    })
+    return Array.from(languages).sort()
+  }, [repertoire])
+
+  // Filtrer le répertoire selon les sélections
+  const filteredRepertoire = useMemo(() => {
+    if (!repertoire) return []
+    
+    return repertoire.filter(item => {
+      // Filtre par catégorie avec normalisation
+      const normalizedType = normalizeType(item.type || '')
+      const matchCategory = activeCategory === 'tous' || normalizedType === activeCategory
+
+      // Filtre par compositeur
+      const matchComposer = selectedComposer === 'Tous les compositeurs' || 
+                           item.composer === selectedComposer
+      
+      // Filtre par année
+      const matchYear = selectedYear === 'Toutes les années' || 
+                       item.year === selectedYear
+      
+      // Filtre par langue
+      const matchLanguage = selectedLanguage === 'Toutes les langues' || 
+                           item.language === selectedLanguage
+      
+      return matchCategory && matchComposer && matchYear && matchLanguage
+    })
+  }, [repertoire, activeCategory, selectedComposer, selectedYear, selectedLanguage])
+
+  // Gestion du chargement
+  if (loading) {
+    return (
+      <div className="repertoire-page min-h-screen">
+        <section className="section-padding">
+          <div className="section-container text-center">
+            <h1 className="hero-title">Répertoire</h1>
+            <p className="mt-4">Chargement du répertoire...</p>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  // Gestion des erreurs
+  if (error) {
+    return (
+      <div className="repertoire-page min-h-screen">
+        <section className="section-padding">
+          <div className="section-container text-center">
+            <h1 className="hero-title">Répertoire</h1>
+            <p className="mt-4 text-red-600">Erreur lors du chargement du répertoire.</p>
+          </div>
+        </section>
+      </div>
+    )
+  }
 
   return (
     <div className="repertoire-page min-h-screen">
@@ -126,8 +273,8 @@ export default function Repertoire(): React.JSX.Element {
             </p>
           </div>
 
-          {/* Filtres par catégorie */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {/* Filtres par catégorie - Tabs principaux */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
             {categories.map((category) => (
               <button
                 key={category.id}
@@ -135,8 +282,8 @@ export default function Repertoire(): React.JSX.Element {
                 className={`tab ${activeCategory === category.id ? 'active' : 'inactive'}`}
               >
                 {category.label}
-                {category.count && (
-                  <span className="ml-2 text-xs opacity-75">({category.count})</span>
+                {category.count !== null && (
+                  <span className="ml-2 text-xs opacity-75">&nbsp;({category.count})</span>
                 )}
               </button>
             ))}
@@ -147,6 +294,7 @@ export default function Repertoire(): React.JSX.Element {
       {/* Liste du répertoire */}
       <section className="section-padding">
         <div className="section-container">
+          {filteredRepertoire.length > 0 ? (
           <div className="grid gap-6">
             {filteredRepertoire.map((item, index) => (
               <div key={index} className="card smooth-hover">
@@ -154,29 +302,41 @@ export default function Repertoire(): React.JSX.Element {
                   
                   {/* Titre et compositeur */}
                   <div className="md:col-span-2">
-                    <h3 className="title-card text-accent mb-1">{item.title}</h3>
+                    <h3 className="title-card text-accent mb-1">{item.work}</h3>
                     <p className="text-small text-gray-600 font-medium">{item.composer}</p>
                   </div>
                   
                   {/* Rôle */}
                   <div>
                     <div className="text-small text-gray-500 uppercase tracking-wide mb-1">Rôle</div>
-                    <p className="text-body font-medium">{item.role}</p>
+                    <p className="text-body font-medium">{item.role || '—'}</p>
                   </div>
                   
                   {/* Année et lieu */}
                   <div className="text-right">
-                    <div className="text-small font-bold text-accent mb-1">{item.year}</div>
-                    <p className="text-small text-gray-600">{item.place}</p>
+                    <div className="text-small font-bold text-accent mb-1">{item.year || '—'}</div>
+                    <p className="text-small text-gray-600">{item.venue || '—'}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
-          {filteredRepertoire.length === 0 && (
+          ) : (
             <div className="text-center py-12">
-              <p className="text-body text-gray-500">Aucun élément trouvé pour cette catégorie.</p>
+              <p className="text-body text-gray-500 mb-4">
+                Aucun élément ne correspond aux critères sélectionnés.
+              </p>
+              <button 
+                onClick={() => {
+                  setActiveCategory('tous')
+                  setSelectedComposer('Tous les compositeurs')
+                  setSelectedYear('Toutes les années')
+                  setSelectedLanguage('Toutes les langues')
+                }}
+                className="btn"
+              >
+                Réinitialiser les filtres
+              </button>
             </div>
           )}
         </div>
