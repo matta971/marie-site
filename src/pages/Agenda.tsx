@@ -254,7 +254,7 @@ export default function Agenda() {
                 setSelectedYear('Toutes les années');
                 setSelectedCity('Toutes les villes');
               }}
-              className="btn mt-4"
+              className="btn-contact"
             >
               Réinitialiser les filtres
             </button>

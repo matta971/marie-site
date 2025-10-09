@@ -333,7 +333,7 @@ export default function Repertoire(): React.JSX.Element {
                   setSelectedYear('Toutes les années')
                   setSelectedLanguage('Toutes les langues')
                 }}
-                className="btn"
+                className="btn-contact"
               >
                 Réinitialiser les filtres
               </button>
