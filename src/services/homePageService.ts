@@ -110,19 +110,28 @@ function parseHomePageBlocks(blocks: any[]): HomePageContent {
   let nextIsTitle = false;
   let nextIsLink = false;
   
-  blocks.forEach((block, ) => {
+  // Première passe : identifier les sections et collecter les paragraphes de biographie
+  const biographyParagraphs: string[] = [];
+  let inBiographySection = false;
+  let biographyLinkFound = false;
+  
+  blocks.forEach((block) => {
     // Détecter les sections principales
     if (block.type === 'heading_1') {
       const title = block.heading_1.rich_text[0]?.plain_text.toLowerCase() || '';
       
       if (title.includes('bandeau') || title.includes('hero') || title.includes('accueil')) {
         currentSection = 'hero';
+        inBiographySection = false;
       } else if (title.includes('service')) {
         currentSection = 'services';
+        inBiographySection = false;
       } else if (title.includes('média') || title.includes('media')) {
         currentSection = 'medias';
+        inBiographySection = false;
       } else if (title.includes('biographie') || title.includes('bio')) {
         currentSection = 'biography';
+        inBiographySection = true;
       }
     }
     
@@ -138,6 +147,10 @@ function parseHomePageBlocks(blocks: any[]): HomePageContent {
         nextIsTitle = true;
       } else if (subtitle.includes('lien') || subtitle.includes('link')) {
         nextIsLink = true;
+        if (currentSection === 'biography') {
+          biographyLinkFound = true;
+          inBiographySection = false; // Arrêter de collecter les paragraphes de bio après le lien
+        }
       }
     }
     
@@ -177,9 +190,9 @@ function parseHomePageBlocks(blocks: any[]): HomePageContent {
           }
           nextIsLink = false;
         }
-        // Biography text avec mise en forme HTML
-        else if (currentSection === 'biography' && !currentSubsection.includes('lien')) {
-          content.biography.text += (content.biography.text ? '<br/><br/>' : '') + html;
+        // Collecter les paragraphes de biographie
+        else if (inBiographySection && !biographyLinkFound) {
+          biographyParagraphs.push(html);
         }
       }
     }
@@ -195,6 +208,12 @@ function parseHomePageBlocks(blocks: any[]): HomePageContent {
       }
     }
   });
+  
+  // Construire le texte de biographie en préservant la structure de paragraphes
+  // On utilise un seul saut de ligne entre les paragraphes pour respecter la mise en page Notion
+  if (biographyParagraphs.length > 0) {
+    content.biography.text = biographyParagraphs.join('<br/><br/>');
+  }
   
   // Valeurs par défaut si rien n'est trouvé
   if (!content.hero.name) content.hero.name = 'Marie-Émeraude Alcime';
