@@ -1,5 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useNotionData } from '../hooks/useNotionData'
+import { getMedias, getPressArticles } from '../services/notionService'
+import { getHomePageContent } from '../services/homePageService'
+
 
 // Import Swiper React components  
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -7,53 +11,88 @@ import { Navigation, EffectCoverflow, Autoplay } from 'swiper/modules'
 
 
 export default function Home(): React.JSX.Element {
-  // Données des médias de Marie-Émeraude
-  const mediaItems = [
-    {
-      id: 1,
-      title: "Ponchielli — Voce di donna o d'angelo",
-      thumbnail: "/images/hero-bg.png",
-      videoUrl: "https://www.youtube.com/watch?v=hCBhh4J9J_8",
-      type: "video",
-      duration: "4:32",
-      venue: "La Cieca"
+
+  // Récupérer les médias depuis Notion (ceux en featured)
+  const { data: medias } = useNotionData(getMedias)
+  
+  // Récupérer les articles de presse depuis Notion
+  const { data: pressArticles } = useNotionData(getPressArticles)
+
+  // Récupérer les contenus statiques de la page Notion
+  const [homeContent, setHomeContent] = useState({
+    hero: {
+      name: 'Marie-Émeraude',
+      surname: 'Alcime',
+      title: 'Artiste lyrique'
     },
-    {
-      id: 2,
-      title: "Rossini — Di tanti palpiti",
-      thumbnail: "https://img.youtube.com/vi/7LEYnKna9XU/maxresdefault.jpg",
-      videoUrl: "https://www.youtube.com/watch?v=7LEYnKna9XU",
-      type: "video",
-      duration: "3:45",
-      venue: "Tancredi"
-    },
-    {
-      id: 3,
-      title: "Verdi — Ulrica, Re dell'abisso",
-      thumbnail: "https://img.youtube.com/vi/gM1b4WjahMI/maxresdefault.jpg",
-      videoUrl: "https://www.youtube.com/watch?v=gM1b4WjahMI",
-      type: "video",
-      duration: "5:12",
-      venue: "Il ballo in maschera"
-    },
-    {
-      id: 4,
-      title: "Interview — Talents d'Outre-Mer",
-      thumbnail: "https://img.youtube.com/vi/_S2GjuBozJg/maxresdefault.jpg",
-      videoUrl: "https://www.youtube.com/watch?v=_S2GjuBozJg",
-      type: "interview",
-      duration: "8:15",
-      venue: "Remise de prix"
-    },
-    {
-      id: 5,
-      title: "Les Contes d'Hoffmann",
-      thumbnail: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=800&auto=format&fit=crop",
-      videoUrl: "#",
-      type: "photo",
-      venue: "Voix de la Mère"
+    services: ['OPERA & ORATORIO', 'CONCERT RECITAL', 'COURS MASTER CLASSE'],
+    biography: {
+      text: `Originaire de Guadeloupe, Marie-Émeraude Alcime est une mezzo-soprano formée en musicologie et en métiers de la scène (Rouen, Nancy).
+      
+      Membre du chœur de l'Opéra-Théâtre de Metz Métropole, elle se produit sur scène dans Orphée (Les Contes d'Hoffmann, La Vie parisienne) et développe en parallèle une activité de cheffe de chœur et pédagogue.`
     }
-  ]
+  })
+  const [loadingContent, setLoadingContent] = useState(true)
+
+  // Charger les contenus depuis la page Notion
+  useEffect(() => {
+    getHomePageContent().then(data => {
+      // Séparer le nom complet si nécessaire
+      const nameParts = data.hero.name.split(' ')
+      const surname = nameParts.length > 1 ? nameParts.pop() : 'Alcime'
+      const name = nameParts.join(' ') || 'Marie-Émeraude'
+      
+      setHomeContent({
+        hero: {
+          name: name,
+          surname: surname ?? 'Alcime',
+          title: data.hero.title || 'Artiste lyrique'
+        },
+        services: data.services.length > 0 ? data.services : homeContent.services,
+        biography: {
+          text: data.biography.text || homeContent.biography.text
+        }
+      })
+      setLoadingContent(false)
+    })
+  }, [])
+
+  // Filtrer et préparer les médias en vedette (type vidéo seulement pour le carousel)
+  const featuredMedias = medias
+    ?.filter(m => m.featured && m.type.toLowerCase().includes('vidéo'))
+    ?.sort((a, b) => a.order - b.order)
+    ?.slice(0, 5) || []
+
+  // Préparer les médias pour le carousel
+  const mediaItems = featuredMedias.map(media => {
+    let thumbnail = "/images/hero-bg.png"
+    let videoUrl = media.url
+    
+    if (media.url.includes('youtube.com') || media.url.includes('youtu.be')) {
+      const videoId = media.url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/)?.[1]
+      if (videoId) {
+        thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+        videoUrl = `https://www.youtube.com/watch?v=${videoId}`
+      }
+    }
+
+    return {
+      id: media.id,
+      title: media.title,
+      thumbnail,
+      videoUrl,
+      type: 'video',
+      venue: media.description || ""
+    }
+  })
+
+  // Filtrer les témoignages de presse les plus récents
+  const recentPress = pressArticles
+    ?.filter(a => a.display)
+    ?.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    ?.slice(0, 3) || []
+
+
   // Gérer le clic sur une slide
   const handleSlideClick = (item: { type: string; videoUrl: string | URL | undefined }) => {
     if (item.type === 'video' && item.videoUrl !== '#') {
@@ -67,8 +106,8 @@ export default function Home(): React.JSX.Element {
       <section className="hero">
         <div className="container">
           <div className="hero-content">
-            <h1 className="hero-title">Marie-Émeraude<br />Alcime</h1>
-            <p className="hero-subtitle">Artiste lyrique</p>
+            <h1 className="hero-title">{homeContent.hero.name}<br />{homeContent.hero.surname}</h1>
+            <p className="hero-subtitle">{homeContent.hero.title}</p>
           </div>
         </div>
       </section>
@@ -89,13 +128,17 @@ export default function Home(): React.JSX.Element {
             <div className="services-text">
               <h2 className="section-title">Services</h2>
               <div className="services-list">
-                <div className="service-item">Opéra & Oratorio</div>
-                <div className="service-item">Concert Récital</div>
-                <div className="service-item">Cours Master Classe</div>
+                {homeContent.services.map((service, index) => {
+                  return (
+                <div key={index} className="service-item">{service}</div>
+                  )
+                })}
               </div>
+              
               <div className="services-cta">
                 <Link to="/contact" className="btn">En savoir plus</Link>
               </div>
+              
             </div>
           </div>
         </div>
@@ -218,7 +261,7 @@ export default function Home(): React.JSX.Element {
                           </div>
                         )}
                         
-                        {item.duration && (
+                        {/*item.duration && (
                           <div style={{
                             position: 'absolute',
                             bottom: '10px',
@@ -232,7 +275,7 @@ export default function Home(): React.JSX.Element {
                           }}>
                             {item.duration}
                           </div>
-                        )}
+                        )*/}
                       </div>
                     </div>
 
@@ -342,9 +385,8 @@ export default function Home(): React.JSX.Element {
             
             {/* Colonne gauche : Texte seulement */}
             <div className="bio-text">
-              <p>Originaire de Guadeloupe, Marie-Émeraude Alcime est une mezzo-soprano formée en musicologie et en métiers de la scène (Rouen, Nancy).</p>
-              
-              <p>Membre du chœur de l'Opéra-Théâtre de Metz Métropole, elle se produit sur scène dans Orphée (Les Contes d'Hoffmann, La Vie parisienne) et développe en parallèle une activité de cheffe de chœur et pédagogue.</p>
+              {/* Afficher le texte avec mise en forme HTML */}
+              <div dangerouslySetInnerHTML={{ __html: homeContent.biography.text }} />
             </div>
             
             {/* Colonne droite : Image */}
