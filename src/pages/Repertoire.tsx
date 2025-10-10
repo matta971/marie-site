@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useNotionData } from '../hooks/useNotionData'
 import { getRepertoire } from '../services/notionService'
-import type { RepertoireData } from '../types/notion.types'
 
 export default function Repertoire(): React.JSX.Element {
   const { data: repertoire, loading, error } = useNotionData(getRepertoire)
@@ -178,7 +177,7 @@ export default function Repertoire(): React.JSX.Element {
   }, [repertoire])
 
   // Extraire les valeurs uniques pour les filtres
-  const availableComposers = useMemo(() => {
+  /*const availableComposers = useMemo(() => {
     if (!repertoire) return []
     const composers = new Set<string>()
     repertoire.forEach(item => {
@@ -203,7 +202,7 @@ export default function Repertoire(): React.JSX.Element {
       if (item.language) languages.add(item.language)
     })
     return Array.from(languages).sort()
-  }, [repertoire])
+  }, [repertoire])*/
 
   // Filtrer le répertoire selon les sélections
   const filteredRepertoire = useMemo(() => {

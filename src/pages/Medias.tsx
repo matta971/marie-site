@@ -3,7 +3,6 @@ import React, { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useNotionData } from '../hooks/useNotionData'
 import { getMedias } from '../services/notionService'
-import type { MediaData } from '../types/notion.types'
 
 // Types de médias disponibles
 const mediaTypes = [

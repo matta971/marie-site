@@ -110,7 +110,7 @@ function parseHomePageBlocks(blocks: any[]): HomePageContent {
   let nextIsTitle = false;
   let nextIsLink = false;
   
-  blocks.forEach((block, index) => {
+  blocks.forEach((block, ) => {
     // Détecter les sections principales
     if (block.type === 'heading_1') {
       const title = block.heading_1.rich_text[0]?.plain_text.toLowerCase() || '';

@@ -3,13 +3,13 @@ import { useNotionData } from '../hooks/useNotionData'
 import { getPressArticles } from '../services/notionService'
 import { formatDate } from '../utils/dateUtils';
 //import type { PressData } from '../types/notion.types'
-interface PressArticle {
+/*interface PressArticle {
   quote: string
   outlet: string
   date: string
   link?: string
-}
-const pressArticles: PressArticle[] = [
+}*/
+/*const pressArticles: PressArticle[] = [
   {
     quote: "Une mention pour la (trop) brève intervention de la Voix de la Mère … touchante et d'une réelle beauté.",
     outlet: "Forum Opéra",
@@ -32,7 +32,7 @@ const pressArticles: PressArticle[] = [
     outlet: "Télérama",
     date: "10 janvier 2024"
   }
-]
+]*/
 
 const additionalQuotes = [
   {
@@ -69,13 +69,13 @@ export default function Presse() {
     return Array.from(sources).sort()
   }, [displayedArticles])
 
-  const availableTypes = useMemo(() => {
+  /*const availableTypes = useMemo(() => {
     const types = new Set<string>()
     displayedArticles.forEach(article => {
       types.add(article.type)
     })
     return Array.from(types)
-  }, [displayedArticles])
+  }, [displayedArticles])*/
 
   const availableYears = useMemo(() => {
     const years = new Set<string>()

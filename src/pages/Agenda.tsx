@@ -1,10 +1,7 @@
 import  { useState, useMemo } from 'react'
 import { useNotionData } from '../hooks/useNotionData';
-import { getConcerts, getFutureConcerts } from '../services/notionService';
+import { getConcerts } from '../services/notionService';
 import { formatDate, getMonth, getYear } from '../utils/dateUtils';
-import EventTable from '../components/EventTable';
-import type { EventItem } from '../components/EventTable';
-import type { ConcertData } from '../types/notion.types';
 
 
 

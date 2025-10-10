@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNotionData } from '../hooks/useNotionData'
-import { getMedias, getPressArticles } from '../services/notionService'
+import { getMedias/*, getPressArticles*/ } from '../services/notionService'
 import { getHomePageContent } from '../services/homePageService'
 
 
@@ -16,7 +16,7 @@ export default function Home(): React.JSX.Element {
   const { data: medias } = useNotionData(getMedias)
   
   // Récupérer les articles de presse depuis Notion
-  const { data: pressArticles } = useNotionData(getPressArticles)
+  //const { data: pressArticles } = useNotionData(getPressArticles)
 
   // Récupérer les contenus statiques de la page Notion
   const [homeContent, setHomeContent] = useState({
@@ -32,7 +32,7 @@ export default function Home(): React.JSX.Element {
       Membre du chœur de l'Opéra-Théâtre de Metz Métropole, elle se produit sur scène dans Orphée (Les Contes d'Hoffmann, La Vie parisienne) et développe en parallèle une activité de cheffe de chœur et pédagogue.`
     }
   })
-  const [loadingContent, setLoadingContent] = useState(true)
+  const [, setLoadingContent] = useState(true)
 
   // Charger les contenus depuis la page Notion
   useEffect(() => {
@@ -87,10 +87,10 @@ export default function Home(): React.JSX.Element {
   })
 
   // Filtrer les témoignages de presse les plus récents
-  const recentPress = pressArticles
+  /*const recentPress = pressArticles
     ?.filter(a => a.display)
     ?.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    ?.slice(0, 3) || []
+    ?.slice(0, 3) || []*/
 
 
   // Gérer le clic sur une slide
