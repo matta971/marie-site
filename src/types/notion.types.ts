@@ -1,4 +1,15 @@
 // src/types/notion.types.ts
+export interface BiographyContent {
+  mainBio: string;
+  formation: string;
+  scenes: string;
+  distinctions: string;
+  pressCitations: Array<{
+    quote: string;
+    source: string;
+    date?: string;
+  }>;
+}
 
 export interface ConcertData {
   id: string;

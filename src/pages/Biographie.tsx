@@ -1,7 +1,61 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { getBiographyContent } from '../services/biographyService'
+import type { BiographyContent } from '../types/notion.types';
 
 export default function Biographie(): React.JSX.Element {
+  const [content, setContent] = useState<BiographyContent>({
+    mainBio: '',
+    formation: '',
+    scenes: '',
+    distinctions: '',
+    pressCitations: []
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getBiographyContent().then(data => {
+      setContent(data)
+      setLoading(false)
+    })
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="biographie-page">
+        <section className="section-padding">
+          <div className="section-container text-center">
+            <h1 className="hero-title">Biographie</h1>
+            <p className="mt-4">Chargement...</p>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  // Extraire la première lettre pour la lettrine
+  const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '');
+  const plainBio = stripHtml(content.mainBio);
+  const firstLetter = plainBio ? plainBio[0] : '';
+  
+  // Pour le reste du texte, on doit retirer le premier caractère visible
+  let restOfBio = content.mainBio;
+  if (restOfBio && firstLetter) {
+    // Si le texte commence par une balise HTML, on la garde et on supprime le premier caractère après
+    if (restOfBio.startsWith('<')) {
+      // Trouver la fin de la balise ouvrante
+      const endOfTag = restOfBio.indexOf('>');
+      if (endOfTag !== -1) {
+        // Garder la balise et supprimer le premier caractère après
+        restOfBio = restOfBio.substring(0, endOfTag + 1) + 
+                   restOfBio.substring(endOfTag + 2);
+      }
+    } else {
+      // Si pas de balise au début, supprimer simplement le premier caractère
+      restOfBio = restOfBio.substring(1);
+    }
+  }
+
   return (
     <div className="biographie-page">
 
@@ -29,28 +83,12 @@ export default function Biographie(): React.JSX.Element {
                 <h1 className="hero-title mb-8">Biographie</h1>
               </div>
               <div className="text-body space-y-6 leading-relaxed">
-                <p>
-                  <span className="lettrine">A</span>
-                  lors quid autem sunt et ut corpore veritatis sunt blanditiis pariis ut
-                  corporis nobis distinctio quis perferendis soluta ullam. Quid
-                  distinctio libero eos autem eos voluptas sed ullam.
-                </p>
-                <p>
-                  Marie-Émeraude Alcime est une mezzo-soprano originaire de Guadeloupe. 
-                  Issue d'une famille de musiciens, elle débute très tôt le piano, la flûte 
-                  traversière et les percussions traditionnelles. Après un baccalauréat 
-                  littéraire option musique, elle poursuit des études supérieures en 
-                  musicologie et métiers de la scène (Rouen, Nancy), avant d'intégrer 
-                  le chœur de l'Opéra-Théâtre de Metz Métropole.
-                </p>
-                <p>
-                  Sur scène, on a pu l'entendre dans <em>Les Contes d'Hoffmann</em> 
-                  d'Offenbach (Metz) et <em>La vie parisienne</em> (Metz, Massy). 
-                  Au concert, son répertoire inclut l'<em>Oratorio de Noël</em> 
-                  (Saint-Saëns), le <em>Stabat Mater</em> (Pergolèse) et la 
-                  <em>Petite messe solennelle</em> (Rossini). Parallèlement, elle 
-                  développe une activité de cheffe de chœur et professeure de chant.
-                </p>
+                {content.mainBio && (
+                  <p>
+                    <span className="lettrine">{firstLetter}</span>
+                    <span dangerouslySetInnerHTML={{ __html: restOfBio }} />
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -70,50 +108,61 @@ export default function Biographie(): React.JSX.Element {
                 <h2 className="bio-section-title">Parcours</h2>
                 
                 <div className="bio-subsections">
-                  <div>
-                    <h3 className="bio-subsection-title">Formation</h3>
-                    <p className="bio-text">
-                      Une formation accompnée toute s essannée lsourge par une renomee épreuve des teribres, des colbquaraeurs.
-                    </p>
-                  </div>
 
-                  <div>
-                    <h3 className="bio-subsection-title">Scènes & Collaborations</h3>
-                  </div>
+                  {/* Formation */}
+                  {content.formation && (
+                    <div>
+                      <h3 className="bio-subsection-title">Formation</h3>
+                      <p 
+                        className="bio-text"
+                        dangerouslySetInnerHTML={{ __html: content.formation }}
+                      />
+                    </div>
+                  )}
 
-                  <div>
-                    <h3 className="bio-subsection-title">Prix / Distinctions</h3>
-                  </div>
+                  {/* Scènes & Collaborations */}
+                  {content.scenes && (
+                    <div>
+                      <h3 className="bio-subsection-title">Scènes & Collaborations</h3>
+                      <div 
+                        className="bio-text"
+                        dangerouslySetInnerHTML={{ __html: content.scenes }}
+                      />
+                    </div>
+                  )}
+
+                  {/* Prix & Distinctions */}
+                  {content.distinctions && (
+                    <div>
+                      <h3 className="bio-subsection-title">Prix & Distinctions</h3>
+                      <div 
+                        className="bio-text"
+                        dangerouslySetInnerHTML={{ __html: content.distinctions }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* Section Presse */}
               <div className="bio-section">
                 <h2 className="bio-section-title">Presse</h2>
-                
-                <div className="bio-quotes">
-                  {/* Citation 1 */}
-                  <blockquote className="bio-quote">
-                    <svg className="bio-quote-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
-                    </svg>
-                    <p className="bio-quote-text">
-                      Une voix déliuat qui rouche et captive le public dès les premières mesures.
-                    </p>
-                    <footer className="bio-quote-source">LE MONDE</footer>
-                  </blockquote>
-
-                  {/* Citation 2 */}
-                  <blockquote className="bio-quote">
-                    <svg className="bio-quote-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
-                    </svg>
-                    <p className="bio-quote-text">
-                      Un moment d'émotion pàx, magnifiquement
-                    </p>
-                    <footer className="bio-quote-source">THE AGE</footer>
-                  </blockquote>
-                </div>
+                {content.pressCitations.length > 0 && (
+                  <div className="bio-quotes">
+                    {/* Citation 1 */}
+                    {content.pressCitations.map((citation, index) => (
+                    <blockquote className="bio-quote" key={index}>
+                      <svg key={index} className="bio-quote-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+                      </svg>
+                      <p className="bio-quote-text">
+                        {citation.quote}
+                      </p>
+                      <footer className="bio-quote-source">{citation.source}</footer>
+                    </blockquote>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
