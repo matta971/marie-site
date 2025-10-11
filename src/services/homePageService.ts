@@ -105,7 +105,7 @@ function parseHomePageBlocks(blocks: any[]): HomePageContent {
   };
   
   let currentSection = '';
-  let currentSubsection = '';
+  //let currentSubsection = '';
   let nextIsName = false;
   let nextIsTitle = false;
   let nextIsLink = false;
@@ -138,7 +138,7 @@ function parseHomePageBlocks(blocks: any[]): HomePageContent {
     // Détecter les sous-sections
     else if (block.type === 'heading_2') {
       const subtitle = block.heading_2.rich_text[0]?.plain_text.toLowerCase() || '';
-      currentSubsection = subtitle;
+      //currentSubsection = subtitle;
       
       // Marquer ce qu'on doit récupérer au prochain paragraphe
       if (subtitle.includes('nom') || subtitle.includes('name')) {

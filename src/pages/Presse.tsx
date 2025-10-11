@@ -50,9 +50,9 @@ const additionalQuotes = [
 ]
 
 export default function Presse() {
-  const [selectedType, setSelectedType] = useState('Tous types')
-  const [selectedSource, setSelectedSource] = useState('Tous périodiques')
-  const [selectedYear, setSelectedYear] = useState('Toutes années')
+  const [selectedType, setSelectedType] = useState('Tous les types')
+  const [selectedSource, setSelectedSource] = useState('Toutes les sources')
+  const [selectedYear, setSelectedYear] = useState('Toutes les années')
   const { data: articles, loading, error } = useNotionData(getPressArticles)
 
   // Filtrer les articles à afficher
