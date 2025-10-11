@@ -103,7 +103,7 @@ export default function Home(): React.JSX.Element {
   return (
     <>
       {/* Hero Section */}
-      <section className="hero">
+      <section className="hero home-page">
         <div className="container">
           <div className="hero-content">
             <h1 className="hero-title">{homeContent.hero.name}<br />{homeContent.hero.surname}</h1>
@@ -113,7 +113,7 @@ export default function Home(): React.JSX.Element {
       </section>
       
       {/* Services Section */}
-      <section className="services section">
+      <section className="services section home-page">
         <div className="container">
           <div className="services-content">
             {/* Rectangle de fond (effet visuel seulement) */}
@@ -145,7 +145,7 @@ export default function Home(): React.JSX.Element {
       </section>
 
       {/* Médias Section */}
-      <section className="medias section">
+      <section className="medias section home-page">
         <div className="container">
           <h2 className="section-title">Médias</h2>
           
@@ -376,7 +376,7 @@ export default function Home(): React.JSX.Element {
       </section>
 
       {/* Biographie Section */}
-      <section className="biography section">
+      <section className="biography section home-page">
         <div className="container">
           <h2 className="section-title">Biographie</h2>
           <div className="bio-content">
@@ -401,7 +401,7 @@ export default function Home(): React.JSX.Element {
       </section>
 
       {/* Contact Section */}
-      <section className="contact section">
+      <section className="contact section home-page">
         <div className="container">
           <h2 className="section-title">Contact / Réservation</h2>
           <form className="contact-form">

@@ -352,6 +352,7 @@ body {
   text-align: center;
   position: relative;
   z-index: 3;
+  margin-left: -10em;
 }
 
 .services-list {
@@ -596,6 +597,10 @@ body {
   border-radius: 8px;
   margin-left: 40px;
   margin-right: 20px;
+}
+
+.home-page .bio-text {
+  color: white;
 }
 
 .bio-text p {
