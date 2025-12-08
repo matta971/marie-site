@@ -9,7 +9,7 @@ const links = [
   { to: '/enseignement', label: 'Services' },
  // { to: '/services', label: 'Services' },
   { to: '/agenda', label: 'Agenda' },
-    { to: '/presse', label: 'Actualités' },
+    { to: '/presse', label: 'Critiques' },
   { to: '/medias', label: 'Médias' },
   { to: '/contact', label: 'Contact' },
 ]

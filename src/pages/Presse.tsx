@@ -112,7 +112,7 @@ export default function Presse() {
         {/* Hero Section */}
         <section className="presse-hero">
           <div className="section-container">
-            <h1 className="hero-title">Presse</h1>
+            <h1 className="hero-title">Critiques</h1>
           </div>
         </section>
         <section className="section-padding">
@@ -130,7 +130,7 @@ export default function Presse() {
         {/* Hero Section */}
         <section className="presse-hero">
           <div className="section-container">
-            <h1 className="hero-title">Presse</h1>
+            <h1 className="hero-title">Critiques</h1>
           </div>
         </section>
         <section className="section-padding">
@@ -150,7 +150,7 @@ export default function Presse() {
       {/* Hero Section */}
       <section className="presse-hero">
         <div className="section-container">
-          <h1 className="hero-title">Presse</h1>
+          <h1 className="hero-title">Critiques</h1>
         </div>
       </section>
 

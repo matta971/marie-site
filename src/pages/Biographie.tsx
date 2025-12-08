@@ -146,7 +146,7 @@ export default function Biographie(): React.JSX.Element {
 
               {/* Section Presse */}
               <div className="bio-section">
-                <h2 className="bio-section-title">Presse</h2>
+                <h2 className="bio-section-title">Critiques</h2>
                 {content.pressCitations.length > 0 && (
                   <div className="bio-quotes">
                     {/* Citation 1 */}
