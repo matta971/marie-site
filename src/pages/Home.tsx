@@ -178,6 +178,44 @@ export default function Home(): React.JSX.Element {
                 nextEl: '.swiper-button-next-custom',
                 prevEl: '.swiper-button-prev-custom',
               }}
+              breakpoints={{
+                // Mobile : 1 slide visible, pas d'effet 3D
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 0,
+                  coverflowEffect: {
+                    rotate: 0,
+                    stretch: 0,
+                    depth: 0,
+                    modifier: 0,
+                    slideShadows: false,
+                  },
+                },
+                // Tablet : 2 slides avec effet léger
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                  coverflowEffect: {
+                    rotate: 20,
+                    stretch: 0,
+                    depth: 150,
+                    modifier: 1,
+                    slideShadows: true,
+                  },
+                },
+                // Desktop : configuration originale
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                  coverflowEffect: {
+                    rotate: 30,
+                    stretch: 0,
+                    depth: 200,
+                    modifier: 1,
+                    slideShadows: true,
+                  },
+                },
+              }}
               modules={[EffectCoverflow, Navigation, Autoplay]}
               style={{
                 width: '100%',
@@ -185,6 +223,7 @@ export default function Home(): React.JSX.Element {
                 paddingTop: '50px',
                 paddingBottom: '50px'
               }}
+              className="media-swiper"
             >
               {mediaItems.map((item) => (
                 <SwiperSlide 
