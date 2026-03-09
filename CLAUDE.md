@@ -8,7 +8,7 @@ Marie-Émeraude Alcime est une mezzo-soprano professionnelle. Ce site est son si
 ### Frontend (ce repo)
 - **Stack** : React 19 + TypeScript 5.8 + Tailwind CSS v4 + Vite 7
 - **Router** : React Router DOM 7
-- **Dépendances clés** : Swiper (carrousels), react-markdown (rendu markdown admin), axios
+- **Dépendances clés** : Swiper (carrousels), react-markdown + remark-gfm (rendu markdown/tableaux GFM dans le chat admin), axios
 - **Déploiement** : Cloudflare Pages (`marie-site.pages.dev`)
 - **Build** : `npm run build` (tsc + vite build)
 - **Dev** : `npm run dev` (port 5173)
@@ -141,3 +141,21 @@ npx wrangler secret list    # Lister les secrets
 - Police : système par défaut
 - Layout : Header fixe + contenu flex + Footer
 - Page admin : layout indépendant (pas de Header/Footer)
+
+## Skills & MCP Servers
+- **Skill `ui-ux-pro-max`** (`.claude/skills/ui-ux-pro-max/`) — Intelligence design complète : 67 styles, 96 palettes, 57 pairings typo, guidelines UX, données pour React/Tailwind
+- **Skill `frontend-design`** (`.claude/skills/frontend-design.md`) — Guide pour interfaces production-grade distinctives
+- **MCP Playwright** — Preview navigateur, screenshots, tests visuels
+- **MCP 21st Magic** — Découverte et génération de composants UI
+
+## Déploiement
+- **Frontend** : Cloudflare Pages, connecté au repo GitHub `matta971/marie-site` (build auto sur push main)
+- **Backend** : Cloudflare Worker `backend-site-marie-emeraude`, déployé via `npx wrangler deploy` depuis `marie-site-backend/`
+- **SPA routing** : fichier `public/_redirects` (`/* /index.html 200`) pour que toutes les routes passent par React Router
+- **Secrets Cloudflare** : configurés sans préfixe `VITE_` (le `.env` backend utilise `VITE_` mais les secrets Worker non)
+
+## Notes importantes
+- Le worker Cloudflare s'appelle `backend-site-marie-emeraude` (pas `marie-api-worker`)
+- Le chatbot utilise Claude Sonnet (`claude-sonnet-4-6`) pour les réponses rapides et le coût faible
+- `react-markdown` nécessite `remark-gfm` pour parser les tableaux GFM — sans ce plugin, les tableaux s'affichent en texte brut
+- Le formulaire de contact (`Contact.tsx`) n'envoie rien au backend pour le moment (console.log uniquement)
