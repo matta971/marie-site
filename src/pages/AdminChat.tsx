@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -166,6 +167,7 @@ export default function AdminChat() {
             >
               {msg.role === 'user' ? msg.content : (
                 <Markdown
+                  remarkPlugins={[remarkGfm]}
                   components={{
                     table: ({ children }) => (
                       <div className="overflow-x-auto my-2 rounded-lg border border-neutral-200">
