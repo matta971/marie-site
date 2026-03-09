@@ -137,10 +137,11 @@ npx wrangler secret list    # Lister les secrets
 
 ## Design
 - Thème clair (bg-white)
-- Couleur d'accent : amber (amber-600, amber-700)
-- Police : système par défaut
+- Couleurs d'accent : émeraude (`#046D5D`) + or (`#D4AF37`)
+- Variables CSS : `--color-emerald-deep: #046D5D`, `--color-gold-light: #D4AF37`
+- Polices : Cormorant Garamond (titres, serif italic) + Lato (body, sans-serif)
 - Layout : Header fixe + contenu flex + Footer
-- Page admin : layout indépendant (pas de Header/Footer)
+- Page admin : layout indépendant (pas de Header/Footer), mêmes fonts et couleurs que le site
 
 ## Skills & MCP Servers
 - **Skill `ui-ux-pro-max`** (`.claude/skills/ui-ux-pro-max/`) — Intelligence design complète : 67 styles, 96 palettes, 57 pairings typo, guidelines UX, données pour React/Tailwind
