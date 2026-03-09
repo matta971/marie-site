@@ -1,11 +1,35 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useNotionData } from '../hooks/useNotionData'
 import { getRepertoire } from '../services/notionService'
+import { useTranslatedArray } from '../hooks/useTranslatedContent'
 
 export default function Repertoire(): React.JSX.Element {
   const { data: repertoire, loading, error } = useNotionData(getRepertoire)
+  const { t } = useTranslation()
+
+  // Traduire les textes dynamiques du répertoire
+  const translatedRepertoire = useTranslatedArray(
+    repertoire as unknown as Record<string, unknown>[] | undefined,
+    ['role', 'venue']
+  ) as unknown as typeof repertoire
   const [activeCategory, setActiveCategory] = useState('tous')
+  const [isStuck, setIsStuck] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+
+  // Détecter quand les filtres passent en sticky
+  useEffect(() => {
+    const sentinel = sentinelRef.current
+    if (!sentinel) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(!entry.isIntersecting),
+      { threshold: 0, rootMargin: '-66px 0px 0px 0px' }
+    )
+    observer.observe(sentinel)
+    return () => observer.disconnect()
+  }, [loading])
   const [selectedComposer, setSelectedComposer] = useState('Tous les compositeurs')
   const [selectedYear, setSelectedYear] = useState('Toutes les années')
   const [selectedLanguage, setSelectedLanguage] = useState('Toutes les langues')
@@ -147,8 +171,8 @@ export default function Repertoire(): React.JSX.Element {
 
   // Extraire les catégories uniques depuis les données
   const categories = useMemo(() => {
-    if (!repertoire) return []
-    
+    if (!translatedRepertoire) return []
+
     // Compter les œuvres par type normalisé
     const counts: { [key: string]: number } = {
       opera: 0,
@@ -157,8 +181,8 @@ export default function Repertoire(): React.JSX.Element {
       sacred: 0,
       recital: 0
     }
-    
-    repertoire.forEach(item => {
+
+    translatedRepertoire.forEach(item => {
       const normalizedType = normalizeType(item.type || '')
       if (normalizedType && counts[normalizedType] !== undefined) {
         counts[normalizedType]++
@@ -167,14 +191,14 @@ export default function Repertoire(): React.JSX.Element {
 
     // Retourner les catégories avec leurs compteurs
     return [
-      { id: 'tous', label: 'Tout le répertoire', count: repertoire.length },
+      { id: 'tous', label: 'Tout le répertoire', count: translatedRepertoire.length },
       { id: 'opera', label: 'Opéra & Opérette', count: counts.opera },
       { id: 'sacred', label: 'Musique sacrée', count: counts.sacred },
       { id: 'oratorio', label: 'Oratorios', count: counts.oratorio },
       { id: 'melodie', label: 'Mélodies & Lieder', count: counts.melodie },
       { id: 'recital', label: 'Récitals & Concerts', count: counts.recital }
     ].filter(cat => cat.id === 'tous' || cat.count > 0)
-  }, [repertoire])
+  }, [translatedRepertoire])
 
   // Extraire les valeurs uniques pour les filtres
   /*const availableComposers = useMemo(() => {
@@ -206,9 +230,9 @@ export default function Repertoire(): React.JSX.Element {
 
   // Filtrer le répertoire selon les sélections
   const filteredRepertoire = useMemo(() => {
-    if (!repertoire) return []
-    
-    return repertoire.filter(item => {
+    if (!translatedRepertoire) return []
+
+    return translatedRepertoire.filter(item => {
       // Filtre par catégorie avec normalisation
       const normalizedType = normalizeType(item.type || '')
       const matchCategory = activeCategory === 'tous' || normalizedType === activeCategory
@@ -227,7 +251,7 @@ export default function Repertoire(): React.JSX.Element {
       
       return matchCategory && matchComposer && matchYear && matchLanguage
     })
-  }, [repertoire, activeCategory, selectedComposer, selectedYear, selectedLanguage])
+  }, [translatedRepertoire, activeCategory, selectedComposer, selectedYear, selectedLanguage])
 
   // Gestion du chargement
   if (loading) {
@@ -235,7 +259,7 @@ export default function Repertoire(): React.JSX.Element {
       <div className="repertoire-page min-h-screen">
         <section className="section-padding">
           <div className="section-container text-center">
-            <h1 className="hero-title">Répertoire</h1>
+            <h1 className="hero-title">{t('repertoire.title')}</h1>
             <p className="mt-4">Chargement du répertoire...</p>
           </div>
         </section>
@@ -249,7 +273,7 @@ export default function Repertoire(): React.JSX.Element {
       <div className="repertoire-page min-h-screen">
         <section className="section-padding">
           <div className="section-container text-center">
-            <h1 className="hero-title">Répertoire</h1>
+            <h1 className="hero-title">{t('repertoire.title')}</h1>
             <p className="mt-4 text-red-600">Erreur lors du chargement du répertoire.</p>
           </div>
         </section>
@@ -261,19 +285,26 @@ export default function Repertoire(): React.JSX.Element {
     <div className="repertoire-page min-h-screen">
 
       {/* Hero Section */}
-      <section className="section-padding">
+      <section className="section-padding" style={{ paddingBottom: '1rem' }}>
         <div className="section-container">
-          <div className="text-center mb-12">
-            <h1 className="hero-title mb-6">Répertoire</h1>
+          <div className="text-center mb-8">
+            <h1 className="hero-title mb-6">{t('repertoire.title')}</h1>
             <p className="text-body mx-auto leading-relaxed">
-              Découvrez l'étendue artistique de Marie-Émeraude Alcime à travers ses rôles 
-              d'opéra, ses interprétations de musique sacrée et ses récitals. Un parcours 
+              Découvrez l'étendue artistique de Marie-Émeraude Alcime à travers ses rôles
+              d'opéra, ses interprétations de musique sacrée et ses récitals. Un parcours
               qui allie tradition et modernité, entre répertoire français, italien et allemand.
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* Filtres par catégorie - Tabs principaux */}
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
+      {/* Sentinelle pour détecter le sticky */}
+      <div ref={sentinelRef} style={{ height: 0 }} />
+
+      {/* Filtres sticky */}
+      <div className={`repertoire-filters-sticky ${isStuck ? 'is-stuck' : ''}`}>
+        <div className="section-container">
+          <div className="flex flex-wrap justify-center gap-4">
             {categories.map((category) => (
               <button
                 key={category.id}
@@ -288,10 +319,10 @@ export default function Repertoire(): React.JSX.Element {
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Liste du répertoire */}
-      <section className="section-padding">
+      <section className="section-padding" style={{ paddingTop: '2rem' }}>
         <div className="section-container">
           {filteredRepertoire.length > 0 ? (
           <div className="grid gap-6">
@@ -385,23 +416,21 @@ export default function Repertoire(): React.JSX.Element {
             
             {/* Tessiture et caractéristiques vocales */}
             <div>
-              <h2 className="repertoire-section-title">Tessiture & Style</h2>
+              <h2 className="repertoire-section-title">{t('repertoire.tessiture')}</h2>
               <div className="space-y-6">
                 <div>
-                  <h3 className="style-subsection-title">Mezzo-soprano</h3>
+                  <h3 className="style-subsection-title">{t('repertoire.mezzoSoprano')}</h3>
                   <p className="text-body">
-                    Voix de mezzo-soprano lyrique avec une extension dans le grave. 
-                    Timbre chaleureux et expressif, particulièrement adapté aux rôles 
-                    de confidente et aux héroïnes romantiques.
+                    {t('repertoire.tessitureDesc')}
                   </p>
                 </div>
                 <div>
-                  <h3 className="style-subsection-title">Caractéristiques</h3>
+                  <h3 className="style-subsection-title">{t('repertoire.characteristics')}</h3>
                   <ul className="text-body space-y-2">
-                    <li>• Tessiture : Sol2 - Sol5</li>
-                    <li>• Couleur : Timbre chaud et velouté</li>
-                    <li>• Style : Lyrique français et italien</li>
-                    <li>• Spécialité : Second rôles expressifs</li>
+                    <li>• {t('repertoire.range')} : {t('repertoire.rangeVal')}</li>
+                    <li>• {t('repertoire.color')} : {t('repertoire.colorVal')}</li>
+                    <li>• {t('repertoire.style')} : {t('repertoire.styleVal')}</li>
+                    <li>• {t('repertoire.specialty')} : {t('repertoire.specialtyVal')}</li>
                   </ul>
                 </div>
               </div>
@@ -409,46 +438,67 @@ export default function Repertoire(): React.JSX.Element {
 
             {/* Langues de travail */}
             <div>
-              <h2 className="repertoire-section-title">Langues de travail</h2>
+              <h2 className="repertoire-section-title">{t('repertoire.languages')}</h2>
               <div className="space-y-4">
                 
                 <div className="flex items-center space-x-4">
-                  <div className="langue-subsection-img w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">FR</span>
+                  <div className="langue-subsection-img w-8 h-8 rounded-full overflow-hidden flex-shrink-0" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
+                    <svg viewBox="0 0 36 36" className="w-full h-full">
+                      <rect width="12" height="36" fill="#002395"/>
+                      <rect x="12" width="12" height="36" fill="#FFFFFF"/>
+                      <rect x="24" width="12" height="36" fill="#ED2939"/>
+                    </svg>
                   </div>
                   <div>
-                    <div className="langue-subsection-title text-accent mb-2">Français</div>
-                    <div className="text-small text-gray-600">Langue maternelle - Répertoire mélodique et lyrique</div>
+                    <div className="langue-subsection-title text-accent mb-2">{t('repertoire.french')}</div>
+                    <div className="text-small text-gray-600">{t('repertoire.frenchDesc')}</div>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="langue-subsection-img w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">IT</span>
+                  <div className="langue-subsection-img w-8 h-8 rounded-full overflow-hidden flex-shrink-0" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
+                    <svg viewBox="0 0 36 36" className="w-full h-full">
+                      <rect width="12" height="36" fill="#009246"/>
+                      <rect x="12" width="12" height="36" fill="#FFFFFF"/>
+                      <rect x="24" width="12" height="36" fill="#CE2B37"/>
+                    </svg>
                   </div>
                   <div>
-                    <div className="langue-subsection-title text-accent mb-2">Italien</div>
-                    <div className="text-small text-gray-600">Opéra italien - Belcanto et verismo</div>
+                    <div className="langue-subsection-title text-accent mb-2">{t('repertoire.italian')}</div>
+                    <div className="text-small text-gray-600">{t('repertoire.italianDesc')}</div>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="langue-subsection-img w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">DE</span>
+                  <div className="langue-subsection-img w-8 h-8 rounded-full overflow-hidden flex-shrink-0" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
+                    <svg viewBox="0 0 36 36" className="w-full h-full">
+                      <rect width="36" height="12" fill="#000000"/>
+                      <rect y="12" width="36" height="12" fill="#DD0000"/>
+                      <rect y="24" width="36" height="12" fill="#FFCC00"/>
+                    </svg>
                   </div>
                   <div>
-                    <div className="langue-subsection-title text-accent mb-2">Allemand</div>
-                    <div className="text-small text-gray-600">Lieder et oratorios - Niveau professionnel</div>
+                    <div className="langue-subsection-title text-accent mb-2">{t('repertoire.german')}</div>
+                    <div className="text-small text-gray-600">{t('repertoire.germanDesc')}</div>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="langue-subsection-img w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">EN</span>
+                  <div className="langue-subsection-img w-8 h-8 rounded-full overflow-hidden flex-shrink-0" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
+                    <svg viewBox="0 0 60 30" className="w-full h-full">
+                      <clipPath id="uk-clip"><circle cx="30" cy="15" r="30"/></clipPath>
+                      <g clipPath="url(#uk-clip)">
+                        <rect width="60" height="30" fill="#012169"/>
+                        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" strokeWidth="6"/>
+                        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4" clipPath="url(#uk-center)"/>
+                        <path d="M30,0 V30 M0,15 H60" stroke="#FFFFFF" strokeWidth="10"/>
+                        <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6"/>
+                      </g>
+                    </svg>
                   </div>
                   <div>
-                    <div className="langue-subsection-title text-accent mb-2">Anglais</div>
-                    <div className="text-small text-gray-600">Répertoire contemporain et oratorios anglais</div>
+                    <div className="langue-subsection-title text-accent mb-2">{t('repertoire.english')}</div>
+                    <div className="text-small text-gray-600">{t('repertoire.englishDesc')}</div>
                   </div>
                 </div>
               </div>

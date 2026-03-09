@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 // Composant ContactForm intégré
 function ContactForm() {
@@ -10,6 +11,8 @@ function ContactForm() {
     message: '',
     acceptePolicy: false
   })
+
+  const { t } = useTranslation()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,7 +32,7 @@ function ContactForm() {
     <form onSubmit={handleSubmit} className="contact-form">
       <div className="form-group">
         <label htmlFor="nom" className="form-label">
-          Nom
+          {t('contact.name')}
         </label>
         <input
           type="text"
@@ -44,7 +47,7 @@ function ContactForm() {
 
       <div className="form-group">
         <label htmlFor="email" className="form-label">
-          E-mail
+          {t('contact.email')}
         </label>
         <input
           type="email"
@@ -59,7 +62,7 @@ function ContactForm() {
 
       <div className="form-group">
         <label htmlFor="telephone" className="form-label">
-          Téléphone (optionnel)
+          {t('contact.phone')}
         </label>
         <input
           type="tel"
@@ -73,7 +76,7 @@ function ContactForm() {
 
       <div className="form-group">
         <label htmlFor="objet" className="form-label">
-          Objet
+          {t('contact.subject')}
         </label>
         <input
           type="text"
@@ -88,7 +91,7 @@ function ContactForm() {
 
       <div className="form-group">
         <label htmlFor="message" className="form-label">
-          Message
+          {t('contact.message')}
         </label>
         <textarea
           id="message"
@@ -111,25 +114,27 @@ function ContactForm() {
           required
         />
         <label htmlFor="acceptePolicy">
-          J'accepte la politique de confidentialité
+          {t('contact.privacy')}
         </label>
       </div>
 
       <button type="submit" className="submit-btn">
-        Envoyer
+        {t('contact.send')}
       </button>
     </form>
   )
 }
 
 export default function Contact(): React.JSX.Element {
+  const { t } = useTranslation()
+
   return (
     <>
       {/* Hero Section */}
       <section className="hero hero-contact">
         <div className="hero-content">
           <div className="hero-text">
-            <h1 className="title-hero">Contact</h1>
+            <h1 className="title-hero">{t('contact.title')}</h1>
             <div className="hero-decoration"></div>
           </div>
         </div>
@@ -143,23 +148,23 @@ export default function Contact(): React.JSX.Element {
             <div className="contact-info">
               {/* Coordonnées professionnelles */}
               <div className="info-block">
-                <h2 className="contact-section-title">Coordonnées professionnelles</h2>
+                <h2 className="contact-section-title">{t('contact.proCoordinates')}</h2>
                 
                 <div className="contact-details">
                   <div className="contact-item">
-                    <h3 className="contact-subtitle">Booking</h3>
+                    <h3 className="contact-subtitle">{t('contact.booking')}</h3>
                     <p className="contact-text">contact@exemple.com</p>
                   </div>
                   
                   <div className="contact-item">
-                    <h3 className="contact-subtitle">Agent</h3>
+                    <h3 className="contact-subtitle">{t('contact.agent')}</h3>
                     <p className="contact-text">Agence Lyrique</p>
                   </div>
                 </div>
                 
                 {/* Réseaux sociaux */}
                 <div className="social-section">
-                  <h3 className="contact-subtitle">Suivez-moi</h3>
+                  <h3 className="contact-subtitle">{t('contact.followMe')}</h3>
                   <div className="social-links">
                     <a href="#" className="social-link" aria-label="Instagram">
                       <svg className="social-icon" fill="currentColor" viewBox="0 0 24 24">
@@ -187,19 +192,19 @@ export default function Contact(): React.JSX.Element {
 
               {/* Informations pratiques */}
               <div className="info-block info-pratiques">
-                <h3 className="contact-subtitle">Informations pratiques</h3>
+                <h3 className="contact-subtitle">{t('contact.practicalInfo')}</h3>
                 <div className="info-content">
                   <div className="info-item">
-                    <h4>Délais de réponse</h4>
-                    <p>Nous nous engageons à répondre à toutes les demandes dans un délai de 48h ouvrables.</p>
+                    <h4>{t('contact.responseTime')}</h4>
+                    <p>{t('contact.responseTimeText')}</p>
                   </div>
                   <div className="info-item">
-                    <h4>Disponibilités</h4>
-                    <p>Planning disponible sur demande. Les réservations se font généralement 6 à 12 mois à l'avance.</p>
+                    <h4>{t('contact.availability')}</h4>
+                    <p>{t('contact.availabilityText')}</p>
                   </div>
                   <div className="info-item">
-                    <h4>Conditions techniques</h4>
-                    <p>Fiche technique et rider disponibles sur demande.</p>
+                    <h4>{t('contact.technicalReqs')}</h4>
+                    <p>{t('contact.technicalReqsText')}</p>
                   </div>
                 </div>
               </div>
@@ -208,7 +213,7 @@ export default function Contact(): React.JSX.Element {
             {/* Colonne de droite - Formulaire */}
             <div className="contact-form-section">
               <div className="form-container">
-                <h2 className="contact-section-title">Formulaire de contact</h2>
+                <h2 className="contact-section-title">{t('contact.formTitle')}</h2>
                 <ContactForm />
               </div>
             </div>

@@ -1,7 +1,9 @@
-import  { useState, useMemo } from 'react'
+import  { useState, useMemo, useEffect, useRef } from 'react'
 import { useNotionData } from '../hooks/useNotionData';
 import { getConcerts } from '../services/notionService';
 import { formatDate, getMonth, getYear } from '../utils/dateUtils';
+import { useTranslation } from 'react-i18next';
+import { useTranslatedArray } from '../hooks/useTranslatedContent';
 
 
 
@@ -34,16 +36,36 @@ import { formatDate, getMonth, getYear } from '../utils/dateUtils';
 
 export default function Agenda() {
   const { data: concerts, loading, error } = useNotionData(getConcerts);
+  const { t } = useTranslation();
+  const [isStuck, setIsStuck] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current
+    if (!sentinel) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(!entry.isIntersecting),
+      { threshold: 0, rootMargin: '-66px 0px 0px 0px' }
+    )
+    observer.observe(sentinel)
+    return () => observer.disconnect()
+  }, [loading])
 
   const [selectedMonth, setSelectedMonth] = useState('Tous les mois')
   const [selectedYear, setSelectedYear] = useState('Toutes les années')
   const [selectedCity, setSelectedCity] = useState('Toutes les villes')
 
+  // Traduire les textes dynamiques des concerts
+  const translatedConcerts = useTranslatedArray(
+    concerts as unknown as Record<string, unknown>[] | undefined,
+    ['title', 'role', 'location', 'description']
+  ) as unknown as typeof concerts
+
   // Séparer concerts futurs et passés
   const now = new Date();
 
   // Filtrer les concerts à afficher
-  const visibleConcerts = concerts?.filter(c => c.display) || [];
+  const visibleConcerts = translatedConcerts?.filter(c => c.display) || [];
   
   // Concerts à venir (format pour les event cards)
   const upcomingConcerts = visibleConcerts?.filter(
@@ -119,8 +141,8 @@ export default function Agenda() {
       <div className="agenda-page">
         <section className="agenda-hero">
           <div className="section-container">
-            <h1 className="hero-title">Agenda</h1>
-            <p className="text-center mt-4">Chargement des événements...</p>
+            <h1 className="hero-title">{t('agenda.title')}</h1>
+            <p className="text-center mt-4">{ t('agenda.loading')}</p>
           </div>
         </section>
       </div>
@@ -133,9 +155,9 @@ export default function Agenda() {
       <div className="agenda-page">
         <section className="agenda-hero">
           <div className="section-container">
-            <h1 className="hero-title">Agenda</h1>
+            <h1 className="hero-title">{t('agenda.title')}</h1>
             <p className="text-center mt-4 text-red-600">
-              Erreur lors du chargement des événements. Veuillez réessayer plus tard.
+              {t('agenda.error')}
             </p>
           </div>
         </section>
@@ -149,14 +171,17 @@ export default function Agenda() {
       {/* Hero Section */}
       <section className="agenda-hero">
         <div className="section-container">
-          <h1 className="hero-title">Agenda</h1>
+          <h1 className="hero-title">{t('agenda.title')}</h1>
         </div>
       </section>
 
       {/* Section Événements à venir */}
         <>
+      {/* Sentinelle pour détecter le sticky */}
+      <div ref={sentinelRef} style={{ height: 0 }} />
+
       {/* Filtres */}
-      <section className="agenda-filters-section">
+      <section className={`agenda-filters-section ${isStuck ? 'is-stuck' : ''}`}>
         <div className="section-container">
           <div className="agenda-filters">
             <select 
@@ -164,7 +189,7 @@ export default function Agenda() {
               onChange={(e) => setSelectedMonth(e.target.value)}
               className="agenda-filter-select"
             >
-              <option value="Tous les mois">Tous les mois</option>
+              <option value="Tous les mois">{t('agenda.allMonths')}</option>
               {availableMonths.map(month => (
                 <option key={month} value={month}>
                   {month.charAt(0).toUpperCase() + month.slice(1)}
@@ -177,7 +202,7 @@ export default function Agenda() {
               onChange={(e) => setSelectedYear(e.target.value)}
               className="agenda-filter-select"
             >
-              <option value="Toutes les années">Toutes les années</option>
+              <option value="Toutes les années">{t('agenda.allYears')}</option>
               {availableYears.map(year => (
                 <option key={year} value={year}>{year}</option>
               ))}
@@ -188,7 +213,7 @@ export default function Agenda() {
               onChange={(e) => setSelectedCity(e.target.value)}
               className="agenda-filter-select"
             >
-              <option value="Toutes les villes">Toutes les villes</option>
+              <option value="Toutes les villes">{t('agenda.allCities')}</option>
               {availableCities.map(city => (
                 <option key={city} value={city}>{city}</option>
               ))}
@@ -201,7 +226,7 @@ export default function Agenda() {
       {filteredUpcomingConcerts.length > 0 && (
           <section className="agenda-events-section">
           <div className="section-container">
-            <h2 className="agenda-section-title">Événements à venir</h2>
+            <h2 className="agenda-section-title">{ t('agenda.upcoming')}</h2>
             <div className="agenda-events-list">
               {filteredUpcomingConcerts.map((event) => (
                 <div key={event.id} className="event-card">
@@ -225,10 +250,10 @@ export default function Agenda() {
                         rel="noopener noreferrer"
                         className="btn-reserve"
                       >
-                        RÉSERVER
+                        {t('agenda.book')}
                       </a>
                     ) : (
-                      <button className="btn-reserve" disabled>BIENTÔT</button>
+                      <button className="btn-reserve" disabled>{t('agenda.soon')}</button>
                     )}
                   </div>
                 </div>
@@ -243,7 +268,7 @@ export default function Agenda() {
         <section className="agenda-events-section">
           <div className="section-container text-center">
             <p className="text-gray-600 italic">
-              Aucun événement ne correspond aux critères sélectionnés.
+              {t('agenda.noResults')}
             </p>
             <button 
               onClick={() => {
@@ -253,7 +278,7 @@ export default function Agenda() {
               }}
               className="btn-contact"
             >
-              Réinitialiser les filtres
+              {t('agenda.resetFilters')}
             </button>
           </div>
         </section>
@@ -263,7 +288,7 @@ export default function Agenda() {
       {filteredPastConcerts.length > 0 && (
         <section className="agenda-events-section agenda-past-section">
           <div className="section-container">
-            <h2 className="agenda-section-title">Concerts passés</h2>
+            <h2 className="agenda-section-title">{ t('agenda.past')}</h2>
             <div className="agenda-events-list">
               {filteredPastConcerts.map((event) => (
                 <div key={event.id} className="event-card past-event">
@@ -286,12 +311,12 @@ export default function Agenda() {
       {/* Section À venir / Projets */}
       <section className="agenda-projects-section">
         <div className="section-container">
-          <h2 className="agenda-section-title">À venir / Projets</h2>
+          <h2 className="agenda-section-title">{ t('agenda.projects')}</h2>
           <div className="project-item">
             <h3 className="project-title">
               Chambre <em>avec Vues</em>
             </h3>
-            <p className="project-type">Concert</p>
+            <p className="project-type">{ t('agenda.concert')}</p>
           </div>
         </div>
       </section>

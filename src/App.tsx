@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import SEO from './components/SEO'
 import Home from './pages/Home'
 import Biographie from './pages/Biographie'
 import Medias from './pages/Medias'
@@ -22,6 +23,7 @@ export default function App(): React.JSX.Element {
         {/* Routes publiques avec Header/Footer */}
         <Route path="*" element={
           <>
+            <SEO />
             <Header />
             <main className="flex-1">
               <Routes>

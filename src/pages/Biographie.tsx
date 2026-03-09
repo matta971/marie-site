@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { getBiographyContent } from '../services/biographyService'
+import { useTranslatedContent, useTranslatedArray } from '../hooks/useTranslatedContent'
 import type { BiographyContent } from '../types/notion.types';
 
 export default function Biographie(): React.JSX.Element {
@@ -12,6 +14,17 @@ export default function Biographie(): React.JSX.Element {
     pressCitations: []
   })
   const [loading, setLoading] = useState(true)
+  const { t } = useTranslation()
+
+  // Traduire les contenus Notion
+  const translatedMainBio = useTranslatedContent(content.mainBio)
+  const translatedFormation = useTranslatedContent(content.formation)
+  const translatedScenes = useTranslatedContent(content.scenes)
+  const translatedDistinctions = useTranslatedContent(content.distinctions)
+  const translatedCitations = useTranslatedArray(
+    content.pressCitations as unknown as Record<string, unknown>[],
+    ['quote', 'source']
+  ) as unknown as { quote: string; source: string }[]
 
   useEffect(() => {
     getBiographyContent().then(data => {
@@ -25,7 +38,7 @@ export default function Biographie(): React.JSX.Element {
       <div className="biographie-page">
         <section className="section-padding">
           <div className="section-container text-center">
-            <h1 className="hero-title">Biographie</h1>
+            <h1 className="hero-title">{t('biography.title')}</h1>
             <p className="mt-4">Chargement...</p>
           </div>
         </section>
@@ -35,11 +48,11 @@ export default function Biographie(): React.JSX.Element {
 
   // Extraire la première lettre pour la lettrine
   const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '');
-  const plainBio = stripHtml(content.mainBio);
+  const plainBio = stripHtml(translatedMainBio);
   const firstLetter = plainBio ? plainBio[0] : '';
-  
+
   // Pour le reste du texte, on doit retirer le premier caractère visible
-  let restOfBio = content.mainBio;
+  let restOfBio = translatedMainBio;
   if (restOfBio && firstLetter) {
     // Si le texte commence par une balise HTML, on la garde et on supprime le premier caractère après
     if (restOfBio.startsWith('<')) {
@@ -80,7 +93,7 @@ export default function Biographie(): React.JSX.Element {
             {/* Contenu textuel à droite */}
             <div className="lg:col-span-3">
               <div className="text-center mb-12">
-                <h1 className="hero-title mb-8">Biographie</h1>
+                <h1 className="hero-title mb-8">{t('biography.title')}</h1>
               </div>
               <div className="text-body space-y-6 leading-relaxed">
                 {content.mainBio && (
@@ -105,39 +118,39 @@ export default function Biographie(): React.JSX.Element {
               
               {/* Section Parcours */}
               <div className="bio-section">
-                <h2 className="bio-section-title">Parcours</h2>
+                <h2 className="bio-section-title">{t('biography.parcours')}</h2>
                 
                 <div className="bio-subsections">
 
                   {/* Formation */}
-                  {content.formation && (
+                  {translatedFormation && (
                     <div>
-                      <h3 className="bio-subsection-title">Formation</h3>
-                      <p 
+                      <h3 className="bio-subsection-title">{t('biography.formation')}</h3>
+                      <p
                         className="bio-text"
-                        dangerouslySetInnerHTML={{ __html: content.formation }}
+                        dangerouslySetInnerHTML={{ __html: translatedFormation }}
                       />
                     </div>
                   )}
 
                   {/* Scènes & Collaborations */}
-                  {content.scenes && (
+                  {translatedScenes && (
                     <div>
-                      <h3 className="bio-subsection-title">Scènes & Collaborations</h3>
-                      <div 
+                      <h3 className="bio-subsection-title">{t('biography.scenes')}</h3>
+                      <div
                         className="bio-text"
-                        dangerouslySetInnerHTML={{ __html: content.scenes }}
+                        dangerouslySetInnerHTML={{ __html: translatedScenes }}
                       />
                     </div>
                   )}
 
                   {/* Prix & Distinctions */}
-                  {content.distinctions && (
+                  {translatedDistinctions && (
                     <div>
-                      <h3 className="bio-subsection-title">Prix & Distinctions</h3>
-                      <div 
+                      <h3 className="bio-subsection-title">{t('biography.distinctions')}</h3>
+                      <div
                         className="bio-text"
-                        dangerouslySetInnerHTML={{ __html: content.distinctions }}
+                        dangerouslySetInnerHTML={{ __html: translatedDistinctions }}
                       />
                     </div>
                   )}
@@ -146,13 +159,12 @@ export default function Biographie(): React.JSX.Element {
 
               {/* Section Presse */}
               <div className="bio-section">
-                <h2 className="bio-section-title">Critiques</h2>
-                {content.pressCitations.length > 0 && (
+                <h2 className="bio-section-title">{t('biography.critiques')}</h2>
+                {translatedCitations.length > 0 && (
                   <div className="bio-quotes">
-                    {/* Citation 1 */}
-                    {content.pressCitations.map((citation, index) => (
+                    {translatedCitations.map((citation, index) => (
                     <blockquote className="bio-quote" key={index}>
-                      <svg key={index} className="bio-quote-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <svg className="bio-quote-icon" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
                       </svg>
                       <p className="bio-quote-text">
@@ -202,10 +214,10 @@ export default function Biographie(): React.JSX.Element {
         <div className="section-container">
           <div className="bio-cta-buttons">
             <Link to="/medias" className="btn-secondary">
-              Voir médias
+              {t('biography.seeMedia')}
             </Link>
             <Link to="/repertoire" className="btn-secondary">
-              Répertoire
+              {t('biography.seeRepertoire')}
             </Link>
           </div>
         </div>

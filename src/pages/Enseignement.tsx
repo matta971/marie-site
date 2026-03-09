@@ -1,5 +1,6 @@
 import  { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const servicesData = {
   cours: [
@@ -97,6 +98,7 @@ const testimonials = {
 
 export default function Enseignement() {
   const [activeTab, setActiveTab] = useState<'cours' | 'masterclasses' | 'ateliers'>('cours')
+  const { t } = useTranslation()
 
   const currentServices = servicesData[activeTab]
   const currentTestimonials = testimonials[activeTab]
@@ -108,7 +110,7 @@ export default function Enseignement() {
       <section className="enseignement-hero">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h1 className="hero-title">Enseignement</h1>
+            <h1 className="hero-title">{t('services.title')}</h1>
           </div>
 
           {/* Navigation tabs */}
@@ -117,19 +119,19 @@ export default function Enseignement() {
               onClick={() => setActiveTab('cours')}
               className={`enseignement-tab ${activeTab === 'cours' ? 'active' : ''}`}
             >
-              Cours
+              {t('services.courses')}
             </button>
             <button
               onClick={() => setActiveTab('masterclasses')}
               className={`enseignement-tab ${activeTab === 'masterclasses' ? 'active' : ''}`}
             >
-              Masterclasses
+              {t('services.masterclasses')}
             </button>
             <button
               onClick={() => setActiveTab('ateliers')}
               className={`enseignement-tab ${activeTab === 'ateliers' ? 'active' : ''}`}
             >
-              Ateliers
+              {t('services.workshops')}
             </button>
           </div>
         </div>
@@ -155,7 +157,7 @@ export default function Enseignement() {
       {/* Testimonials Section */}
       <section className="enseignement-testimonials">
         <div className="section-container">
-          <h2 className="enseignement-testimonials-title">Témoignages élèves</h2>
+          <h2 className="enseignement-testimonials-title">{t('services.testimonials')}</h2>
           
           <div className="testimonials-grid">
             {currentTestimonials.map((testimonial, index) => (
@@ -182,7 +184,7 @@ export default function Enseignement() {
           <div className="text-center">
             <div className="bio-cta-buttons">
               <Link to="/contact" className="btn-secondary">
-                Contactez Marie-Émeraude
+                {t('services.contactCta')}
               </Link>
             </div>
           </div>

@@ -1,35 +1,58 @@
 // src/pages/Medias.tsx
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useNotionData } from '../hooks/useNotionData'
 import { getMedias } from '../services/notionService'
+import { useTranslation } from 'react-i18next'
+import { useTranslatedArray } from '../hooks/useTranslatedContent'
 
 // Types de médias disponibles
 const mediaTypes = [
-  { id: 'videos', label: 'Vidéos' },
-  { id: 'audios', label: 'Audios' },
-  { id: 'photos', label: 'Photos' }
+  { id: 'videos', key: 'media.videos' },
+  { id: 'audios', key: 'media.audios' },
+  { id: 'photos', key: 'media.photos' }
 ]
 
 // Catégories disponibles (à adapter selon vos besoins)
 const categories = [
-  { id: 'tous', label: 'Tous' },
-  { id: 'recital', label: 'Récital' },
-  { id: 'baroque', label: 'Baroque' },
-  { id: 'mozart', label: 'Mozart' },
-  { id: 'sacre', label: 'Sacré' }
+  { id: 'tous', key: 'media.all' },
+  { id: 'recital', key: 'media.recital' },
+  { id: 'baroque', key: 'media.baroque' },
+  { id: 'mozart', key: 'media.mozart' },
+  { id: 'sacre', key: 'media.sacred' }
 ]
 
 export default function Medias(): React.JSX.Element {
   const { data: medias, loading, error } = useNotionData(getMedias)
-  
+  const { t } = useTranslation()
+
+  // Traduire les textes dynamiques des médias
+  const translatedMedias = useTranslatedArray(
+    medias as unknown as Record<string, unknown>[] | undefined,
+    ['title', 'description']
+  ) as unknown as typeof medias
+
   const [activeMediaType, setActiveMediaType] = useState('videos')
   const [activeCategory, setActiveCategory] = useState('tous')
+  const [visibleCount, setVisibleCount] = useState(9)
+  const [isStuck, setIsStuck] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current
+    if (!sentinel) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(!entry.isIntersecting),
+      { threshold: 0, rootMargin: '-66px 0px 0px 0px' }
+    )
+    observer.observe(sentinel)
+    return () => observer.disconnect()
+  }, [loading])
 
   // Trier les médias par ordre
   const sortedMedias = useMemo(() => {
-    return medias?.sort((a, b) => a.order - b.order) || []
-  }, [medias])
+    return translatedMedias?.sort((a, b) => a.order - b.order) || []
+  }, [translatedMedias])
 
   // Extraire les catégories disponibles depuis les descriptions (ou ajouter un champ category dans Notion)
   const availableCategories = useMemo(() => {
@@ -86,7 +109,7 @@ export default function Medias(): React.JSX.Element {
         <section className="section-padding">
           <div className="section-container">
             <div className="text-center">
-              <h1 className="hero-title">Médias</h1>
+              <h1 className="hero-title">{t('media.title')}</h1>
               <p className="mt-4">Chargement des médias...</p>
             </div>
           </div>
@@ -101,7 +124,7 @@ export default function Medias(): React.JSX.Element {
         <section className="section-padding">
           <div className="section-container">
             <div className="text-center">
-              <h1 className="hero-title">Médias</h1>
+              <h1 className="hero-title">{t('media.title')}</h1>
               <p className="mt-4 text-red-600">Erreur lors du chargement des médias.</p>
             </div>
           </div>
@@ -113,55 +136,58 @@ export default function Medias(): React.JSX.Element {
   return (
     <div className="medias-page min-h-screen">
       {/* Hero Section */}
-      <section className="section-padding">
+      <section className="medias-hero">
         <div className="section-container">
-          <div className="text-center mb-12">
-            <h1 className="hero-title">Médias</h1>
-            
-            {/* Filtres principaux - Types de médias */}
-            <div className="flex justify-center gap-6 mb-8">
-              {mediaTypes.map((type) => (
-                <button
-                  key={type.id}
-                  onClick={() => {
-                    setActiveMediaType(type.id)
-                    setActiveCategory('tous') // Reset category when switching media type
-                  }}
-                  className={`tab ${activeMediaType === type.id ? 'active' : 'inactive'}`}
-                >
-                  {type.label}
-                </button>
-              ))}
-            </div>
+          <h1 className="hero-title">{t('media.title')}</h1>
+        </div>
+      </section>
 
-            {/* Filtres secondaires - Catégories */}
-            <div className="flex flex-wrap justify-center gap-4">
-              {availableCategories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
-                  className={`px-4 py-2 rounded-full text-small transition-colors ${
-                    activeCategory === category.id
-                      ? 'bg-accent text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
+      {/* Sentinelle pour détecter le sticky */}
+      <div ref={sentinelRef} style={{ height: 0 }} />
+
+      {/* Filtres sticky */}
+      <section className={`medias-filters-section ${isStuck ? 'is-stuck' : ''}`}>
+        <div className="section-container">
+          {/* Filtres principaux - Types de médias */}
+          <div className="medias-type-tabs">
+            {mediaTypes.map((type) => (
+              <button
+                key={type.id}
+                onClick={() => {
+                  setActiveMediaType(type.id)
+                  setActiveCategory('tous')
+                  setVisibleCount(9)
+                }}
+                className={`tab ${activeMediaType === type.id ? 'active' : 'inactive'}`}
+              >
+                {t(type.key)}
+              </button>
+            ))}
+          </div>
+
+          {/* Filtres secondaires - Catégories */}
+          <div className="medias-category-filters">
+            {availableCategories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => { setActiveCategory(category.id); setVisibleCount(9) }}
+                className={`medias-category-btn ${activeCategory === category.id ? 'active' : ''}`}
+              >
+                {t(category.key)}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Contenu des médias */}
-      <section className="section-padding">
+      <section className="medias-content-section">
         <div className="section-container">
           
           {/* Grille des vidéos */}
           {activeMediaType === 'videos' && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMedia.map((video) => {
+              {filteredMedia.slice(0, visibleCount).map((video) => {
                 const videoInfo = getVideoInfo(video.url)
                 return (
                   <div key={video.id} className="card smooth-hover group cursor-pointer">
@@ -194,7 +220,7 @@ export default function Medias(): React.JSX.Element {
                         rel="noopener noreferrer"
                         className="text-small text-accent hover:text-gold transition-colors"
                       >
-                        Regarder →
+                        {t('media.watch')}
                       </a>
                     </div>
                   </div>
@@ -206,7 +232,7 @@ export default function Medias(): React.JSX.Element {
           {/* Liste des audios */}
           {activeMediaType === 'audios' && (
             <div className="space-y-4">
-              {filteredMedia.map((audio) => (
+              {filteredMedia.slice(0, visibleCount).map((audio) => (
                 <div key={audio.id} className="card smooth-hover">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
@@ -238,7 +264,7 @@ export default function Medias(): React.JSX.Element {
                         rel="noopener noreferrer"
                         className="btn-outline text-small"
                       >
-                        Écouter
+                        {t('media.listen')}
                       </a>
                     </div>
                   </div>
@@ -250,7 +276,7 @@ export default function Medias(): React.JSX.Element {
           {/* Galerie photos */}
           {activeMediaType === 'photos' && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMedia.map((photo) => (
+              {filteredMedia.slice(0, visibleCount).map((photo) => (
                 <div key={photo.id} className="card smooth-hover group cursor-pointer">
                   <div className="relative mb-4">
                     <img 
@@ -278,7 +304,7 @@ export default function Medias(): React.JSX.Element {
                       rel="noopener noreferrer"
                       className="text-small text-accent hover:text-gold transition-colors"
                     >
-                      Agrandir →
+                      {t('media.enlarge')}
                     </a>
                   </div>
                 </div>
@@ -286,15 +312,24 @@ export default function Medias(): React.JSX.Element {
             </div>
           )}
 
+          {/* Bouton Voir plus */}
+          {filteredMedia.length > visibleCount && (
+            <div className="medias-voir-plus">
+              <button
+                onClick={() => setVisibleCount(prev => prev + 9)}
+                className="btn-voir-plus"
+              >
+                {t('media.seeMore')} ({filteredMedia.length - visibleCount} {filteredMedia.length - visibleCount > 1 ? t('media.remainingPlural') : t('media.remaining')})
+              </button>
+            </div>
+          )}
+
           {/* Message si aucun résultat */}
           {filteredMedia.length === 0 && (
             <div className="text-center py-16">
-              <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-gray-400 text-2xl">📁</span>
-              </div>
-              <p className="text-body text-gray-500 mb-2">Aucun contenu trouvé</p>
+              <p className="text-body text-gray-500 mb-2">{t('media.noContent')}</p>
               <p className="text-small text-gray-400">
-                Essayez de changer de catégorie ou de type de média
+                {t('media.noContentHint')}
               </p>
             </div>
           )}
@@ -308,42 +343,37 @@ export default function Medias(): React.JSX.Element {
             
             {/* Crédits et informations */}
             <div className="medias-info-block">
-              <h2 className="medias-info-title">Crédits & Informations</h2>
+              <h2 className="medias-info-title">{t('media.credits')}</h2>
               
               <div className="medias-credit-item">
-                <h3 className="medias-credit-subtitle">Photos</h3>
+                <h3 className="medias-credit-subtitle">{t('media.photosCredits')}</h3>
                 <p className="medias-credit-text">
-                  Photos de concert : © Photographe Officiel<br/>
-                  Photos de studio : © Studio Portrait<br/>
-                  Utilisation presse autorisée avec mention des crédits
+                  {t('media.photosCreditsText')}
                 </p>
               </div>
               
               <div className="medias-credit-item">
-                <h3 className="medias-credit-subtitle">Vidéos</h3>
+                <h3 className="medias-credit-subtitle">{t('media.videosCredits')}</h3>
                 <p className="medias-credit-text">
-                  Enregistrements live et extraits d'opéra disponibles en HD. 
-                  Tous droits réservés pour usage commercial.
+                  {t('media.videosCreditsText')}
                 </p>
               </div>
               
               <div className="medias-credit-item">
-                <h3 className="medias-credit-subtitle">Audios</h3>
+                <h3 className="medias-credit-subtitle">{t('media.audiosCredits')}</h3>
                 <p className="medias-credit-text">
-                  Enregistrements studio et live. Qualité CD et Hi-Res disponibles 
-                  sur demande pour les professionnels.
+                  {t('media.audiosCreditsText')}
                 </p>
               </div>
             </div>
 
             {/* Demandes médias */}
             <div className="medias-info-block">
-              <h2 className="medias-info-title">Demandes médias</h2>
+              <h2 className="medias-info-title">{t('media.mediaRequests')}</h2>
               
               <div className="medias-request-card">
                 <p className="medias-request-text">
-                  Pour obtenir des photos haute résolution, des enregistrements 
-                  professionnels ou organiser une séance photo, contactez notre équipe.
+                  {t('media.mediaRequestsText')}
                 </p>
                 
                 <div className="medias-contact-info">
@@ -352,7 +382,7 @@ export default function Medias(): React.JSX.Element {
                       <span>📧</span>
                     </div>
                     <div>
-                      <div className="medias-contact-label">Email médias</div>
+                      <div className="medias-contact-label">{t('media.emailLabel')}</div>
                       <div className="medias-contact-value">
                         <a href="mailto:medias@marie-emeraude.com" className="medias-contact-link">
                           medias@marie-emeraude.com
@@ -366,14 +396,14 @@ export default function Medias(): React.JSX.Element {
                       <span>⏱️</span>
                     </div>
                     <div>
-                      <div className="medias-contact-label">Délai de réponse</div>
-                      <div className="medias-contact-value">48h ouvrables</div>
+                      <div className="medias-contact-label">{t('media.responseTime')}</div>
+                      <div className="medias-contact-value">{t('media.responseTimeVal')}</div>
                     </div>
                   </div>
                 </div>
                 
                 <Link to="/contact" className="btn-medias-request">
-                  Demande de médias
+                  {t('media.mediaRequestBtn')}
                 </Link>
               </div>
             </div>

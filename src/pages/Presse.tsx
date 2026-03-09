@@ -1,7 +1,9 @@
-import  { useState, useMemo } from 'react'
+import  { useState, useMemo, useEffect, useRef } from 'react'
 import { useNotionData } from '../hooks/useNotionData'
 import { getPressArticles } from '../services/notionService'
 import { formatDate } from '../utils/dateUtils';
+import { useTranslation } from 'react-i18next'
+import { useTranslatedArray } from '../hooks/useTranslatedContent'
 //import type { PressData } from '../types/notion.types'
 /*interface PressArticle {
   quote: string
@@ -54,10 +56,30 @@ export default function Presse() {
   const [selectedSource, setSelectedSource] = useState('Toutes les sources')
   const [selectedYear, setSelectedYear] = useState('Toutes les années')
   const { data: articles, loading, error } = useNotionData(getPressArticles)
+  const { t } = useTranslation()
+
+  // Traduire les textes dynamiques des articles
+  const translatedArticles = useTranslatedArray(
+    articles as unknown as Record<string, unknown>[] | undefined,
+    ['quote']
+  ) as unknown as typeof articles
+  const [isStuck, setIsStuck] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current
+    if (!sentinel) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(!entry.isIntersecting),
+      { threshold: 0, rootMargin: '-66px 0px 0px 0px' }
+    )
+    observer.observe(sentinel)
+    return () => observer.disconnect()
+  }, [loading])
 
   // Filtrer les articles à afficher
   const displayedArticles = useMemo(() => {
-    return articles?.filter(article => article.display) || []
+    return translatedArticles?.filter(article => article.display) || []
   }, [articles])
 
   // Extraire les valeurs uniques pour les filtres
@@ -112,12 +134,12 @@ export default function Presse() {
         {/* Hero Section */}
         <section className="presse-hero">
           <div className="section-container">
-            <h1 className="hero-title">Critiques</h1>
+            <h1 className="hero-title">{t('press.title')}</h1>
           </div>
         </section>
         <section className="section-padding">
           <div className="section-container text-center">
-            <p>Chargement des articles de presse...</p>
+            <p>{t('press.loading')}</p>
           </div>
         </section>
       </div>
@@ -130,7 +152,7 @@ export default function Presse() {
         {/* Hero Section */}
         <section className="presse-hero">
           <div className="section-container">
-            <h1 className="hero-title">Critiques</h1>
+            <h1 className="hero-title">{t('press.title')}</h1>
           </div>
         </section>
         <section className="section-padding">
@@ -150,12 +172,15 @@ export default function Presse() {
       {/* Hero Section */}
       <section className="presse-hero">
         <div className="section-container">
-          <h1 className="hero-title">Critiques</h1>
+          <h1 className="hero-title">{t('press.title')}</h1>
         </div>
       </section>
 
+      {/* Sentinelle pour détecter le sticky */}
+      <div ref={sentinelRef} style={{ height: 0 }} />
+
       {/* Filtres */}
-      <section className="presse-filters-section">
+      <section className={`presse-filters-section ${isStuck ? 'is-stuck' : ''}`}>
         <div className="section-container">
           <div className="presse-filters">
             <select
@@ -163,10 +188,10 @@ export default function Presse() {
                 onChange={(e) => setSelectedType(e.target.value)}
                 className="presse-filter-select"
               >
-                <option value="Tous les types">Tous les types ({countByType.all})</option>
-                <option value="critique">Critiques ({countByType.critique})</option>
-                <option value="interview">Interviews ({countByType.interview})</option>
-                <option value="mention">Mentions ({countByType.mention})</option>
+                <option value="Tous les types">{t('press.allTypes')} ({countByType.all})</option>
+                <option value="critique">{t('press.critiques')} ({countByType.critique})</option>
+                <option value="interview">{t('press.interviews')} ({countByType.interview})</option>
+                <option value="mention">{t('press.mentions')} ({countByType.mention})</option>
               </select>
 
             {availableSources.length > 1 && (
@@ -175,7 +200,7 @@ export default function Presse() {
                   onChange={(e) => setSelectedSource(e.target.value)}
                   className="presse-filter-select"
                 >
-                  <option value="Toutes les sources">Toutes les sources</option>
+                  <option value="Toutes les sources">{t('press.allSources')}</option>
                   {availableSources.map(source => (
                     <option key={source} value={source}>{source}</option>
                   ))}
@@ -188,7 +213,7 @@ export default function Presse() {
                   onChange={(e) => setSelectedYear(e.target.value)}
                   className="presse-filter-select"
                 >
-                  <option value="Toutes les années">Toutes les années</option>
+                  <option value="Toutes les années">{t('press.allYears')}</option>
                   {availableYears.map(year => (
                     <option key={year} value={year}>{year}</option>
                   ))}
@@ -224,7 +249,7 @@ export default function Presse() {
                       rel="noopener noreferrer"
                       className="btn-article"
                     >
-                      Lire l'article →
+                      {t('press.readArticle')}
                     </a>
                   )}
                 </div>
@@ -234,7 +259,7 @@ export default function Presse() {
             ) : (
               <div className="text-center">
                 <p className="text-gray-600">
-                  Aucun article ne correspond aux critères sélectionnés.
+                  {t('press.noResults')}
                 </p>
                 <button 
                   onClick={() => {
@@ -244,7 +269,7 @@ export default function Presse() {
                   }}
                   className="btn-contact"
                 >
-                  Réinitialiser les filtres
+                  {t('press.resetFilters')}
                 </button>
               </div>
             )}
@@ -255,23 +280,23 @@ export default function Presse() {
       {/* Autres mentions */}
       <section className="presse-mentions-section">
         <div className="section-container">
-          <h2 className="presse-section-title">Autres mentions</h2>
+          <h2 className="presse-section-title">{t('press.otherMentions')}</h2>
           
           <div className="mentions-grid">
             {additionalQuotes.map((quote, index) => (
               <div key={index} className="mention-card">
-                <svg 
+                <svg
                   className="mention-quote-icon"
-                  viewBox="0 0 24 24" 
+                  viewBox="0 0 24 24"
                   fill="currentColor"
                 >
                   <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
                 </svg>
-                
+
                 <blockquote className="mention-text">
-                  "{quote.quote}"
+                  {quote.quote}
                 </blockquote>
-                
+
                 <cite className="mention-source">— {quote.outlet}</cite>
               </div>
             ))}
@@ -282,28 +307,26 @@ export default function Presse() {
       {/* Section Dossier de presse */}
       <section className="presse-dossier-section">
         <div className="section-container">
-          <h2 className="presse-section-title">Revue de presse</h2>
+          <h2 className="presse-section-title">{t('press.pressReview')}</h2>
           
           <div className="dossier-content">
             <div className="dossier-text">
-              <h3 className="dossier-subtitle">Dossier de presse</h3>
+              <h3 className="dossier-subtitle">{t('press.pressKit')}</h3>
               <p className="dossier-description">
-                Retrouvez l'ensemble des articles et critiques dans notre dossier 
-                de presse complet, disponible en téléchargement.
+                {t('press.pressKitDesc')}
               </p>
               <button className="btn-download">
-                Télécharger le dossier (PDF)
+                {t('press.downloadPdf')}
               </button>
             </div>
             
             <div className="dossier-text">
-              <h3 className="dossier-subtitle">Contact presse</h3>
+              <h3 className="dossier-subtitle">{t('press.pressContact')}</h3>
               <p className="dossier-description">
-                Pour toute demande d'interview, de photos haute résolution ou 
-                d'informations complémentaires, contactez notre attachée de presse.
+                {t('press.pressContactDesc')}
               </p>
               <button className="btn-contact">
-                Demande d'interview
+                {t('press.interviewRequest')}
               </button>
             </div>
           </div>
