@@ -141,7 +141,9 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const currentLang = i18n.language
+  // Normaliser le code langue (ex: "fr-FR" → "fr")
+  const rawLang = i18n.language
+  const currentLang = languages.find(l => rawLang.startsWith(l.code))?.code || 'fr'
 
   const changeLang = (code: string) => {
     i18n.changeLanguage(code)
