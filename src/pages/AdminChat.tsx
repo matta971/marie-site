@@ -158,8 +158,8 @@ export default function AdminChat() {
 
           <label htmlFor="admin-password" className="sr-only">Mot de passe</label>
           <div className="relative mb-5">
-            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-300">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                 <path fillRule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clipRule="evenodd" />
               </svg>
             </div>
@@ -169,7 +169,7 @@ export default function AdminChat() {
               value={password}
               onChange={(e) => { setPassword(e.target.value); setLoginError('') }}
               placeholder="Mot de passe"
-              className="w-full pl-11 pr-4 py-3.5 bg-neutral-50 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-400 focus:bg-white text-sm transition-all"
+              className="w-full pl-12 pr-4 py-3.5 bg-neutral-50 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-400 focus:bg-white text-sm transition-all"
               autoFocus
               disabled={loginLoading}
             />
