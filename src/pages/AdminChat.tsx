@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import Markdown from 'react-markdown'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -157,13 +158,42 @@ export default function AdminChat() {
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[80%] px-4 py-3 rounded-2xl whitespace-pre-wrap text-sm leading-relaxed ${
+              className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'bg-amber-600 text-white rounded-br-md'
+                  ? 'bg-amber-600 text-white rounded-br-md whitespace-pre-wrap'
                   : 'bg-white text-neutral-800 border border-neutral-200 rounded-bl-md shadow-sm'
               }`}
             >
-              {msg.content}
+              {msg.role === 'user' ? msg.content : (
+                <Markdown
+                  components={{
+                    table: ({ children }) => (
+                      <div className="overflow-x-auto my-2 rounded-lg border border-neutral-200">
+                        <table className="w-full text-xs">{children}</table>
+                      </div>
+                    ),
+                    thead: ({ children }) => (
+                      <thead className="bg-neutral-100 text-neutral-600 font-semibold">{children}</thead>
+                    ),
+                    th: ({ children }) => (
+                      <th className="px-3 py-2 text-left whitespace-nowrap">{children}</th>
+                    ),
+                    td: ({ children }) => (
+                      <td className="px-3 py-2 border-t border-neutral-100 whitespace-nowrap">{children}</td>
+                    ),
+                    tr: ({ children }) => (
+                      <tr className="hover:bg-neutral-50">{children}</tr>
+                    ),
+                    p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                    strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                    ul: ({ children }) => <ul className="list-disc pl-4 mb-2">{children}</ul>,
+                    ol: ({ children }) => <ol className="list-decimal pl-4 mb-2">{children}</ol>,
+                    li: ({ children }) => <li className="mb-1">{children}</li>,
+                  }}
+                >
+                  {msg.content}
+                </Markdown>
+              )}
             </div>
           </div>
         ))}
