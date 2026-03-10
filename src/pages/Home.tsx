@@ -67,13 +67,13 @@ export default function Home(): React.JSX.Element {
     ?.slice(0, 5) || []
 
   const mediaItems = featuredMedias.map(media => {
-    let thumbnail = "/images/hero-bg.png"
+    let thumbnail = "/images/media-placeholder.svg"
     let videoUrl = media.url
 
     if (media.url.includes('youtube.com') || media.url.includes('youtu.be')) {
       const videoId = media.url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/)?.[1]
       if (videoId) {
-        thumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+        thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
         videoUrl = `https://www.youtube.com/watch?v=${videoId}`
       }
     }
@@ -103,7 +103,7 @@ export default function Home(): React.JSX.Element {
             <h1 className="hero-title">
               {homeContent.hero.name}<br />{homeContent.hero.surname}
             </h1>
-            <p className="hero-subtitle">{homeContent.hero.title}</p>
+            <p className="hero-subtitle">{t('home.heroTitle')}</p>
           </div>
         </div>
       </section>
@@ -231,6 +231,9 @@ export default function Home(): React.JSX.Element {
                       <img
                         src={item.thumbnail}
                         alt={item.title}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/images/media-placeholder.svg'
+                        }}
                         style={{
                           width: '100%',
                           height: '100%',

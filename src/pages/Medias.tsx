@@ -98,7 +98,7 @@ export default function Medias(): React.JSX.Element {
     
     return {
       embedUrl: videoId ? `https://www.youtube.com/embed/${videoId}` : url,
-      thumbnail: videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '/images/video-placeholder.jpg',
+      thumbnail: videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '/images/media-placeholder.svg',
       watchUrl: videoId ? `https://www.youtube.com/watch?v=${videoId}` : url
     }
   }
@@ -197,7 +197,7 @@ export default function Medias(): React.JSX.Element {
                         alt={video.title}
                         className="w-full h-48 object-cover rounded-lg"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = '/images/video-placeholder.jpg'
+                          (e.target as HTMLImageElement).src = '/images/media-placeholder.svg'
                         }}
                       />
                       {/* Play button overlay */}
