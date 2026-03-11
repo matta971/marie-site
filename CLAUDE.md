@@ -8,7 +8,7 @@ Marie-Émeraude Alcime est une mezzo-soprano professionnelle. Ce site est son si
 ### Frontend (ce repo)
 - **Stack** : React 19 + TypeScript 5.8 + Tailwind CSS v4 + Vite 7
 - **Router** : React Router DOM 7
-- **Dépendances clés** : Swiper (carrousels), react-markdown + remark-gfm (rendu markdown/tableaux GFM dans le chat admin), axios
+- **Dépendances clés** : Swiper (carrousels), react-markdown + remark-gfm (rendu markdown/tableaux GFM dans le chat admin), axios, react-i18next + i18next + i18next-browser-languagedetector (i18n 7 langues), react-helmet-async (SEO)
 - **Déploiement** : Cloudflare Pages (`marie-site.pages.dev`)
 - **Build** : `npm run build` (tsc + vite build)
 - **Dev** : `npm run dev` (port 5173)
@@ -27,10 +27,23 @@ Toutes les données dynamiques sont stockées dans Notion (bases de données + p
 ```
 src/
 ├── App.tsx                    # Router principal
-├── main.tsx                   # Point d'entrée
+├── main.tsx                   # Point d'entrée (HelmetProvider + BrowserRouter)
 ├── data/site.ts               # Données statiques (vidéos, presse, badges, événements passés)
 ├── types/notion.types.ts      # Types TypeScript pour les données Notion
-├── hooks/useNotionData.ts     # Hook générique fetch + loading + error + refresh
+├── i18n/
+│   ├── index.ts               # Configuration i18next (7 langues, détection navigateur)
+│   └── locales/
+│       ├── fr.json            # Français (langue par défaut)
+│       ├── en.json            # Anglais
+│       ├── de.json            # Allemand
+│       ├── it.json            # Italien
+│       ├── es.json            # Espagnol
+│       ├── pt.json            # Portugais
+│       └── ru.json            # Russe
+├── hooks/
+│   ├── useNotionData.ts       # Hook générique fetch + loading + error + refresh
+│   ├── useTranslatedContent.ts # Traduction automatique du contenu Notion (appelle /api/translate)
+│   └── useScrollReveal.ts     # Hook d'animation au scroll (IntersectionObserver)
 ├── services/
 │   ├── notionService.ts       # Appels API vers le backend (cache 5min côté client)
 │   ├── biographyService.ts    # Service biographie
@@ -46,8 +59,9 @@ src/
 │   ├── Contact.tsx            # Formulaire de contact
 │   └── AdminChat.tsx          # Chatbot admin (sans Header/Footer)
 ├── components/
-│   ├── Header.tsx             # Navigation principale
+│   ├── Header.tsx             # Navigation + sélecteur de langue (drapeaux SVG)
 │   ├── Footer.tsx             # Pied de page
+│   ├── SEO.tsx                # Meta tags dynamiques + Schema.org JSON-LD
 │   ├── EventTable.tsx         # Tableau d'événements
 │   ├── PressQuote.tsx         # Citation presse
 │   ├── MediaEmbed.tsx         # Embed média
@@ -118,6 +132,9 @@ src/
 - `/api/testimonials` — Témoignages avec Afficher=true
 - `/api/biography` — Blocks de la page biographie
 
+### POST (publics)
+- `/api/translate` — Traduction de texte via MyMemory API avec cache Cloudflare KV (body: `{ text, lang }`)
+
 ### POST (authentifié)
 - `/api/chat` — Endpoint chatbot (Authorization: Bearer ADMIN_PASSWORD)
 
@@ -135,13 +152,31 @@ npx wrangler secret put X   # Ajouter un secret
 npx wrangler secret list    # Lister les secrets
 ```
 
+## Internationalisation (i18n)
+- **7 langues** : Français (défaut), Anglais, Allemand, Italien, Espagnol, Portugais, Russe
+- **UI statique** : react-i18next avec fichiers JSON dans `src/i18n/locales/`
+- **Contenu Notion** : traduction dynamique via `useTranslatedContent` / `useTranslatedArray` → appelle `POST /api/translate`
+- **Backend** : MyMemory API avec cache Cloudflare KV (namespace `TRANSLATIONS`, TTL 30 jours)
+- **Sélecteur de langue** : drapeaux SVG dans le Header, dropdown au clic
+- **Détection** : i18next-browser-languagedetector, normalisation `fr-FR` → `fr`
+- **Langues supportées par MyMemory** : `{ en: 'en-GB', de: 'de-DE', it: 'it-IT', es: 'es-ES', pt: 'pt-BR', ru: 'ru-RU' }`
+
+## SEO
+- **react-helmet-async** : meta tags dynamiques par page (title, description, og:*, twitter:*)
+- **Schema.org** : JSON-LD Person (artiste) + WebSite
+- **Fichiers statiques** : `public/robots.txt`, `public/sitemap.xml`
+- **URL du site** : `https://marie-site.pages.dev`
+- **Composant** : `src/components/SEO.tsx` inclus dans le layout des routes publiques
+
 ## Design
 - Thème clair (bg-white)
 - Couleurs d'accent : émeraude (`#046D5D`) + or (`#D4AF37`)
 - Variables CSS : `--color-emerald-deep: #046D5D`, `--color-gold-light: #D4AF37`
 - Polices : Cormorant Garamond (titres, serif italic) + Lato (body, sans-serif)
 - Layout : Header fixe + contenu flex + Footer
+- Breakpoint mobile/desktop : 1024px (header responsive avec tailles progressives 1024/1200/1400px)
 - Page admin : layout indépendant (pas de Header/Footer), mêmes fonts et couleurs que le site
+- Placeholder média : `public/images/media-placeholder.svg` (SVG émeraude/or avec note de musique)
 
 ## Skills & MCP Servers
 - **Skill `ui-ux-pro-max`** (`.claude/skills/ui-ux-pro-max/`) — Intelligence design complète : 67 styles, 96 palettes, 57 pairings typo, guidelines UX, données pour React/Tailwind
@@ -160,3 +195,6 @@ npx wrangler secret list    # Lister les secrets
 - Le chatbot utilise Claude Sonnet (`claude-sonnet-4-6`) pour les réponses rapides et le coût faible
 - `react-markdown` nécessite `remark-gfm` pour parser les tableaux GFM — sans ce plugin, les tableaux s'affichent en texte brut
 - Le formulaire de contact (`Contact.tsx`) n'envoie rien au backend pour le moment (console.log uniquement)
+- YouTube thumbnails : utiliser `hqdefault.jpg` (toujours disponible), pas `maxresdefault.jpg` (souvent 404)
+- Cloudflare KV namespace `TRANSLATIONS` (id: `9ec708b6ccbc43ce9a5bad9f153b8430`) — binding dans `wrangler.toml`
+- Vérification TypeScript : utiliser `./node_modules/.bin/tsc --noEmit` (pas `npx tsc` qui peut installer un mauvais package)
