@@ -36,7 +36,7 @@ export default function App(): React.JSX.Element {
                 <Route path="/enseignement" element={<Enseignement />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="*" element={
-                  <div className="flex flex-col items-center justify-center py-24 px-6 text-center">
+                  <div className="flex flex-col items-center justify-center min-h-[60vh] mt-20 py-24 px-6 text-center">
                     <h1 className="text-6xl font-cormorant font-bold text-emerald-deep mb-4">404</h1>
                     <p className="text-xl text-neutral-600 mb-8">Cette page n'existe pas.</p>
                     <a href="/" className="inline-block px-6 py-3 bg-emerald-deep text-white rounded-lg hover:opacity-90 transition">
