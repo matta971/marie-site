@@ -28,10 +28,10 @@ export function useTranslatedContent(text: string | undefined | null): string {
   const [translated, setTranslated] = useState<string>(source)
 
   useEffect(() => {
-    if (!source || lang === 'fr') {
-      setTranslated(source)
-      return
-    }
+    // Always show original content immediately
+    setTranslated(source)
+
+    if (!source || lang === 'fr') return
 
     let cancelled = false
     translateText(source, lang).then(result => {
@@ -60,11 +60,15 @@ export function useTranslatedArray<T extends Record<string, unknown>>(
 
   const [translated, setTranslated] = useState<T[]>(source)
 
+  // Keep translated in sync with source immediately (show original while translating)
   useEffect(() => {
-    if (!source.length || lang === 'fr') {
+    if (source.length) {
       setTranslated(source)
-      return
     }
+  }, [source])
+
+  useEffect(() => {
+    if (!source.length || lang === 'fr') return
 
     let cancelled = false
 

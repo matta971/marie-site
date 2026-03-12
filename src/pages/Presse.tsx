@@ -80,7 +80,7 @@ export default function Presse() {
   // Filtrer les articles à afficher
   const displayedArticles = useMemo(() => {
     return translatedArticles?.filter(article => article.display) || []
-  }, [articles])
+  }, [translatedArticles])
 
   // Extraire les valeurs uniques pour les filtres
   const availableSources = useMemo(() => {
