@@ -196,6 +196,10 @@
     "subject": "Betreff",
     "message": "Nachricht",
     "privacy": "Ich akzeptiere die Datenschutzrichtlinie",
-    "send": "Senden"
+    "send": "Senden",
+    "sending": "Wird gesendet…",
+    "success": "Nachricht gesendet. Marie meldet sich so bald wie möglich.",
+    "error": "Senden fehlgeschlagen. Bitte erneut versuchen oder direkt eine E-Mail schreiben.",
+    "tooMany": "Zu viele Nachrichten gesendet. Bitte in einer Stunde erneut versuchen."
   }
 }

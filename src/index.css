@@ -3438,3 +3438,32 @@ body {
     color: black;
   }
 }
+
+/* ============================================================
+   FORMULAIRE DE CONTACT — retours d'envoi
+   ============================================================ */
+.form-feedback {
+  margin-top: 1rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border-left: 3px solid;
+}
+
+.form-feedback-success {
+  background: rgba(4, 109, 93, 0.08);
+  border-left-color: var(--color-emerald-deep, #046D5D);
+  color: #04564a;
+}
+
+.form-feedback-error {
+  background: rgba(176, 58, 46, 0.08);
+  border-left-color: #b03a2e;
+  color: #8c2d24;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

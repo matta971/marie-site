@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://backend-site-marie-emeraude.matta971.workers.dev/api'
+
+type Statut = 'repos' | 'envoi' | 'succes' | 'erreur'
+
 // Composant ContactForm intégré
 function ContactForm() {
   const [formData, setFormData] = useState({
@@ -9,15 +13,50 @@ function ContactForm() {
     telephone: '',
     objet: '',
     message: '',
-    acceptePolicy: false
+    acceptePolicy: false,
+    website: '' // pot de miel : invisible, seuls les robots le remplissent
   })
+  const [statut, setStatut] = useState<Statut>('repos')
+  const [messageErreur, setMessageErreur] = useState('')
 
   const { t } = useTranslation()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Formulaire soumis:', formData)
-    // Ici on traiterait l'envoi du formulaire
+    if (statut === 'envoi') return
+
+    setStatut('envoi')
+    setMessageErreur('')
+
+    try {
+      const reponse = await fetch(`${API_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nom: formData.nom,
+          email: formData.email,
+          telephone: formData.telephone,
+          objet: formData.objet,
+          message: formData.message,
+          website: formData.website
+        })
+      })
+
+      if (reponse.ok) {
+        setStatut('succes')
+        setFormData({
+          nom: '', email: '', telephone: '', objet: '',
+          message: '', acceptePolicy: false, website: ''
+        })
+        return
+      }
+
+      setStatut('erreur')
+      setMessageErreur(reponse.status === 429 ? t('contact.tooMany') : t('contact.error'))
+    } catch {
+      setStatut('erreur')
+      setMessageErreur(t('contact.error'))
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -118,9 +157,34 @@ function ContactForm() {
         </label>
       </div>
 
-      <button type="submit" className="submit-btn">
-        {t('contact.send')}
+      {/* Pot de miel — caché aux humains, aux lecteurs d'écran et à la tabulation */}
+      <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px' }}>
+        <label htmlFor="website">Ne pas remplir</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          value={formData.website}
+          onChange={handleChange}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
+      <button type="submit" className="submit-btn" disabled={statut === 'envoi'}>
+        {statut === 'envoi' ? t('contact.sending') : t('contact.send')}
       </button>
+
+      {statut === 'succes' && (
+        <p role="status" className="form-feedback form-feedback-success">
+          {t('contact.success')}
+        </p>
+      )}
+      {statut === 'erreur' && (
+        <p role="alert" className="form-feedback form-feedback-error">
+          {messageErreur}
+        </p>
+      )}
     </form>
   )
 }

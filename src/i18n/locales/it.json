@@ -196,6 +196,10 @@
     "subject": "Oggetto",
     "message": "Messaggio",
     "privacy": "Accetto l'informativa sulla privacy",
-    "send": "Invia"
+    "send": "Invia",
+    "sending": "Invio in corso…",
+    "success": "Messaggio inviato. Marie risponderà al più presto.",
+    "error": "Invio non riuscito. Riprova, oppure scrivi direttamente via e-mail.",
+    "tooMany": "Troppi messaggi inviati. Riprova tra un'ora."
   }
 }

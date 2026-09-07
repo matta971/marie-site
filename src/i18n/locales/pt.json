@@ -196,6 +196,10 @@
     "subject": "Assunto",
     "message": "Mensagem",
     "privacy": "Aceito a política de privacidade",
-    "send": "Enviar"
+    "send": "Enviar",
+    "sending": "A enviar…",
+    "success": "Mensagem enviada. Marie responderá assim que possível.",
+    "error": "O envio falhou. Tente novamente ou escreva diretamente por e-mail.",
+    "tooMany": "Demasiadas mensagens enviadas. Tente novamente dentro de uma hora."
   }
 }

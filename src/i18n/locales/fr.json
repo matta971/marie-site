@@ -196,6 +196,10 @@
     "subject": "Objet",
     "message": "Message",
     "privacy": "J'accepte la politique de confidentialité",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "sending": "Envoi en cours…",
+    "success": "Message envoyé. Marie vous répondra dès que possible.",
+    "error": "L'envoi a échoué. Réessayez, ou écrivez directement par e-mail.",
+    "tooMany": "Trop de messages envoyés. Réessayez dans une heure."
   }
 }
