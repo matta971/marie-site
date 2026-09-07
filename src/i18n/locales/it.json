@@ -79,7 +79,11 @@
     "german": "Tedesco",
     "germanDesc": "Lieder e oratori - Livello professionale",
     "english": "Inglese",
-    "englishDesc": "Repertorio contemporaneo e oratori inglesi"
+    "englishDesc": "Repertorio contemporaneo e oratori inglesi",
+    "intro": "Scoprite l'ampiezza artistica di Marie-Émeraude Alcime attraverso i suoi ruoli operistici, le sue interpretazioni di musica sacra e i suoi recital. Un percorso che unisce tradizione e modernità, tra repertorio francese, italiano e tedesco.",
+    "cardMelodie": "Specialista della mélodie francese e dell'opéra-comique, con interpretazioni riconosciute in Bizet, Massenet e Gounod.",
+    "cardSacre": "Oratori, messe e stabat mater: un approccio spirituale e intimo al repertorio sacro barocco e romantico.",
+    "cardEnseignement": "Trasmissione del mestiere lirico, attraverso masterclass e coaching vocale su tecnica ed espressione."
   },
   "services": {
     "title": "Insegnamento",

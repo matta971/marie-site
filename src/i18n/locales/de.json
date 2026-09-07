@@ -79,7 +79,11 @@
     "german": "Deutsch",
     "germanDesc": "Lieder und Oratorien - Professionelles Niveau",
     "english": "Englisch",
-    "englishDesc": "Zeitgenössisches Repertoire und englische Oratorien"
+    "englishDesc": "Zeitgenössisches Repertoire und englische Oratorien",
+    "intro": "Entdecken Sie die künstlerische Bandbreite von Marie-Émeraude Alcime in ihren Opernrollen, ihren Interpretationen geistlicher Musik und ihren Liederabenden. Ein Weg zwischen Tradition und Moderne, durch das französische, italienische und deutsche Repertoire.",
+    "cardMelodie": "Spezialistin für französische Mélodie und Opéra-comique, mit anerkannten Interpretationen von Bizet, Massenet und Gounod.",
+    "cardSacre": "Oratorien, Messen und Stabat mater: ein spiritueller, intimer Zugang zum barocken und romantischen geistlichen Repertoire.",
+    "cardEnseignement": "Weitergabe des lyrischen Handwerks, durch Meisterkurse und Gesangscoaching zu Technik und Ausdruck."
   },
   "services": {
     "title": "Unterricht",

@@ -290,9 +290,7 @@ export default function Repertoire(): React.JSX.Element {
           <div className="text-center mb-8">
             <h1 className="hero-title mb-6">{t('repertoire.title')}</h1>
             <p className="text-body mx-auto leading-relaxed">
-              Découvrez l'étendue artistique de Marie-Émeraude Alcime à travers ses rôles
-              d'opéra, ses interprétations de musique sacrée et ses récitals. Un parcours
-              qui allie tradition et modernité, entre répertoire français, italien et allemand.
+              {t('repertoire.intro')}
             </p>
           </div>
         </div>
@@ -383,8 +381,7 @@ export default function Repertoire(): React.JSX.Element {
             <div className="text-center">
               <h3 className="specialite-subsection-title">Répertoire français</h3>
               <p className="text-body">
-                Spécialiste des mélodies françaises et de l'opéra-comique. 
-                Interprétations reconnues dans Bizet, Massenet et Gounod.
+                {t('repertoire.cardMelodie')}
               </p>
             </div>
 
@@ -392,8 +389,7 @@ export default function Repertoire(): React.JSX.Element {
             <div className="text-center">
               <h3 className="specialite-subsection-title">Musique sacrée</h3>
               <p className="text-body">
-                Oratorios, messes et stabat mater. Une approche spirituelle 
-                et intimiste du répertoire sacré baroque et romantique.
+                {t('repertoire.cardSacre')}
               </p>
             </div>
 
@@ -401,8 +397,7 @@ export default function Repertoire(): React.JSX.Element {
             <div className="text-center">
               <h3 className="specialite-subsection-title">Pédagogie vocale</h3>
               <p className="text-body">
-                Transmission du savoir-faire lyrique. Masterclasses et 
-                coaching vocal pour développer la technique et l'expression.
+                {t('repertoire.cardEnseignement')}
               </p>
             </div>
           </div>
