@@ -47,6 +47,41 @@ function richTextToHtml(richTextArray: any[]): string {
   }).join('');
 }
 
+// Découpe une citation « texte - Source, année ».
+// Le séparateur est un tiret ENTOURÉ D'ESPACES : découper sur n'importe quel
+// tiret casse les citations contenant un trait d'union (Marie-Émeraude Alcime,
+// Quimper-Karadec…), ce qui tronquait la citation au premier mot composé.
+// On retient le DERNIER séparateur espacé, la source venant toujours en fin.
+function parseCitation(plainText: string): { quote: string; source: string; date?: string } | null {
+  const cleanText = plainText.replace(/["“”„«»‘’]/g, '').trim();
+  if (!cleanText) return null;
+
+  const sep = /\s[-–—]\s/g;
+  let lastIndex = -1, lastLength = 0, m: RegExpExecArray | null;
+  while ((m = sep.exec(cleanText)) !== null) {
+    lastIndex = m.index;
+    lastLength = m[0].length;
+  }
+
+  let quote = cleanText;
+  let after = '';
+  if (lastIndex !== -1) {
+    quote = cleanText.substring(0, lastIndex).trim();
+    after = cleanText.substring(lastIndex + lastLength).trim();
+  }
+
+  if (!quote) return null;
+  if (!after) return { quote, source: 'Source non spécifiée', date: undefined };
+
+  const commaIndex = after.indexOf(',');
+  if (commaIndex === -1) return { quote, source: after, date: undefined };
+  return {
+    quote,
+    source: after.substring(0, commaIndex).trim(),
+    date: after.substring(commaIndex + 1).trim(),
+  };
+}
+
 // Fonction pour récupérer et parser la page Biographie
 export async function getBiographyContent(): Promise<BiographyContent> {
   const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://backend-site-marie-emeraude.matta971.workers.dev/api';
@@ -118,45 +153,13 @@ function parseBiographyBlocks(blocks: any[]): BiographyContent {
           case 'distinctions':
             content.distinctions += html + '<br/><br/>';
             break;
-          case 'citations':
-            // Parser les citations en gérant les guillemets stylisés
+          case 'citations': {
             const plainText = block.paragraph.rich_text
               .map((t: any) => t.plain_text)
               .join('');
-            
-            // Retirer TOUS les types de guillemets
-            // \u201C = " (left double quotation mark)
-            // \u201D = " (right double quotation mark)
-            // \u201E = „ (double low quotation mark)
-            // \u2018 = ' (left single quotation mark)
-            // \u2019 = ' (right single quotation mark)
-            const cleanText = plainText.replace(/["\u201C\u201D\u201E«»\u2018\u2019''""]/g, '').trim();
-            
-            // Ensuite, parser avec le tiret comme séparateur
-            const parts = cleanText.split(/[-–—]/);
-            
-            if (parts.length >= 2) {
-              const quotePart = parts[0].trim();
-              const afterDash = parts.slice(1).join('-').trim();
-              
-              // Séparer source et date par la virgule
-              const commaIndex = afterDash.indexOf(',');
-              let source = afterDash;
-              let date = undefined;
-              
-              if (commaIndex !== -1) {
-                source = afterDash.substring(0, commaIndex).trim();
-                date = afterDash.substring(commaIndex + 1).trim();
-              }
-              
-              if (quotePart) {
-                content.pressCitations.push({
-                  quote: quotePart,
-                  source: source,
-                  date: date
-                });
-              }
-            }
+            const parsed = parseCitation(plainText);
+            if (parsed) content.pressCitations.push(parsed);
+          }
             break;
         }
       }
@@ -203,41 +206,8 @@ function parseBiographyBlocks(blocks: any[]): BiographyContent {
         .join('');
       
       if (currentSection === 'citations' && plainText) {
-        // Retirer TOUS les guillemets avec les codes Unicode
-        const cleanText = plainText.replace(/["\u201C\u201D\u201E«»\u2018\u2019''""]/g, '').trim();
-        
-        // Parser avec le tiret comme séparateur
-        const parts = cleanText.split(/[-–—]/);
-        
-        if (parts.length >= 2) {
-          const quotePart = parts[0].trim();
-          const afterDash = parts.slice(1).join('-').trim();
-          
-          // Séparer source et date par la virgule
-          const commaIndex = afterDash.indexOf(',');
-          let source = afterDash;
-          let date = undefined;
-          
-          if (commaIndex !== -1) {
-            source = afterDash.substring(0, commaIndex).trim();
-            date = afterDash.substring(commaIndex + 1).trim();
-          }
-          
-          if (quotePart) {
-            content.pressCitations.push({
-              quote: quotePart,
-              source: source,
-              date: date
-            });
-          }
-        } else if (cleanText) {
-          // Si pas de tiret, tout est la citation
-          content.pressCitations.push({
-            quote: cleanText,
-            source: 'Source non spécifiée',
-            date: undefined
-          });
-        }
+        const parsed = parseCitation(plainText);
+        if (parsed) content.pressCitations.push(parsed);
       }
     }
   });
