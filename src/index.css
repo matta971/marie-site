@@ -498,16 +498,21 @@ body {
    ============================================================ */
 .hero {
   background:
-    /* Gradient émeraude dominant + touche dorée */
+    /* Voile émeraude et or, allégé à environ 60 % de son opacité d'origine :
+       la photo de fond est une façade éclairée au crépuscule, que le voile
+       initial éteignait complètement. */
     linear-gradient(135deg,
-      rgba(4, 109, 93, 0.88) 0%,
-      rgba(3, 90, 76, 0.85) 30%,
-      rgba(4, 109, 93, 0.78) 50%,
-      rgba(139, 125, 58, 0.65) 80%,
-      rgba(212, 175, 55, 0.6) 100%),
-    url('/images/hero-bg.png');
+      rgba(4, 109, 93, 0.53) 0%,
+      rgba(3, 90, 76, 0.51) 30%,
+      rgba(4, 109, 93, 0.47) 50%,
+      rgba(139, 125, 58, 0.39) 80%,
+      rgba(212, 175, 55, 0.36) 100%),
+    image-set(url('/images/hero-bg.webp') type('image/webp'),
+              url('/images/hero-bg.jpg') type('image/jpeg'));
   background-size: cover;
-  background-position: center;
+  /* Cadrage bas : garde le fronton entier et place la silhouette dans le tiers
+     droit, hors de la zone où se pose le titre. */
+  background-position: center 70%;
   background-attachment: fixed;
   min-height: 100vh;
   display: flex;
