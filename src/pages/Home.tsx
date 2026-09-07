@@ -60,11 +60,26 @@ export default function Home(): React.JSX.Element {
     })
   }, [])
 
-  // Filtrer et préparer les médias en vedette
-  const featuredMedias = medias
-    ?.filter(m => m.featured && m.type.toLowerCase().includes('vidéo'))
-    ?.sort((a, b) => a.order - b.order)
-    ?.slice(0, 5) || []
+  // Filtrer et préparer les médias en vedette.
+  // Deux pièges corrigés ici :
+  //  - le type peut s'écrire « video » ou « vidéo » selon la saisie ; le tool
+  //    du chatbot admin n'écrit QUE « video » (enum sans accent), donc tester
+  //    l'accent seul rendait invisible tout média ajouté par ce biais ;
+  //  - « Mise en avant » n'est pas modifiable via le chatbot (buildMediaProps
+  //    ne l'écrit pas), donc l'exiger vide le carrousel. On s'en sert pour
+  //    prioriser, plus pour filtrer.
+  const isVideo = (type?: string) => {
+    const t = (type || '').toLowerCase()
+    return t.includes('video') || t.includes('vidéo')
+  }
+
+  const featuredMedias = (medias ?? [])
+    .filter(m => isVideo(m.type) && m.url)
+    .sort((a, b) => {
+      if (a.featured !== b.featured) return a.featured ? -1 : 1
+      return a.order - b.order
+    })
+    .slice(0, 5)
 
   const mediaItems = featuredMedias.map(media => {
     let thumbnail = "/images/media-placeholder.svg"
