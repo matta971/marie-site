@@ -2,10 +2,10 @@ import type { EventItem } from '../components/EventTable'
 
 
 export const videos = [
-{ title: "Ponchielli — Voce di donna o d'angelo (La Cieca)", url: 'https://www.youtube.com/embed/hCBhh4J9J_8' },
-{ title: 'Rossini — Di tanti palpiti (Tancredi)', url: 'https://www.youtube.com/embed/7LEYnKna9XU' },
-{ title: "Verdi — Ulrica, Re dell'abisso (Il ballo in maschera)", url: 'https://www.youtube.com/embed/gM1b4WjahMI' },
-{ title: "Interview — Talents d'Outre-Mer (INAUG)", url: 'https://www.youtube.com/embed/_S2GjuBozJg' },
+{ title: "Voce di donna o d'angelo, La Cieca (Ponchielli)", url: 'https://www.youtube.com/embed/hCBhh4J9J_8' },
+{ title: 'Di tanti palpiti, Tancredi (Rossini)', url: 'https://www.youtube.com/embed/7LEYnKna9XU' },
+{ title: "Ulrica, Re dell'abisso, Il ballo in maschera (Verdi)", url: 'https://www.youtube.com/embed/gM1b4WjahMI' },
+{ title: "Interview, Talents d'Outre-Mer (INAUG)", url: 'https://www.youtube.com/embed/_S2GjuBozJg' },
 ] as const
 
 

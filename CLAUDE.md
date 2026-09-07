@@ -9,7 +9,7 @@ Marie-Émeraude Alcime est une mezzo-soprano professionnelle. Ce site est son si
 - **Stack** : React 19 + TypeScript 5.8 + Tailwind CSS v4 + Vite 7
 - **Router** : React Router DOM 7
 - **Dépendances clés** : Swiper (carrousels), react-markdown + remark-gfm (rendu markdown/tableaux GFM dans le chat admin), axios, react-i18next + i18next + i18next-browser-languagedetector (i18n 7 langues), react-helmet-async (SEO)
-- **Déploiement** : Cloudflare Pages (`marie-site.pages.dev`)
+- **Déploiement** : Cloudflare Pages (`marie-emeraude.com`, ex-`marie-site.pages.dev`)
 - **Build** : `npm run build` (tsc + vite build)
 - **Dev** : `npm run dev` (port 5173)
 
@@ -165,7 +165,7 @@ npx wrangler secret list    # Lister les secrets
 - **react-helmet-async** : meta tags dynamiques par page (title, description, og:*, twitter:*)
 - **Schema.org** : JSON-LD Person (artiste) + WebSite
 - **Fichiers statiques** : `public/robots.txt`, `public/sitemap.xml`
-- **URL du site** : `https://marie-site.pages.dev`
+- **URL du site** : `https://marie-emeraude.com`
 - **Composant** : `src/components/SEO.tsx` inclus dans le layout des routes publiques
 
 ## Design
