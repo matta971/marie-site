@@ -146,7 +146,7 @@
     "remainingPlural": "restantes",
     "credits": "Créditos & Informações",
     "photosCredits": "Fotos",
-    "photosCreditsText": "Fotos de concerto: © Fotógrafo Oficial\nFotos de estúdio: © Estúdio Retrato\nUso para imprensa autorizado com menção de crédito",
+    "photosCreditsText": "Outras fotografias: © Marie-Émeraude Alcime e Opéra-Théâtre de l'Eurométropole de Metz. Utilização pela imprensa autorizada com menção dos créditos.",
     "videosCredits": "Vídeos",
     "videosCreditsText": "Gravações ao vivo e trechos de ópera disponíveis em HD. Todos os direitos reservados para uso comercial.",
     "audiosCredits": "Áudio",
@@ -156,7 +156,8 @@
     "emailLabel": "E-mail de mídia",
     "responseTime": "Tempo de resposta",
     "responseTimeVal": "48 horas úteis",
-    "mediaRequestBtn": "Solicitação de mídia"
+    "mediaRequestBtn": "Solicitação de mídia",
+    "photosCreditsNicky": "Fotografias em traje crioulo: © Nicky Mariette"
   },
   "seo": {
     "homeTitle": "Marie-Émeraude Alcime, Mezzo-soprano | Ópera, Recital, Oratório",

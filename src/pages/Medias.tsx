@@ -348,6 +348,17 @@ export default function Medias(): React.JSX.Element {
               <div className="medias-credit-item">
                 <h3 className="medias-credit-subtitle">{t('media.photosCredits')}</h3>
                 <p className="medias-credit-text">
+                  {t('media.photosCreditsNicky')}{' '}
+                  <a
+                    href="https://nickymariette.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-link"
+                  >
+                    nickymariette.com
+                  </a>
+                </p>
+                <p className="medias-credit-text">
                   {t('media.photosCreditsText')}
                 </p>
               </div>
