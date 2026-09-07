@@ -1,3 +1,11 @@
+// Fuseau des lieux de concert. Les dates Notion portent leur décalage
+// (ex. 2026-10-03T16:30:00+02:00) ; sans `timeZone` explicite, toLocale*
+// convertit dans le fuseau du VISITEUR, ce qui décale l'heure et parfois
+// le jour. On épingle donc l'affichage sur l'heure du lieu.
+// À revoir si un concert a lieu hors de France métropolitaine (Guadeloupe…) :
+// il faudrait alors un fuseau par événement.
+export const VENUE_TIME_ZONE = 'Europe/Paris';
+
 // Fonction pour formater les dates
 export function formatDate(dateString: string): string {
   if (!dateString) return '';
@@ -10,7 +18,8 @@ export function formatDate(dateString: string): string {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: VENUE_TIME_ZONE
   };
   
   // Si l'heure est présente (format avec T)
@@ -30,7 +39,8 @@ export const formatDateLong = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = { 
     day: 'numeric', 
     month: 'long', 
-    year: 'numeric' 
+    year: 'numeric',
+    timeZone: VENUE_TIME_ZONE
   };
   return date.toLocaleDateString('fr-FR', options);
 };
@@ -52,7 +62,8 @@ export const formatMonthYear = (dateString: string): string => {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = { 
     month: 'long', 
-    year: 'numeric' 
+    year: 'numeric',
+    timeZone: VENUE_TIME_ZONE
   };
   return date.toLocaleDateString('fr-FR', options);
 };
@@ -81,10 +92,14 @@ export const sortByDate = <T extends { date: string }>(
 // Fonction pour obtenir le mois d'une date
 export const getMonth = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('fr-FR', { month: 'long' });
+  return date.toLocaleDateString('fr-FR', { month: 'long', timeZone: VENUE_TIME_ZONE });
 };
 
 // Fonction pour obtenir l'année d'une date
 export const getYear = (dateString: string): string => {
-  return new Date(dateString).getFullYear().toString();
+  // getFullYear() lit le fuseau du visiteur : on formate explicitement.
+  return new Intl.DateTimeFormat('fr-FR', {
+    year: 'numeric',
+    timeZone: VENUE_TIME_ZONE
+  }).format(new Date(dateString));
 };
