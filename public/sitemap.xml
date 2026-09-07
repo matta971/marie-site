@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://marie-site.pages.dev/</loc>
+    <loc>https://marie-emeraude.com/</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://marie-site.pages.dev/biographie</loc>
+    <loc>https://marie-emeraude.com/biographie</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://marie-site.pages.dev/repertoire</loc>
+    <loc>https://marie-emeraude.com/repertoire</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://marie-site.pages.dev/enseignement</loc>
+    <loc>https://marie-emeraude.com/enseignement</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://marie-site.pages.dev/agenda</loc>
+    <loc>https://marie-emeraude.com/agenda</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://marie-site.pages.dev/presse</loc>
+    <loc>https://marie-emeraude.com/presse</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://marie-site.pages.dev/medias</loc>
+    <loc>https://marie-emeraude.com/medias</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://marie-site.pages.dev/contact</loc>
+    <loc>https://marie-emeraude.com/contact</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>

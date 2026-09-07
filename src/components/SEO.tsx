@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 
-const SITE_URL = 'https://marie-site.pages.dev'
+const SITE_URL = 'https://marie-emeraude.com'
 const SITE_NAME = 'Marie-Émeraude Alcime'
 const DEFAULT_IMAGE = `${SITE_URL}/images/portrait-face-main-buste.jpg`
 
