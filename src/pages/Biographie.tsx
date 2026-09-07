@@ -182,26 +182,29 @@ export default function Biographie(): React.JSX.Element {
             <div className="bio-gallery-column">
               {/* Deux images côte à côte en haut */}
               <div className="bio-gallery-row">
-                <div className="bio-gallery-image bio-image-small">
-                  <img 
-                    src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=500&auto=format&fit=crop"
-                    alt="Performance 1"
+                <div className="bio-gallery-image bio-image-small focus-top">
+                  <img
+                    src="/images/bio-parcours-1.jpg"
+                    alt="Marie-Émeraude Alcime en costume de scène"
+                    loading="lazy"
                   />
                 </div>
 
                 <div className="bio-gallery-image bio-image-small">
-                  <img 
-                    src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=500&auto=format&fit=crop"
-                    alt="Performance 2"
+                  <img
+                    src="/images/bio-parcours-2.jpg"
+                    alt="Marie-Émeraude Alcime en costume créole"
+                    loading="lazy"
                   />
                 </div>
               </div>
 
               {/* Une grande image en bas */}
               <div className="bio-gallery-image bio-image-large">
-                <img 
-                  src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?q=80&w=500&auto=format&fit=crop"
-                  alt="Performance 3"
+                <img
+                  src="/images/bio-parcours-3.jpg"
+                  alt="Marie-Émeraude Alcime sur scène à l'opéra"
+                  loading="lazy"
                 />
               </div>
             </div>

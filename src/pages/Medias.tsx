@@ -5,6 +5,7 @@ import { useNotionData } from '../hooks/useNotionData'
 import { getMedias } from '../services/notionService'
 import { useTranslation } from 'react-i18next'
 import { useTranslatedArray } from '../hooks/useTranslatedContent'
+import { galleryPhotos } from '../data/site'
 
 // Types de médias disponibles
 const mediaTypes = [
@@ -26,9 +27,16 @@ export default function Medias(): React.JSX.Element {
   const { data: medias, loading, error } = useNotionData(getMedias)
   const { t } = useTranslation()
 
+  // Notion ne contient pas encore de photos : on complète avec la galerie locale
+  const mediasWithPhotos = useMemo(() => {
+    if (!medias) return medias
+    const hasPhotos = medias.some(m => (m.type || '').toLowerCase().startsWith('photo'))
+    return hasPhotos ? medias : [...medias, ...galleryPhotos]
+  }, [medias])
+
   // Traduire les textes dynamiques des médias
   const translatedMedias = useTranslatedArray(
-    medias as unknown as Record<string, unknown>[] | undefined,
+    mediasWithPhotos as unknown as Record<string, unknown>[] | undefined,
     ['title', 'description']
   ) as unknown as typeof medias
 
