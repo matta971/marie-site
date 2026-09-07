@@ -13,15 +13,6 @@ const mediaTypes = [
   { id: 'photos', key: 'media.photos' }
 ]
 
-// Catégories disponibles (à adapter selon vos besoins)
-const categories = [
-  { id: 'tous', key: 'media.all' },
-  { id: 'recital', key: 'media.recital' },
-  { id: 'baroque', key: 'media.baroque' },
-  { id: 'mozart', key: 'media.mozart' },
-  { id: 'sacre', key: 'media.sacred' }
-]
-
 export default function Medias(): React.JSX.Element {
   const { data: medias, loading, error } = useNotionData(getMedias)
   const { t } = useTranslation()
@@ -33,7 +24,6 @@ export default function Medias(): React.JSX.Element {
   ) as unknown as typeof medias
 
   const [activeMediaType, setActiveMediaType] = useState('videos')
-  const [activeCategory, setActiveCategory] = useState('tous')
   const [visibleCount, setVisibleCount] = useState(9)
   const [isStuck, setIsStuck] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
@@ -49,41 +39,26 @@ export default function Medias(): React.JSX.Element {
     return () => observer.disconnect()
   }, [loading])
 
-  // Trier les médias par ordre
+  // Trier les médias par ordre. On copie avant de trier : sort() modifie le
+  // tableau en place, et muter la valeur renvoyée par un hook provoque des
+  // rendus incohérents.
   const sortedMedias = useMemo(() => {
-    return translatedMedias?.sort((a, b) => a.order - b.order) || []
+    return [...(translatedMedias ?? [])].sort((a, b) => a.order - b.order)
   }, [translatedMedias])
 
-  // Extraire les catégories disponibles depuis les descriptions (ou ajouter un champ category dans Notion)
-  const availableCategories = useMemo(() => {
-    // Pour l'instant, on utilise les catégories statiques
-    // Vous pouvez adapter cela selon comment vous stockez les catégories dans Notion
-    return categories
-  }, [])
-
-  // Filtrer les médias selon le type actif et la catégorie
+  // Filtrer selon l'onglet actif. Le type vient de Notion et s'y écrit avec ou
+  // sans accent selon la saisie ; on compare donc en minuscules.
   const filteredMedia = useMemo(() => {
-    return sortedMedias.filter(media => {
-      // Mapping des types - ATTENTION aux majuscules et accents de Notion
-      const typeMap: { [key: string]: string[] } = {
-        'videos': ['video', 'vidéo', 'Vidéo', 'Video'], // Plusieurs variantes possibles
-        'audios': ['audio', 'Audio'], 
-        'photos': ['photo', 'Photo', 'image', 'Image']
-      }
-      
-      // Vérifier si le type du média correspond (insensible à la casse)
-      const mediaTypeLower = media.type?.toLowerCase() || ''
-      const acceptedTypes = typeMap[activeMediaType] || []
-      const matchType = acceptedTypes.some(t => t.toLowerCase() === mediaTypeLower)
-      
-      // Filtre par catégorie (à adapter selon votre structure de données)
-      const matchCategory = activeCategory === 'tous' || 
-                           // Vous pouvez ajouter une logique de catégorie ici
-                           true
-      
-      return matchType && matchCategory
-    })
-  }, [sortedMedias, activeMediaType, activeCategory])
+    const typeMap: { [key: string]: string[] } = {
+      videos: ['video', 'vidéo'],
+      audios: ['audio'],
+      photos: ['photo', 'image'],
+    }
+    const acceptes = typeMap[activeMediaType] ?? []
+    return sortedMedias.filter(media =>
+      acceptes.includes((media.type ?? '').toLowerCase())
+    )
+  }, [sortedMedias, activeMediaType])
 
   // Convertir les URLs YouTube en format embed et extraire les infos
   const getVideoInfo = (url: string) => {
@@ -155,25 +130,11 @@ export default function Medias(): React.JSX.Element {
                 key={type.id}
                 onClick={() => {
                   setActiveMediaType(type.id)
-                  setActiveCategory('tous')
                   setVisibleCount(9)
                 }}
                 className={`tab ${activeMediaType === type.id ? 'active' : 'inactive'}`}
               >
                 {t(type.key)}
-              </button>
-            ))}
-          </div>
-
-          {/* Filtres secondaires - Catégories */}
-          <div className="medias-category-filters">
-            {availableCategories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => { setActiveCategory(category.id); setVisibleCount(9) }}
-                className={`medias-category-btn ${activeCategory === category.id ? 'active' : ''}`}
-              >
-                {t(category.key)}
               </button>
             ))}
           </div>
