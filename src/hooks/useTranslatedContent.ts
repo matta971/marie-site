@@ -5,11 +5,21 @@ const API_URL = (import.meta.env.PROD || import.meta.env.DEV)
   ? 'https://backend-site-marie-emeraude.matta971.workers.dev/api'
   : 'http://localhost:3001/api'
 
+/**
+ * i18next renvoie parfois la locale complète du navigateur : « fr-FR », « en-US »,
+ * voire « en-US@posix ». Sans normalisation, le backend ne reconnaît pas « fr-FR »
+ * comme du français et traduit le texte vers lui-même, et les variantes régionales
+ * multiplient les entrées de cache pour un même contenu.
+ */
+function codeLangue(lang: string): string {
+  return (lang || '').split('-')[0].split('@')[0].toLowerCase()
+}
+
 async function translateText(text: string, lang: string): Promise<string> {
   const res = await fetch(`${API_URL}/translate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, lang }),
+    body: JSON.stringify({ text, lang: codeLangue(lang) }),
   })
   if (!res.ok) return text
   const data = await res.json()
@@ -22,7 +32,7 @@ async function translateText(text: string, lang: string): Promise<string> {
  */
 export function useTranslatedContent(text: string | undefined | null): string {
   const { i18n } = useTranslation()
-  const lang = i18n.language
+  const lang = codeLangue(i18n.language)
   const source = text || ''
 
   const [translated, setTranslated] = useState<string>(source)
@@ -55,7 +65,7 @@ export function useTranslatedArray<T extends Record<string, unknown>>(
   fields: (keyof T)[]
 ): T[] {
   const { i18n } = useTranslation()
-  const lang = i18n.language
+  const lang = codeLangue(i18n.language)
   const source = items || []
 
   const [translated, setTranslated] = useState<T[]>(source)
