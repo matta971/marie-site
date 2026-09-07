@@ -3472,3 +3472,14 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.contact-link {
+  color: var(--color-emerald-deep, #046D5D);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(4, 109, 93, 0.3);
+  transition: border-color 0.2s ease;
+}
+
+.contact-link:hover {
+  border-bottom-color: var(--color-emerald-deep, #046D5D);
+}

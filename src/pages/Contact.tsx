@@ -217,12 +217,11 @@ export default function Contact(): React.JSX.Element {
                 <div className="contact-details">
                   <div className="contact-item">
                     <h3 className="contact-subtitle">{t('contact.booking')}</h3>
-                    <p className="contact-text">contact@exemple.com</p>
-                  </div>
-                  
-                  <div className="contact-item">
-                    <h3 className="contact-subtitle">{t('contact.agent')}</h3>
-                    <p className="contact-text">Agence Lyrique</p>
+                    <p className="contact-text">
+                      <a href="mailto:contact@marie-emeraude.com" className="contact-link">
+                        contact@marie-emeraude.com
+                      </a>
+                    </p>
                   </div>
                 </div>
                 
