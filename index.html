@@ -24,6 +24,16 @@
     <!-- Google Fonts - preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script>
+      // Le sous-domaine Pages reste servi et duplique le site sur une seconde
+      // adresse. Cloudflare Pages ne sait pas le rediriger cote serveur et les
+      // Redirect Rules ne s'appliquent pas a *.pages.dev, faute de zone. On le
+      // fait donc ici, avant le rendu, en conservant chemin, requete et ancre.
+      // La balise canonique couvre les robots ; ceci couvre les visiteurs.
+      if (location.hostname === 'marie-site.pages.dev') {
+        location.replace('https://marie-emeraude.com' + location.pathname + location.search + location.hash);
+      }
+    </script>
   </head>
 
   <body>
