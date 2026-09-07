@@ -206,5 +206,33 @@
     "success": "Message envoyé. Marie vous répondra dès que possible.",
     "error": "L'envoi a échoué. Réessayez, ou écrivez directement par e-mail.",
     "tooMany": "Trop de messages envoyés. Réessayez dans une heure."
+  },
+  "teaching": {
+    "c1t": "Cours particuliers",
+    "c1d": "Cours de chant adaptés à votre niveau et vos objectifs. Travail personnalisé sur la technique vocale, la respiration, l'interprétation et le répertoire.",
+    "c2t": "Coaching vocal",
+    "c2d": "Sessions de coaching pour préparer un concert, une audition ou une prise de rôle. Accompagnement ciblé sur l'expression scénique et la gestion du trac.",
+    "c3t": "Technique respiratoire",
+    "c3d": "Cours thématiques sur la respiration et le soutien vocal. Apprentissage des fondamentaux pour une voix saine et projetée.",
+    "c4t": "Interprétation",
+    "c4d": "Modules d'interprétation, en solo ou en duo. Exploration approfondie du texte, de la musicalité et de l'émotion.",
+    "c5t": "Préparation audition et concours",
+    "c5d": "Conseils et accompagnement pour réussir vos auditions et concours. Stratégies de préparation mentale et techniques de présentation.",
+    "m1t": "Masterclass répertoire français",
+    "m1d": "Immersion dans le répertoire lyrique français de Massenet, Gounod et Bizet. Analyse stylistique et technique d'interprétation.",
+    "m2t": "Masterclass opéra italien",
+    "m2d": "Exploration des grands rôles du bel canto et du vérisme. Travail sur la ligne de chant, l'ornementation et l'expression dramatique.",
+    "m3t": "Masterclass musique sacrée",
+    "m3d": "Approche spirituelle des oratorios, messes et requiem. Équilibre entre virtuosité technique et profondeur émotionnelle.",
+    "m4t": "Masterclass art scénique",
+    "m4d": "Perfectionnement de la présence scénique et du jeu d'acteur lyrique. Techniques de déplacement, gestuelle et occupation de l'espace.",
+    "a1t": "Atelier découverte du chant",
+    "a1d": "Initiation au chant lyrique pour débutants. Découverte de la voix, des bases de la technique vocale et du plaisir de chanter.",
+    "a2t": "Atelier ensemble vocal",
+    "a2d": "Pratique collective du chant d'ensemble et des duos d'opéra. Développement de l'écoute et de la musicalité de groupe.",
+    "a3t": "Atelier préparation de rôle",
+    "a3d": "Construction complète d'un rôle d'opéra ou d'oratorio. De l'analyse du livret à la mise en scène, en passant par le coaching musical.",
+    "a4t": "Atelier récital et mélodie",
+    "a4d": "Art du récital et interprétation de la mélodie française. Travail sur la diction, la poésie musicale et la communication avec le public."
   }
 }

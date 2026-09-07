@@ -153,7 +153,17 @@ export default function Header() {
   return (
     <header className={`header ${isScrolled || !isHome ? 'header-scrolled' : 'header-top'}`}>
       <div className="header-content">
-        <Link to="/" className="logo">
+        <Link
+          to="/"
+          className="logo"
+          onClick={() => {
+            // Sur l'accueil, React Router ne change pas de route : rien ne se
+            // passerait et le clic paraîtrait mort. On remonte alors la page.
+            if (isHome) {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+          }}
+        >
           <span className="logo-name">Marie-Émeraude</span>
           <span className="logo-surname">Alcime</span>
         </Link>

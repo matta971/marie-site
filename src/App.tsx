@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import SEO from './components/SEO'
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Biographie from './pages/Biographie'
 import Medias from './pages/Medias'
@@ -16,6 +17,7 @@ export default function App(): React.JSX.Element {
   return (
     // SEUL CHANGEMENT : bg-white au lieu de bg-neutral-950 text-neutral-100
     <div className="min-h-screen bg-white flex flex-col">
+      <ScrollToTop />
       <Routes>
         {/* Route admin sans Header/Footer */}
         <Route path="/admin" element={<AdminChat />} />

@@ -206,5 +206,33 @@
     "success": "Message sent. Marie will get back to you as soon as possible.",
     "error": "Sending failed. Please try again, or write directly by email.",
     "tooMany": "Too many messages sent. Please try again in an hour."
+  },
+  "teaching": {
+    "c1t": "Private lessons",
+    "c1d": "Singing lessons matched to your level and your goals. Personalised work on vocal technique, breathing, interpretation and repertoire.",
+    "c2t": "Vocal coaching",
+    "c2d": "Coaching sessions to prepare a concert, an audition or a new role. Focused work on stage presence and performance nerves.",
+    "c3t": "Breathing technique",
+    "c3d": "Themed lessons on breathing and vocal support. The fundamentals of a healthy, well-projected voice.",
+    "c4t": "Interpretation",
+    "c4d": "Interpretation modules, solo or in duo. In-depth exploration of text, musicality and emotion.",
+    "c5t": "Audition and competition preparation",
+    "c5d": "Guidance and support for auditions and competitions. Mental preparation strategies and presentation technique.",
+    "m1t": "French repertoire masterclass",
+    "m1d": "Immersion in the French lyric repertoire of Massenet, Gounod and Bizet. Stylistic analysis and interpretative technique.",
+    "m2t": "Italian opera masterclass",
+    "m2d": "Exploring the great bel canto and verismo roles. Work on vocal line, ornamentation and dramatic expression.",
+    "m3t": "Sacred music masterclass",
+    "m3d": "A spiritual approach to oratorios, masses and requiems. Balancing technical virtuosity with emotional depth.",
+    "m4t": "Stagecraft masterclass",
+    "m4d": "Refining stage presence and operatic acting. Movement, gesture and use of the stage.",
+    "a1t": "Discovering singing workshop",
+    "a1d": "An introduction to lyric singing for beginners. Discovering the voice, the basics of vocal technique and the pleasure of singing.",
+    "a2t": "Vocal ensemble workshop",
+    "a2d": "Collective practice of ensemble singing and operatic duets. Developing listening and group musicality.",
+    "a3t": "Role preparation workshop",
+    "a3d": "Building an opera or oratorio role from end to end: libretto analysis, musical coaching and staging.",
+    "a4t": "Recital and mélodie workshop",
+    "a4d": "The art of the recital and the French mélodie. Diction, musical poetry and connecting with an audience."
   }
 }

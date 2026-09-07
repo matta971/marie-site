@@ -206,5 +206,33 @@
     "success": "Mensagem enviada. Marie responderá assim que possível.",
     "error": "O envio falhou. Tente novamente ou escreva diretamente por e-mail.",
     "tooMany": "Demasiadas mensagens enviadas. Tente novamente dentro de uma hora."
+  },
+  "teaching": {
+    "c1t": "Aulas particulares",
+    "c1d": "Aulas de canto adaptadas ao seu nível e aos seus objetivos. Trabalho personalizado sobre técnica vocal, respiração, interpretação e repertório.",
+    "c2t": "Coaching vocal",
+    "c2d": "Sessões de coaching para preparar um concerto, uma audição ou um novo papel. Trabalho centrado na presença em palco e na gestão do nervosismo.",
+    "c3t": "Técnica respiratória",
+    "c3d": "Aulas temáticas sobre respiração e apoio vocal. Os fundamentos de uma voz saudável e projetada.",
+    "c4t": "Interpretação",
+    "c4d": "Módulos de interpretação, a solo ou em dueto. Exploração aprofundada do texto, da musicalidade e da emoção.",
+    "c5t": "Preparação de audições e concursos",
+    "c5d": "Conselhos e acompanhamento para audições e concursos. Estratégias de preparação mental e técnicas de apresentação.",
+    "m1t": "Masterclass de repertório francês",
+    "m1d": "Imersão no repertório lírico francês de Massenet, Gounod e Bizet. Análise estilística e técnica interpretativa.",
+    "m2t": "Masterclass de ópera italiana",
+    "m2d": "Os grandes papéis do bel canto e do verismo. Trabalho sobre a linha de canto, a ornamentação e a expressão dramática.",
+    "m3t": "Masterclass de música sacra",
+    "m3d": "Uma abordagem espiritual de oratórios, missas e réquiens. Equilíbrio entre virtuosismo técnico e profundidade emocional.",
+    "m4t": "Masterclass de arte cénica",
+    "m4d": "Aperfeiçoamento da presença em palco e da representação lírica. Movimento, gesto e ocupação do espaço.",
+    "a1t": "Atelier de descoberta do canto",
+    "a1d": "Iniciação ao canto lírico para principiantes. Descobrir a voz, as bases da técnica e o prazer de cantar.",
+    "a2t": "Atelier de conjunto vocal",
+    "a2d": "Prática coletiva do canto de conjunto e dos duetos de ópera. Desenvolvimento da escuta e da musicalidade de grupo.",
+    "a3t": "Atelier de preparação de papel",
+    "a3d": "Construção completa de um papel de ópera ou oratória: análise do libreto, coaching musical e encenação.",
+    "a4t": "Atelier de recital e mélodie",
+    "a4d": "A arte do recital e da mélodie francesa. Dicção, poesia musical e comunicação com o público."
   }
 }

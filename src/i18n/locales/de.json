@@ -206,5 +206,33 @@
     "success": "Nachricht gesendet. Marie meldet sich so bald wie möglich.",
     "error": "Senden fehlgeschlagen. Bitte erneut versuchen oder direkt eine E-Mail schreiben.",
     "tooMany": "Zu viele Nachrichten gesendet. Bitte in einer Stunde erneut versuchen."
+  },
+  "teaching": {
+    "c1t": "Einzelunterricht",
+    "c1d": "Gesangsunterricht, abgestimmt auf Ihr Niveau und Ihre Ziele. Individuelle Arbeit an Gesangstechnik, Atmung, Interpretation und Repertoire.",
+    "c2t": "Vokalcoaching",
+    "c2d": "Coaching zur Vorbereitung eines Konzerts, eines Vorsingens oder einer neuen Rolle. Gezielte Arbeit an Bühnenpräsenz und Lampenfieber.",
+    "c3t": "Atemtechnik",
+    "c3d": "Thematischer Unterricht zu Atmung und Stützung. Die Grundlagen einer gesunden, tragfähigen Stimme.",
+    "c4t": "Interpretation",
+    "c4d": "Interpretationsmodule, solo oder im Duo. Vertiefte Arbeit an Text, Musikalität und Ausdruck.",
+    "c5t": "Vorbereitung auf Vorsingen und Wettbewerbe",
+    "c5d": "Beratung und Begleitung für Vorsingen und Wettbewerbe. Mentale Vorbereitung und Präsentationstechnik.",
+    "m1t": "Meisterkurs französisches Repertoire",
+    "m1d": "Eintauchen in das französische Repertoire von Massenet, Gounod und Bizet. Stilanalyse und Interpretationstechnik.",
+    "m2t": "Meisterkurs italienische Oper",
+    "m2d": "Die großen Partien des Belcanto und des Verismo. Arbeit an Gesangslinie, Verzierung und dramatischem Ausdruck.",
+    "m3t": "Meisterkurs geistliche Musik",
+    "m3d": "Ein spiritueller Zugang zu Oratorien, Messen und Requiems. Gleichgewicht zwischen Virtuosität und emotionaler Tiefe.",
+    "m4t": "Meisterkurs Bühnenkunst",
+    "m4d": "Verfeinerung von Bühnenpräsenz und Opernschauspiel. Bewegung, Gestik und Raumnutzung.",
+    "a1t": "Workshop Gesang entdecken",
+    "a1d": "Einführung in den lyrischen Gesang für Anfänger. Die Stimme entdecken, Grundlagen der Technik und Freude am Singen.",
+    "a2t": "Workshop Vokalensemble",
+    "a2d": "Gemeinsames Ensemblesingen und Opernduette. Entwicklung von Hören und Gruppenmusikalität.",
+    "a3t": "Workshop Rollenvorbereitung",
+    "a3d": "Eine Opern- oder Oratorienrolle vollständig erarbeiten: Librettoanalyse, musikalisches Coaching und Inszenierung.",
+    "a4t": "Workshop Liederabend und Mélodie",
+    "a4d": "Die Kunst des Liederabends und der französischen Mélodie. Diktion, musikalische Poesie und Kontakt zum Publikum."
   }
 }

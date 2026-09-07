@@ -206,5 +206,33 @@
     "success": "Messaggio inviato. Marie risponderà al più presto.",
     "error": "Invio non riuscito. Riprova, oppure scrivi direttamente via e-mail.",
     "tooMany": "Troppi messaggi inviati. Riprova tra un'ora."
+  },
+  "teaching": {
+    "c1t": "Lezioni individuali",
+    "c1d": "Lezioni di canto calibrate sul vostro livello e sui vostri obiettivi. Lavoro personalizzato su tecnica vocale, respirazione, interpretazione e repertorio.",
+    "c2t": "Coaching vocale",
+    "c2d": "Sessioni di coaching per preparare un concerto, un'audizione o un nuovo ruolo. Lavoro mirato sulla presenza scenica e sulla gestione dell'ansia.",
+    "c3t": "Tecnica respiratoria",
+    "c3d": "Lezioni tematiche su respirazione e sostegno vocale. I fondamentali di una voce sana e proiettata.",
+    "c4t": "Interpretazione",
+    "c4d": "Moduli di interpretazione, da solisti o in duo. Esplorazione approfondita del testo, della musicalità e dell'emozione.",
+    "c5t": "Preparazione ad audizioni e concorsi",
+    "c5d": "Consigli e accompagnamento per audizioni e concorsi. Strategie di preparazione mentale e tecniche di presentazione.",
+    "m1t": "Masterclass repertorio francese",
+    "m1d": "Immersione nel repertorio lirico francese di Massenet, Gounod e Bizet. Analisi stilistica e tecnica interpretativa.",
+    "m2t": "Masterclass opera italiana",
+    "m2d": "I grandi ruoli del belcanto e del verismo. Lavoro sulla linea di canto, sull'ornamentazione e sull'espressione drammatica.",
+    "m3t": "Masterclass musica sacra",
+    "m3d": "Un approccio spirituale a oratori, messe e requiem. Equilibrio tra virtuosismo tecnico e profondità emotiva.",
+    "m4t": "Masterclass arte scenica",
+    "m4d": "Perfezionamento della presenza scenica e della recitazione lirica. Movimento, gestualità e uso dello spazio.",
+    "a1t": "Laboratorio scoperta del canto",
+    "a1d": "Iniziazione al canto lirico per principianti. Scoperta della voce, delle basi della tecnica e del piacere di cantare.",
+    "a2t": "Laboratorio ensemble vocale",
+    "a2d": "Pratica collettiva del canto d'insieme e dei duetti d'opera. Sviluppo dell'ascolto e della musicalità di gruppo.",
+    "a3t": "Laboratorio preparazione di un ruolo",
+    "a3d": "Costruzione completa di un ruolo d'opera o d'oratorio: analisi del libretto, coaching musicale e messa in scena.",
+    "a4t": "Laboratorio recital e mélodie",
+    "a4d": "L'arte del recital e della mélodie francese. Dizione, poesia musicale e comunicazione con il pubblico."
   }
 }

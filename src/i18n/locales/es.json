@@ -206,5 +206,33 @@
     "success": "Mensaje enviado. Marie le responderá lo antes posible.",
     "error": "El envío ha fallado. Inténtelo de nuevo o escriba directamente por correo.",
     "tooMany": "Demasiados mensajes enviados. Inténtelo de nuevo en una hora."
+  },
+  "teaching": {
+    "c1t": "Clases particulares",
+    "c1d": "Clases de canto adaptadas a su nivel y sus objetivos. Trabajo personalizado sobre técnica vocal, respiración, interpretación y repertorio.",
+    "c2t": "Coaching vocal",
+    "c2d": "Sesiones de coaching para preparar un concierto, una audición o un nuevo papel. Trabajo centrado en la presencia escénica y el control de los nervios.",
+    "c3t": "Técnica respiratoria",
+    "c3d": "Clases temáticas sobre respiración y apoyo vocal. Los fundamentos de una voz sana y proyectada.",
+    "c4t": "Interpretación",
+    "c4d": "Módulos de interpretación, en solitario o en dúo. Exploración profunda del texto, la musicalidad y la emoción.",
+    "c5t": "Preparación de audiciones y concursos",
+    "c5d": "Consejos y acompañamiento para audiciones y concursos. Estrategias de preparación mental y técnicas de presentación.",
+    "m1t": "Clase magistral de repertorio francés",
+    "m1d": "Inmersión en el repertorio lírico francés de Massenet, Gounod y Bizet. Análisis estilístico y técnica interpretativa.",
+    "m2t": "Clase magistral de ópera italiana",
+    "m2d": "Los grandes papeles del bel canto y del verismo. Trabajo sobre la línea de canto, la ornamentación y la expresión dramática.",
+    "m3t": "Clase magistral de música sacra",
+    "m3d": "Un enfoque espiritual de oratorios, misas y réquiems. Equilibrio entre virtuosismo técnico y profundidad emocional.",
+    "m4t": "Clase magistral de arte escénico",
+    "m4d": "Perfeccionamiento de la presencia escénica y la interpretación operística. Movimiento, gesto y ocupación del escenario.",
+    "a1t": "Taller de descubrimiento del canto",
+    "a1d": "Iniciación al canto lírico para principiantes. Descubrir la voz, las bases de la técnica y el placer de cantar.",
+    "a2t": "Taller de conjunto vocal",
+    "a2d": "Práctica colectiva del canto de conjunto y de los dúos de ópera. Desarrollo de la escucha y la musicalidad de grupo.",
+    "a3t": "Taller de preparación de papel",
+    "a3d": "Construcción completa de un papel de ópera u oratorio: análisis del libreto, coaching musical y puesta en escena.",
+    "a4t": "Taller de recital y mélodie",
+    "a4d": "El arte del recital y de la mélodie francesa. Dicción, poesía musical y comunicación con el público."
   }
 }
