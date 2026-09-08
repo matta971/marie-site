@@ -1,64 +1,49 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-const API_URL = (import.meta.env.PROD || import.meta.env.DEV)
-  ? 'https://backend-site-marie-emeraude.matta971.workers.dev/api'
-  : 'http://localhost:3001/api'
+import { codeLangue, traduire, traductionEnCache } from '../services/translationCache'
 
 /**
- * i18next renvoie parfois la locale complète du navigateur : « fr-FR », « en-US »,
- * voire « en-US@posix ». Sans normalisation, le backend ne reconnaît pas « fr-FR »
- * comme du français et traduit le texte vers lui-même, et les variantes régionales
- * multiplient les entrées de cache pour un même contenu.
+ * Traduction du contenu Notion. Le cache et le réseau vivent dans
+ * `services/translationCache` ; ces hooks ne font que brancher React dessus.
+ *
+ * Chaque hook lit d'abord le cache de façon synchrone, pour que le premier
+ * rendu affiche directement la bonne langue. Sans cela, une visite déjà connue
+ * repassait par le français le temps d'un aller-retour réseau.
  */
-function codeLangue(lang: string): string {
-  return (lang || '').split('-')[0].split('@')[0].toLowerCase()
-}
 
-async function translateText(text: string, lang: string): Promise<string> {
-  const res = await fetch(`${API_URL}/translate`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, lang: codeLangue(lang) }),
-  })
-  if (!res.ok) return text
-  const data = await res.json()
-  return data.translated || text
-}
-
-/**
- * Hook to translate Notion content dynamically.
- * Returns original text if language is FR, otherwise translates via backend with KV caching.
- */
 export function useTranslatedContent(text: string | undefined | null): string {
   const { i18n } = useTranslation()
   const lang = codeLangue(i18n.language)
   const source = text || ''
 
-  const [translated, setTranslated] = useState<string>(source)
+  const enCache = lang === 'fr' ? null : traductionEnCache(source, lang)
+  const immediat = enCache ?? source
+
+  const [translated, setTranslated] = useState<string>(immediat)
 
   useEffect(() => {
-    // Always show original content immediately
-    setTranslated(source)
+    setTranslated(immediat)
 
-    if (!source || lang === 'fr') return
+    // Rien à demander : pas de texte, français, ou traduction déjà en cache.
+    if (!source || lang === 'fr' || enCache !== null) return
 
     let cancelled = false
-    translateText(source, lang).then(result => {
-      if (!cancelled) {
-        setTranslated(result)
-      }
+    traduire(source, lang).then(result => {
+      if (!cancelled) setTranslated(result)
     })
 
     return () => { cancelled = true }
-  }, [source, lang])
+  }, [source, lang, immediat, enCache])
 
   return translated
 }
 
 /**
- * Translate an array of items with text fields.
- * Returns the original array with translated text fields.
+ * Traduit une liste d'objets sur les champs indiqués.
+ *
+ * `items` et `fields` étant le plus souvent des littéraux recréés à chaque
+ * rendu, les dépendances passent par la liste des noms de champs plutôt que
+ * par le tableau lui-même.
  */
 export function useTranslatedArray<T extends Record<string, unknown>>(
   items: T[] | undefined | null,
@@ -66,44 +51,68 @@ export function useTranslatedArray<T extends Record<string, unknown>>(
 ): T[] {
   const { i18n } = useTranslation()
   const lang = codeLangue(i18n.language)
-  const source = items || []
+  const nomsChamps = fields.join(',')
 
-  const [translated, setTranslated] = useState<T[]>(source)
+  /**
+   * Ce que le cache permet d'afficher sans attendre, et si quelque chose
+   * manque encore. Une liste complète évite entièrement l'effet réseau.
+   */
+  const immediat = useMemo(() => {
+    const source = items || []
+    if (!source.length || lang === 'fr') return { liste: source, complet: true }
 
-  // Keep translated in sync with source immediately (show original while translating)
+    let complet = true
+    const liste = source.map(item => {
+      let copie: T | null = null
+      for (const field of fields) {
+        const valeur = item[field]
+        if (typeof valeur !== 'string' || !valeur.trim()) continue
+
+        const cache = traductionEnCache(valeur, lang)
+        if (cache === null) {
+          complet = false
+          continue
+        }
+        if (copie === null) copie = { ...item }
+        ;(copie as Record<string, unknown>)[field as string] = cache
+      }
+      return copie ?? item
+    })
+
+    return { liste, complet }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, lang, nomsChamps])
+
+  const [translated, setTranslated] = useState<T[]>(immediat.liste)
+
   useEffect(() => {
-    if (source.length) {
-      setTranslated(source)
-    }
-  }, [source])
+    setTranslated(immediat.liste)
+    if (immediat.complet) return
 
-  useEffect(() => {
-    if (!source.length || lang === 'fr') return
-
+    const source = items || []
     let cancelled = false
 
-    async function translateAll() {
-      const results = await Promise.all(
-        source.map(async (item) => {
-          const translatedItem = { ...item }
-          for (const field of fields) {
-            const value = item[field]
-            if (typeof value === 'string' && value.trim()) {
-              const result = await translateText(value, lang)
-              if (!cancelled) {
-                ;(translatedItem as Record<string, unknown>)[field as string] = result
-              }
-            }
-          }
-          return translatedItem
-        })
-      )
-      if (!cancelled) setTranslated(results)
-    }
+    // On repart des textes d'origine : `traduire` répond immédiatement pour
+    // ce qui est déjà en cache, il n'y a donc rien à filtrer ici.
+    Promise.all(
+      source.map(async item => {
+        const copie = { ...item }
+        await Promise.all(
+          fields.map(async field => {
+            const valeur = item[field]
+            if (typeof valeur !== 'string' || !valeur.trim()) return
+            ;(copie as Record<string, unknown>)[field as string] = await traduire(valeur, lang)
+          })
+        )
+        return copie
+      })
+    ).then(resultats => {
+      if (!cancelled) setTranslated(resultats)
+    })
 
-    translateAll()
     return () => { cancelled = true }
-  }, [source, lang, fields.join(',')])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, lang, nomsChamps, immediat])
 
   return translated
 }
