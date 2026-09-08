@@ -40,7 +40,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <div className="footer-copyright">
-            &copy; {new Date().getFullYear()} Marie-Émeraude Alcime &mdash; {t('footer.rights')}
+            &copy; {new Date().getFullYear()} Marie-Émeraude Alcime. {t('footer.rights')}
           </div>
           <div className="footer-lang">
             {languages.map((lang, index) => (
