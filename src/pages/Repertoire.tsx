@@ -190,13 +190,15 @@ export default function Repertoire(): React.JSX.Element {
     })
 
     // Retourner les catégories avec leurs compteurs
+    // On garde la clé plutôt que le libellé : la traduction est résolue au
+    // rendu, sinon les onglets resteraient dans la langue du dernier calcul.
     return [
-      { id: 'tous', label: 'Tout le répertoire', count: translatedRepertoire.length },
-      { id: 'opera', label: 'Opéra & Opérette', count: counts.opera },
-      { id: 'sacred', label: 'Musique sacrée', count: counts.sacred },
-      { id: 'oratorio', label: 'Oratorios', count: counts.oratorio },
-      { id: 'melodie', label: 'Mélodies & Lieder', count: counts.melodie },
-      { id: 'recital', label: 'Récitals & Concerts', count: counts.recital }
+      { id: 'tous', labelKey: 'repertoire.catAll', count: translatedRepertoire.length },
+      { id: 'opera', labelKey: 'repertoire.catOpera', count: counts.opera },
+      { id: 'sacred', labelKey: 'repertoire.catSacred', count: counts.sacred },
+      { id: 'oratorio', labelKey: 'repertoire.catOratorio', count: counts.oratorio },
+      { id: 'melodie', labelKey: 'repertoire.catMelodie', count: counts.melodie },
+      { id: 'recital', labelKey: 'repertoire.catRecital', count: counts.recital }
     ].filter(cat => cat.id === 'tous' || cat.count > 0)
   }, [translatedRepertoire])
 
@@ -309,7 +311,7 @@ export default function Repertoire(): React.JSX.Element {
                 onClick={() => setActiveCategory(category.id)}
                 className={`tab ${activeCategory === category.id ? 'active' : 'inactive'}`}
               >
-                {category.label}
+                {t(category.labelKey)}
                 {category.count !== null && (
                   <span className="ml-2 text-xs opacity-75">&nbsp;({category.count})</span>
                 )}
