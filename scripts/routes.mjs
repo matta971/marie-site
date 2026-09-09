@@ -25,16 +25,31 @@ export const SOURCES_COMMUNES = [
   'src/i18n/locales',
 ]
 
+/**
+ * `notion` liste les routes de l'API dont la page tire son contenu. Le
+ * générateur de sitemap y lit le `lastEdited` des entrées : sans cela, un
+ * concert ajouté dans Notion sans le moindre changement de code laissait le
+ * `lastmod` de /agenda inchangé, alors que la page change au build suivant.
+ *
+ * /enseignement n'a pas de source : la page n'est pas encore branchée sur
+ * Notion (issues #1 et #2).
+ */
 export const ROUTES = [
-  { chemin: '/', sources: ['src/pages/Home.tsx'], priorite: '1.0', frequence: 'weekly' },
-  { chemin: '/biographie', sources: ['src/pages/Biographie.tsx', 'src/services/biographyService.ts'], priorite: '0.9', frequence: 'monthly' },
-  { chemin: '/repertoire', sources: ['src/pages/Repertoire.tsx'], priorite: '0.8', frequence: 'monthly' },
-  { chemin: '/enseignement', sources: ['src/pages/Enseignement.tsx'], priorite: '0.7', frequence: 'monthly' },
-  { chemin: '/agenda', sources: ['src/pages/Agenda.tsx'], priorite: '0.9', frequence: 'weekly' },
-  { chemin: '/presse', sources: ['src/pages/Presse.tsx'], priorite: '0.7', frequence: 'monthly' },
-  { chemin: '/medias', sources: ['src/pages/Medias.tsx'], priorite: '0.8', frequence: 'monthly' },
-  { chemin: '/contact', sources: ['src/pages/Contact.tsx', 'src/components/ContactForm.tsx'], priorite: '0.6', frequence: 'yearly' },
+  // L'accueil appelle bien /api/homepage, mais cette route n'existe pas côté
+  // Worker : le service se rabat sur son contenu statique. Seuls les médias
+  // qu'il affiche viennent donc réellement de Notion.
+  { chemin: '/', sources: ['src/pages/Home.tsx', 'src/services/homePageService.ts'], notion: ['medias'], priorite: '1.0', frequence: 'weekly' },
+  { chemin: '/biographie', sources: ['src/pages/Biographie.tsx', 'src/services/biographyService.ts'], notion: ['biography'], priorite: '0.9', frequence: 'monthly' },
+  { chemin: '/repertoire', sources: ['src/pages/Repertoire.tsx'], notion: ['repertoire'], priorite: '0.8', frequence: 'monthly' },
+  { chemin: '/enseignement', sources: ['src/pages/Enseignement.tsx'], notion: [], priorite: '0.7', frequence: 'monthly' },
+  { chemin: '/agenda', sources: ['src/pages/Agenda.tsx'], notion: ['concerts'], priorite: '0.9', frequence: 'weekly' },
+  { chemin: '/presse', sources: ['src/pages/Presse.tsx'], notion: ['press'], priorite: '0.7', frequence: 'monthly' },
+  { chemin: '/medias', sources: ['src/pages/Medias.tsx'], notion: ['medias'], priorite: '0.8', frequence: 'monthly' },
+  { chemin: '/contact', sources: ['src/pages/Contact.tsx', 'src/components/ContactForm.tsx'], notion: [], priorite: '0.6', frequence: 'yearly' },
 ]
+
+/** Base de l'API interrogée au build pour dater le contenu Notion. */
+export const API_URL = 'https://backend-site-marie-emeraude.matta971.workers.dev/api'
 
 /** URL absolue d'une route, sans barre oblique finale hormis la racine. */
 export function urlComplete(chemin) {

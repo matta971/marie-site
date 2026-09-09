@@ -6,24 +6,27 @@
  * uniforme et périmé n'est pas neutre : Google apprend à ne plus s'y fier et
  * finit par ignorer le champ.
  *
- * La date retenue pour une page est celle du dernier commit ayant touché l'un
- * de ses fichiers sources — la page elle-même, plus la mise en page, les styles
- * et les traductions, qui l'affectent toutes. C'est une date vérifiable, et
- * elle ne bouge que lorsque la page change vraiment.
+ * La date d'une page est la plus récente de deux sources :
  *
- * Limite connue et assumée : le contenu venant de Notion n'entre pas dans ce
- * calcul. Si Marie ajoute un concert sans qu'aucun fichier ne change, le
- * `lastmod` de /agenda reste celui du dernier changement de code. La corriger
- * demanderait que le Worker expose le `last_edited_time` des pages Notion.
+ *   - le dernier commit ayant touché l'un de ses fichiers — la page elle-même,
+ *     plus la mise en page, les styles et les traductions, qui l'affectent
+ *     toutes ;
+ *   - le `lastEdited` du contenu Notion qu'elle affiche, interrogé au build.
  *
- * Si git est indisponible — Cloudflare Pages peut cloner sans historique — le
- * script se rabat sur la date du build plutôt que d'échouer, et le signale.
+ * La seconde compte parce que Marie modifie Notion sans qu'aucun fichier ne
+ * bouge : un concert ajouté laissait sinon /agenda daté du dernier changement
+ * de code, alors que la page change bel et bien au build suivant.
+ *
+ * Le script ne fait échouer aucun build. Si git est indisponible — Cloudflare
+ * Pages peut cloner sans historique — ou si l'API ne répond pas, il se rabat
+ * sur ce qui reste, et en dernier recours sur la date du build, en le signalant
+ * dans sa sortie.
  */
 import fs from 'node:fs'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
-import { ROUTES, SOURCES_COMMUNES, urlComplete } from './routes.mjs'
+import { ROUTES, SOURCES_COMMUNES, urlComplete, API_URL } from './routes.mjs'
 
 const RACINE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = path.join(RACINE, 'dist')
@@ -47,11 +50,39 @@ function enJour(iso) {
   return iso.slice(0, 10)
 }
 
+/**
+ * Date de dernière modification du contenu Notion servi par une route de l'API.
+ *
+ * Les bases exposent `lastEdited` par entrée depuis la version f48e47a2 du
+ * Worker ; la biographie, elle, rend des blocs Notion bruts, qui portent
+ * chacun `last_edited_time`. On prend la plus récente des deux formes.
+ *
+ * Le réseau n'est pas une raison de faire échouer un build : toute erreur rend
+ * null, et la route retombe sur sa date git.
+ */
+async function dateContenuNotion(nom) {
+  try {
+    const reponse = await fetch(`${API_URL}/${nom}`, { signal: AbortSignal.timeout(15000) })
+    if (!reponse.ok) return null
+
+    const donnees = await reponse.json()
+    const entrees = Array.isArray(donnees) ? donnees : (donnees.blocks ?? [])
+    const dates = entrees
+      .map(e => e.lastEdited ?? e.last_edited_time)
+      .filter(d => typeof d === 'string' && d)
+      .sort()
+
+    return dates.length ? dates[dates.length - 1] : null
+  } catch {
+    return null
+  }
+}
+
 function echapper(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
-function main() {
+async function main() {
   if (!fs.existsSync(DIST)) {
     console.error('sitemap : dist/ absent, lancer vite build d’abord')
     process.exit(1)
@@ -65,18 +96,32 @@ function main() {
 
   for (const route of ROUTES) {
     let plusRecente = null
+    let origine = ''
 
     if (gitDisponible) {
       for (const source of [...route.sources, ...SOURCES_COMMUNES]) {
         const d = dateDernierCommit(source)
-        if (d && (plusRecente === null || d > plusRecente)) plusRecente = d
+        if (d && (plusRecente === null || d > plusRecente)) {
+          plusRecente = d
+          origine = 'code'
+        }
       }
     }
 
-    // Sans historique, ou pour une source jamais commitée, la date du build
-    // reste plus honnête qu'une date figée à la main.
+    // Le contenu Notion change sans qu'aucun fichier ne bouge : une page peut
+    // donc être plus récente que son code.
+    for (const nom of route.notion ?? []) {
+      const d = await dateContenuNotion(nom)
+      if (d && (plusRecente === null || d > plusRecente)) {
+        plusRecente = d
+        origine = 'notion:' + nom
+      }
+    }
+
+    // Sans historique ni contenu daté, la date du build reste plus honnête
+    // qu'une date figée à la main.
     const lastmod = enJour(plusRecente ?? aujourdhui)
-    journal.push(`  ${route.chemin.padEnd(14)} ${lastmod}${plusRecente ? '' : '  (date du build)'}`)
+    journal.push(`  ${route.chemin.padEnd(14)} ${lastmod}  ${plusRecente ? origine : 'date du build'}`)
 
     lignes.push(
       '  <url>',
