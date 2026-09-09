@@ -4,7 +4,12 @@ import { useLocation } from 'react-router-dom'
 
 const SITE_URL = 'https://marie-emeraude.com'
 const SITE_NAME = 'Marie-Émeraude Alcime'
-const DEFAULT_IMAGE = `${SITE_URL}/images/portrait-face-main-buste.jpg`
+// Image d'aperçu dédiée, 1200 x 630, produite par `scripts/og-image.mjs`.
+// Le portrait employé auparavant faisait 640 x 960 alors que les balises
+// annonçaient 1200 x 630 : Facebook préparait une grande carte pour une image
+// deux fois plus haute que large, et LinkedIn, dont la largeur minimale est
+// 1200 px, rétrogradait l'aperçu en vignette.
+const DEFAULT_IMAGE = `${SITE_URL}/images/partage-og.jpg`
 
 const SUPPORTED_LANGS = ['fr', 'en', 'de', 'it', 'es', 'pt', 'ru'] as const
 
