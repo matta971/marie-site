@@ -24,6 +24,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import http from 'node:http'
 import { fileURLToPath } from 'node:url'
+import { ROUTES } from './routes.mjs'
 
 const RACINE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = path.join(RACINE, 'dist')
@@ -52,10 +53,14 @@ const TYPES = {
   '.xml': 'application/xml',
 }
 
-/** Les routes viennent du sitemap, pour qu'il ne puisse pas diverger de ce qui est prérendu. */
-function routesDepuisSitemap() {
-  const xml = fs.readFileSync(path.join(RACINE, 'public', 'sitemap.xml'), 'utf8')
-  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => new URL(m[1]).pathname)
+/**
+ * Les routes viennent de `routes.mjs`, que le générateur de sitemap lit aussi :
+ * une route ajoutée est prérendue *et* déclarée aux moteurs, jamais l'un sans
+ * l'autre. Elles étaient auparavant extraites de `public/sitemap.xml`, ce qui
+ * interdisait de générer ce fichier.
+ */
+function routesPubliques() {
+  return ROUTES.map(r => r.chemin)
 }
 
 function servirDist() {
@@ -99,7 +104,7 @@ async function main() {
   }
 
   const serveur = await servirDist()
-  const routes = routesDepuisSitemap()
+  const routes = routesPubliques()
   const rendues = []
   const ignorees = []
 

@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -p tsconfig.app.json && vite build && node scripts/prerender.mjs",
-    "build:spa": "tsc -p tsconfig.app.json && vite build",
+    "build": "tsc -p tsconfig.app.json && vite build && node scripts/prerender.mjs && node scripts/sitemap.mjs",
+    "build:spa": "tsc -p tsconfig.app.json && vite build && node scripts/sitemap.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
