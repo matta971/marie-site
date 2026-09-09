@@ -167,13 +167,39 @@ async function main() {
           nouveau.textContent = titre
           tete.prepend(nouveau)
 
+          /*
+           * Toutes les balises ne sont pas uniques. « og:locale:alternate »
+           * est légitimement répété, une fois par langue : n'en garder qu'une
+           * revient à effacer six déclarations sur sept. Ces propriétés-là sont
+           * donc dédupliquées sur leur VALEUR — les deux jeux annoncent les
+           * mêmes langues — au lieu d'être réduites à une seule balise.
+           */
+          const REPETABLES = new Set(['og:locale:alternate', 'article:tag', 'article:author'])
+
           const vues = new Map()
-          for (const balise of [...tete.querySelectorAll('meta[name], meta[property], link[rel="canonical"]')]) {
-            const identite =
-              balise.tagName === 'LINK'
-                ? 'canonical'
-                : (balise.getAttribute('name') || balise.getAttribute('property'))
+          const valeursVues = new Set()
+
+          for (const balise of [...tete.querySelectorAll('meta[name], meta[property], link[rel]')]) {
+            let identite
+            if (balise.tagName === 'LINK') {
+              const rel = balise.getAttribute('rel')
+              if (rel !== 'canonical' && rel !== 'alternate') continue
+              // Les « alternate » se distinguent par leur langue : un hreflang
+              // par langue doit survivre, mais une seule fois. Sans cela, la
+              // page portait seize hreflang, dont huit désignant l'accueil.
+              identite = rel === 'alternate' ? 'alternate:' + balise.getAttribute('hreflang') : 'canonical'
+            } else {
+              identite = balise.getAttribute('name') || balise.getAttribute('property')
+            }
             if (!identite) continue
+
+            if (REPETABLES.has(identite)) {
+              const cle = identite + '=' + balise.getAttribute('content')
+              if (valeursVues.has(cle)) balise.remove()
+              else valeursVues.add(cle)
+              continue
+            }
+
             const precedente = vues.get(identite)
             if (precedente) precedente.remove()
             vues.set(identite, balise)
