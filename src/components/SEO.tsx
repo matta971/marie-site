@@ -11,6 +11,9 @@ const SITE_NAME = 'Marie-Émeraude Alcime'
 // 1200 px, rétrogradait l'aperçu en vignette.
 const DEFAULT_IMAGE = `${SITE_URL}/images/partage-og.jpg`
 
+/** Date de publication du site, alignée sur le `lastmod` de public/sitemap.xml. */
+const PUBLISHED_TIME = '2026-03-12T00:00:00+01:00'
+
 const SUPPORTED_LANGS = ['fr', 'en', 'de', 'it', 'es', 'pt', 'ru'] as const
 
 // og:locale requires xx_XX format
@@ -72,6 +75,19 @@ export default function SEO() {
       <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={canonicalUrl} />
+
+      {/*
+        Le Post Inspector de LinkedIn signale l'auteur et la date de publication
+        comme manquants ; ces deux balises les lui fournissent. Elles relèvent
+        du type Open Graph « article » : Facebook les ignore tant que og:type
+        vaut « website », ce qui reste juste pour un site vitrine. LinkedIn,
+        lui, les lit sans exiger ce type.
+
+        La date est celle du sitemap, seule date de publication dont dispose le
+        site. À tenir à jour avec lui.
+      */}
+      <meta property="article:author" content={SITE_NAME} />
+      <meta property="article:published_time" content={PUBLISHED_TIME} />
       <meta property="og:image" content={DEFAULT_IMAGE} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
