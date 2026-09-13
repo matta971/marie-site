@@ -151,8 +151,14 @@ export default function Medias(): React.JSX.Element {
               {filteredMedia.slice(0, visibleCount).map((video) => {
                 const videoInfo = getVideoInfo(video.url)
                 return (
-                  <div key={video.id} className="card smooth-hover group cursor-pointer">
-                    <div className="relative mb-4">
+                  <div key={video.id} className="card smooth-hover group">
+                    <a
+                      href={videoInfo.watchUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${t('media.watch')} : ${video.title}`}
+                      className="block relative mb-4"
+                    >
                       <img 
                         src={videoInfo.thumbnail}
                         alt={video.title}
@@ -169,7 +175,7 @@ export default function Medias(): React.JSX.Element {
                           </svg>
                         </div>
                       </div>
-                    </div>
+                    </a>
                     <h3 className="title-card text-accent mb-2">{video.title}</h3>
                     <div className="flex justify-between items-center">
                       <span className="text-small text-gray-600">
