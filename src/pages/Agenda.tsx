@@ -300,6 +300,9 @@ export default function Agenda() {
                     <p className="event-venue">{event.location}</p>
                     {event.ville && <p className="event-city">{event.ville}</p>}
                     <p className="event-date">{formatDate(event.date)}</p>
+                    {event.description && (
+                      <p className="event-description mt-2 text-sm">{event.description}</p>
+                    )}
                   </div>
                 </div>
               ))}
