@@ -12,7 +12,8 @@
   "footer": {
     "tagline": "Mezzo-soprano",
     "rights": "Todos os direitos reservados",
-    "language": "Idioma"
+    "language": "Idioma",
+    "proLink": "Imprensa e programadores"
   },
   "home": {
     "heroTitle": "Mezzo-soprano",
@@ -127,14 +128,13 @@
     "readArticle": "Ler artigo →",
     "noResults": "Nenhum artigo corresponde aos critérios selecionados.",
     "resetFilters": "Redefinir filtros",
-    "otherMentions": "Outras Menções",
     "pressReview": "Revista de Imprensa",
     "pressKit": "Kit de Imprensa",
-    "pressKitDesc": "Encontre todos os artigos e críticas no nosso kit de imprensa completo, disponível para download.",
-    "downloadPdf": "Baixar kit (PDF)",
+    "pressKitDesc": "Biografias, papéis, críticas e fotos reunidos para programadores e jornalistas.",
     "pressContact": "Contato de Imprensa",
-    "pressContactDesc": "Para solicitações de entrevista, fotos em alta resolução ou informações adicionais, entre em contato com o nosso assessor de imprensa.",
-    "interviewRequest": "Solicitação de entrevista"
+    "pressContactDesc": "Para uma entrevista ou fotos em alta resolução, escreva-nos.",
+    "interviewRequest": "Solicitação de entrevista",
+    "openProSpace": "Abrir o espaço de imprensa"
   },
   "media": {
     "title": "Mídia",
@@ -185,7 +185,9 @@
     "mediaTitle": "Mídia | Marie-Émeraude Alcime, Mezzo-soprano",
     "mediaDesc": "Vídeos, gravações de áudio e fotos de Marie-Émeraude Alcime em concerto, recital e apresentações de ópera.",
     "contactTitle": "Contato & Reservas | Marie-Émeraude Alcime, Mezzo-soprano",
-    "contactDesc": "Entre em contato com Marie-Émeraude Alcime para reservas, concertos, recitais ou masterclasses. Formulário de contato e dados profissionais."
+    "contactDesc": "Entre em contato com Marie-Émeraude Alcime para reservas, concertos, recitais ou masterclasses. Formulário de contato e dados profissionais.",
+    "proTitle": "Imprensa e programadores | Marie-Émeraude Alcime, mezzo-soprano",
+    "proDesc": "Biografias, papéis, críticas, fotos e contacto para contratar Marie-Émeraude Alcime, mezzo-soprano em Metz: ópera, oratória, recital."
   },
   "contact": {
     "title": "Contato",
@@ -240,5 +242,31 @@
     "a3d": "Construção completa de um papel de ópera ou oratória: análise do libreto, coaching musical e encenação.",
     "a4t": "Atelier de recital e mélodie",
     "a4d": "A arte do recital e da mélodie francesa. Dicção, poesia musical e comunicação com o público."
+  },
+  "pro": {
+    "title": "Imprensa e programadores",
+    "intro": "Para programadores, organizadores e jornalistas: o essencial para apresentar ou contratar Marie-Émeraude Alcime.",
+    "bioTitle": "Biografia",
+    "bioShortLabel": "Versão curta",
+    "bioShort": "Marie-Émeraude Alcime é uma mezzo-soprano natural de Guadalupe. Membro efetivo do Coro da Opéra-Théâtre de l’Eurométropole de Metz desde 2016, tem mestrado em musicologia e recebeu o Prix Talent d’Outre-Mer 2017 (CASODOM). Apresenta-se em ópera, oratória e recital, e é também maestrina de coro e professora de canto.",
+    "bioMediumLabel": "Versão longa",
+    "bioMedium": "Marie-Émeraude Alcime é uma mezzo-soprano natural de Guadalupe. Oriunda de uma família de músicos, estudou musicologia e profissões do palco em Rouen e Nancy, até ao mestrado. Desde 2016 é membro efetivo do Coro da Opéra-Théâtre de l’Eurométropole de Metz.\n\nEm palco cantou, entre outros, a Mãe em Les Contes d’Hoffmann de Offenbach em Metz, onde a Ôlyrix elogiou a sua «voz suntuosa e generosa», e Madame de Quimper-Karadec em La Vie parisienne, em Metz e na Opéra de Massy. Trabalhou sob a direção de José Miguel Pérez-Sierra, Claude Schnitzler e Aurélien Azan Zielinski, e com os encenadores Jérôme Savary e Paul-Émile Fourny.\n\nEm recital explora o lied alemão, dos Wesendonck-Lieder de Wagner aos Kindertotenlieder de Mahler. Vencedora do Prix Talent d’Outre-Mer 2017 (CASODOM), é também maestrina de coro e professora de canto.",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "fullBio": "Biografia completa",
+    "rolesTitle": "Papéis de destaque",
+    "allRepertoire": "Todo o repertório",
+    "pressTitle": "O que diz a imprensa",
+    "allPress": "Todas as críticas",
+    "photosTitle": "Fotos",
+    "photosNote": "É obrigatório mencionar o crédito. Para qualquer outro uso, ou para um ficheiro em alta resolução, escreva-nos.",
+    "download": "Descarregar",
+    "videosTitle": "Vídeos",
+    "videosText": "Excertos de concertos e produções, neste site e no seu canal do YouTube.",
+    "seeVideos": "Ver os vídeos",
+    "contactTitle": "Contratação e imprensa",
+    "contactText": "Concerto, recital, oratória ou pedido de entrevista: escreva diretamente a Marie-Émeraude Alcime.",
+    "contactButton": "Entrar em contacto",
+    "elsewhere": "Encontre-a também em"
   }
 }

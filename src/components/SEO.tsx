@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
+import { SITE_URL, PERSON_ID } from '../utils/identite'
 
-const SITE_URL = 'https://marie-emeraude.com'
 const SITE_NAME = 'Marie-Émeraude Alcime'
 // Image d'aperçu dédiée, 1200 x 630, produite par `scripts/og-image.mjs`.
 // Le portrait employé auparavant faisait 640 x 960 alors que les balises
@@ -13,6 +13,14 @@ const DEFAULT_IMAGE = `${SITE_URL}/images/partage-og.jpg`
 
 /** Date de publication du site, alignée sur le `lastmod` de public/sitemap.xml. */
 const PUBLISHED_TIME = '2026-03-12T00:00:00+01:00'
+
+/** Profils vérifiés de Marie-Émeraude Alcime, les mêmes que ceux du pied de page. */
+const SAME_AS = [
+  'https://www.olyrix.com/artistes/17547/marie-emeraude-alcime',
+  'https://www.youtube.com/@doucinay',
+  'https://www.instagram.com/doucinay/',
+  'https://x.com/marieemeraude',
+]
 
 const SUPPORTED_LANGS = ['fr', 'en', 'de', 'it', 'es', 'pt', 'ru'] as const
 
@@ -37,6 +45,7 @@ const routeSeoMap: Record<string, { titleKey: string; descKey: string }> = {
   '/presse': { titleKey: 'seo.pressTitle', descKey: 'seo.pressDesc' },
   '/medias': { titleKey: 'seo.mediaTitle', descKey: 'seo.mediaDesc' },
   '/contact': { titleKey: 'seo.contactTitle', descKey: 'seo.contactDesc' },
+  '/espace-pro': { titleKey: 'seo.proTitle', descKey: 'seo.proDesc' },
 }
 
 export default function SEO() {
@@ -107,16 +116,26 @@ export default function SEO() {
         {JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Person',
+          '@id': PERSON_ID,
           name: 'Marie-Émeraude Alcime',
           url: SITE_URL,
           image: DEFAULT_IMAGE,
           jobTitle: 'Mezzo-soprano',
-          description: 'Mezzo-soprano lyrique originaire de Guadeloupe, spécialisée en opéra, oratorio et musique sacrée.',
-          knowsAbout: ['Opera', 'Oratorio', 'Sacred Music', 'French Art Song', 'Vocal Pedagogy'],
-          performerIn: {
-            '@type': 'EventSeries',
-            name: 'Concerts et Récitals',
+          description: 'Mezzo-soprano lyrique originaire de Guadeloupe, artiste du Chœur de l’Opéra-Théâtre de l’Eurométropole de Metz.',
+          knowsAbout: ['Opera', 'Oratorio', 'Sacred Music', 'French Art Song', 'Lied', 'Vocal Pedagogy'],
+          // Relie le site à ses autres profils : c'est ce qui permet à Google
+          // de comprendre qu'il s'agit d'une seule et même personne.
+          sameAs: SAME_AS,
+          homeLocation: {
+            '@type': 'Place',
+            name: 'Metz',
+            address: { '@type': 'PostalAddress', addressLocality: 'Metz', addressRegion: 'Grand Est', addressCountry: 'FR' },
           },
+          memberOf: {
+            '@type': 'PerformingGroup',
+            name: 'Chœur de l’Opéra-Théâtre de l’Eurométropole de Metz',
+          },
+          award: 'Prix Talent d’Outre-Mer 2017 (CASODOM)',
           hasOccupation: {
             '@type': 'Occupation',
             name: 'Mezzo-soprano',

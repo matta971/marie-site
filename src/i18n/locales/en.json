@@ -12,7 +12,8 @@
   "footer": {
     "tagline": "Mezzo-soprano",
     "rights": "All rights reserved",
-    "language": "Language"
+    "language": "Language",
+    "proLink": "Press & presenters"
   },
   "home": {
     "heroTitle": "Mezzo-soprano",
@@ -127,14 +128,13 @@
     "readArticle": "Read article →",
     "noResults": "No articles match the selected criteria.",
     "resetFilters": "Reset filters",
-    "otherMentions": "Other Mentions",
     "pressReview": "Press Review",
     "pressKit": "Press Kit",
-    "pressKitDesc": "Find all articles and reviews in our complete press kit, available for download.",
-    "downloadPdf": "Download kit (PDF)",
+    "pressKitDesc": "Biographies, roles, reviews and photos gathered for presenters and journalists.",
     "pressContact": "Press Contact",
-    "pressContactDesc": "For interview requests, high-resolution photos or additional information, contact our press officer.",
-    "interviewRequest": "Interview request"
+    "pressContactDesc": "For an interview or high-resolution photos, please write to us.",
+    "interviewRequest": "Interview request",
+    "openProSpace": "Open the press area"
   },
   "media": {
     "title": "Media",
@@ -185,7 +185,9 @@
     "mediaTitle": "Media | Marie-Émeraude Alcime, Mezzo-soprano",
     "mediaDesc": "Videos, audio recordings and photos of Marie-Émeraude Alcime in concert, recital and opera performances.",
     "contactTitle": "Contact & Booking | Marie-Émeraude Alcime, Mezzo-soprano",
-    "contactDesc": "Contact Marie-Émeraude Alcime for booking, concerts, recitals or masterclasses. Contact form and professional details."
+    "contactDesc": "Contact Marie-Émeraude Alcime for booking, concerts, recitals or masterclasses. Contact form and professional details.",
+    "proTitle": "Press & presenters | Marie-Émeraude Alcime, mezzo-soprano",
+    "proDesc": "Ready-to-use biographies, roles, reviews, photos and contact details to engage Marie-Émeraude Alcime, mezzo-soprano based in Metz, France."
   },
   "contact": {
     "title": "Contact",
@@ -240,5 +242,31 @@
     "a3d": "Building an opera or oratorio role from end to end: libretto analysis, musical coaching and staging.",
     "a4t": "Recital and mélodie workshop",
     "a4d": "The art of the recital and the French mélodie. Diction, musical poetry and connecting with an audience."
+  },
+  "pro": {
+    "title": "Press & presenters",
+    "intro": "For presenters, organisers and journalists: everything you need to introduce or engage Marie-Émeraude Alcime.",
+    "bioTitle": "Biography",
+    "bioShortLabel": "Short version",
+    "bioShort": "Marie-Émeraude Alcime is a mezzo-soprano from Guadeloupe. A permanent member of the Chorus of the Opéra-Théâtre de l’Eurométropole de Metz since 2016, she holds a master’s degree in musicology and won the 2017 Prix Talent d’Outre-Mer (CASODOM). She performs in opera, oratorio and recital, and is also a choir conductor and singing teacher.",
+    "bioMediumLabel": "Long version",
+    "bioMedium": "Marie-Émeraude Alcime is a mezzo-soprano from Guadeloupe. Born into a family of musicians, she studied musicology and stage professions in Rouen and Nancy, up to a master’s degree. Since 2016 she has been a permanent member of the Chorus of the Opéra-Théâtre de l’Eurométropole de Metz.\n\nOn stage, she has sung the Mother in Offenbach’s Les Contes d’Hoffmann in Metz, where Ôlyrix praised her “sumptuous and generous voice”, and Madame de Quimper-Karadec in La Vie parisienne, in Metz and at the Opéra de Massy. She has worked under conductors José Miguel Pérez-Sierra, Claude Schnitzler and Aurélien Azan Zielinski, and with stage directors Jérôme Savary and Paul-Émile Fourny.\n\nIn recital she explores the German lied, from Wagner’s Wesendonck-Lieder to Mahler’s Kindertotenlieder. Winner of the 2017 Prix Talent d’Outre-Mer (CASODOM), she is also a choir conductor and singing teacher.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "fullBio": "Full biography",
+    "rolesTitle": "Selected roles",
+    "allRepertoire": "Full repertoire",
+    "pressTitle": "What the press says",
+    "allPress": "All reviews",
+    "photosTitle": "Photos",
+    "photosNote": "Photo credit required. For any other use, or for a high-resolution file, please write to us.",
+    "download": "Download",
+    "videosTitle": "Videos",
+    "videosText": "Excerpts from concerts and productions, on this site and on her YouTube channel.",
+    "seeVideos": "Watch the videos",
+    "contactTitle": "Bookings and press",
+    "contactText": "Concert, recital, oratorio or interview request: write directly to Marie-Émeraude Alcime.",
+    "contactButton": "Get in touch",
+    "elsewhere": "Also find her on"
   }
 }

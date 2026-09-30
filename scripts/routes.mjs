@@ -34,6 +34,7 @@ export const ROUTES = [
   { chemin: '/presse', sources: ['src/pages/Presse.tsx'], priorite: '0.7', frequence: 'monthly' },
   { chemin: '/medias', sources: ['src/pages/Medias.tsx'], priorite: '0.8', frequence: 'monthly' },
   { chemin: '/contact', sources: ['src/pages/Contact.tsx', 'src/components/ContactForm.tsx'], priorite: '0.6', frequence: 'yearly' },
+  { chemin: '/espace-pro', sources: ['src/pages/EspacePro.tsx'], priorite: '0.7', frequence: 'monthly' },
 ]
 
 /** URL absolue d'une route, sans barre oblique finale hormis la racine. */
