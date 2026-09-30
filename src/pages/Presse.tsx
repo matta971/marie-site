@@ -3,6 +3,7 @@ import { useNotionData } from '../hooks/useNotionData'
 import { getPressArticles } from '../services/notionService'
 import { formatDate } from '../utils/dateUtils';
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { useTranslatedArray } from '../hooks/useTranslatedContent'
 //import type { PressData } from '../types/notion.types'
 /*interface PressArticle {
@@ -35,21 +36,6 @@ import { useTranslatedArray } from '../hooks/useTranslatedContent'
     date: "10 janvier 2024"
   }
 ]*/
-
-const additionalQuotes = [
-  {
-    quote: "Une interprète sensible qui sait allier technique et émotion.",
-    outlet: "ConcertoNet"
-  },
-  {
-    quote: "Présence scénique remarquable et voix chaleureuse.",
-    outlet: "Le Monde"
-  },
-  {
-    quote: "Une artiste complète au service de la musique.",
-    outlet: "Diapason"
-  }
-]
 
 export default function Presse() {
   const [selectedType, setSelectedType] = useState('Tous les types')
@@ -277,33 +263,6 @@ export default function Presse() {
         </div>
       </section>
 
-      {/* Autres mentions */}
-      <section className="presse-mentions-section">
-        <div className="section-container">
-          <h2 className="presse-section-title">{t('press.otherMentions')}</h2>
-          
-          <div className="mentions-grid">
-            {additionalQuotes.map((quote, index) => (
-              <div key={index} className="mention-card">
-                <svg
-                  className="mention-quote-icon"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
-                </svg>
-
-                <blockquote className="mention-text">
-                  {quote.quote}
-                </blockquote>
-
-                <cite className="mention-source">— {quote.outlet}</cite>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Section Dossier de presse */}
       <section className="presse-dossier-section">
         <div className="section-container">
@@ -315,9 +274,9 @@ export default function Presse() {
               <p className="dossier-description">
                 {t('press.pressKitDesc')}
               </p>
-              <button className="btn-download">
-                {t('press.downloadPdf')}
-              </button>
+              <Link to="/espace-pro" className="btn-download">
+                {t('press.openProSpace')}
+              </Link>
             </div>
             
             <div className="dossier-text">
@@ -325,9 +284,9 @@ export default function Presse() {
               <p className="dossier-description">
                 {t('press.pressContactDesc')}
               </p>
-              <button className="btn-contact">
+              <Link to="/contact" className="btn-contact">
                 {t('press.interviewRequest')}
-              </button>
+              </Link>
             </div>
           </div>
         </div>

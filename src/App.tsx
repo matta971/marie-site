@@ -11,6 +11,7 @@ import Presse from './pages/Presse'
 import Enseignement from './pages/Enseignement'
 import Contact from './pages/Contact'
 import Repertoire from './pages/Repertoire'
+import EspacePro from './pages/EspacePro'
 import AdminChat from './pages/AdminChat'
 
 export default function App(): React.JSX.Element {
@@ -37,6 +38,7 @@ export default function App(): React.JSX.Element {
                 <Route path="/presse" element={<Presse />} />
                 <Route path="/enseignement" element={<Enseignement />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/espace-pro" element={<EspacePro />} />
                 <Route path="*" element={
                   <div className="flex flex-col items-center justify-center min-h-[60vh] mt-20 py-24 px-6 text-center">
                     <h1 className="text-6xl font-cormorant font-bold text-emerald-deep mb-4">404</h1>

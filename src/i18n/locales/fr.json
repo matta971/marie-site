@@ -12,7 +12,8 @@
   "footer": {
     "tagline": "Mezzo-soprano",
     "rights": "Tous droits réservés",
-    "language": "Langue"
+    "language": "Langue",
+    "proLink": "Espace pro & presse"
   },
   "home": {
     "heroTitle": "Mezzo-soprano",
@@ -127,14 +128,13 @@
     "readArticle": "Lire l'article →",
     "noResults": "Aucun article ne correspond aux critères sélectionnés.",
     "resetFilters": "Réinitialiser les filtres",
-    "otherMentions": "Autres mentions",
     "pressReview": "Revue de presse",
     "pressKit": "Dossier de presse",
-    "pressKitDesc": "Retrouvez l'ensemble des articles et critiques dans notre dossier de presse complet, disponible en téléchargement.",
-    "downloadPdf": "Télécharger le dossier (PDF)",
+    "pressKitDesc": "Biographies, rôles, critiques et photos réunis pour les programmateurs et les journalistes.",
     "pressContact": "Contact presse",
-    "pressContactDesc": "Pour toute demande d'interview, de photos haute résolution ou d'informations complémentaires, contactez notre attachée de presse.",
-    "interviewRequest": "Demande d'interview"
+    "pressContactDesc": "Pour une demande d'interview ou de photos en haute définition, écrivez-nous.",
+    "interviewRequest": "Demande d'interview",
+    "openProSpace": "Ouvrir l'espace pro"
   },
   "media": {
     "title": "Médias",
@@ -170,8 +170,8 @@
     "photosCreditsNicky": "Photos en costume créole : © Nicky Mariette"
   },
   "seo": {
-    "homeTitle": "Marie-Émeraude Alcime, Mezzo-soprano | Opéra, Récital, Oratorio",
-    "homeDesc": "Site officiel de Marie-Émeraude Alcime, mezzo-soprano lyrique. Découvrez sa biographie, son répertoire d'opéra et d'oratorio, ses prochains concerts et ses extraits vidéo.",
+    "homeTitle": "Marie-Émeraude Alcime, mezzo-soprano à Metz | Opéra, récital, oratorio",
+    "homeDesc": "Site officiel de Marie-Émeraude Alcime, mezzo-soprano originaire de Guadeloupe, artiste de l'Opéra-Théâtre de Metz. Biographie, répertoire, prochains concerts et vidéos.",
     "biographyTitle": "Biographie | Marie-Émeraude Alcime, Mezzo-soprano",
     "biographyDesc": "Parcours, formation et carrière de Marie-Émeraude Alcime, mezzo-soprano lyrique originaire de Guadeloupe. Opéra, musique sacrée, récitals.",
     "repertoireTitle": "Répertoire | Marie-Émeraude Alcime, Mezzo-soprano",
@@ -185,7 +185,9 @@
     "mediaTitle": "Médias | Marie-Émeraude Alcime, Mezzo-soprano",
     "mediaDesc": "Vidéos, enregistrements audio et photos de Marie-Émeraude Alcime en concert, récital et représentation d'opéra.",
     "contactTitle": "Contact & Booking | Marie-Émeraude Alcime, Mezzo-soprano",
-    "contactDesc": "Contactez Marie-Émeraude Alcime pour une réservation, un concert, un récital ou une masterclass. Formulaire de contact et coordonnées professionnelles."
+    "contactDesc": "Contactez Marie-Émeraude Alcime pour une réservation, un concert, un récital ou une masterclass. Formulaire de contact et coordonnées professionnelles.",
+    "proTitle": "Espace pro & dossier de presse | Marie-Émeraude Alcime, mezzo-soprano",
+    "proDesc": "Biographies prêtes à l'emploi, rôles, critiques, photos et contact pour engager Marie-Émeraude Alcime, mezzo-soprano à Metz : opéra, oratorio, récital."
   },
   "contact": {
     "title": "Contact",
@@ -240,5 +242,31 @@
     "a3d": "Construction complète d'un rôle d'opéra ou d'oratorio. De l'analyse du livret à la mise en scène, en passant par le coaching musical.",
     "a4t": "Atelier récital et mélodie",
     "a4d": "Art du récital et interprétation de la mélodie française. Travail sur la diction, la poésie musicale et la communication avec le public."
+  },
+  "pro": {
+    "title": "Espace pro",
+    "intro": "Pour les programmateurs, les organisateurs et les journalistes : l'essentiel pour présenter Marie-Émeraude Alcime ou l'engager.",
+    "bioTitle": "Présentation",
+    "bioShortLabel": "Version courte",
+    "bioShort": "Marie-Émeraude Alcime est une mezzo-soprano originaire de Guadeloupe. Artiste lyrique du Chœur de l'Opéra-Théâtre de l'Eurométropole de Metz depuis 2016, diplômée d'un master de musicologie et lauréate du Prix Talent d'Outre-Mer 2017 (CASODOM), elle se produit à l'opéra, en oratorio et en récital. Elle est aussi cheffe de chœur et professeure de chant.",
+    "bioMediumLabel": "Version développée",
+    "bioMedium": "Marie-Émeraude Alcime est une mezzo-soprano originaire de Guadeloupe. Issue d'une famille de musiciens, elle étudie la musicologie et les métiers de la scène à Rouen et à Nancy, jusqu'au master. Depuis 2016, elle est artiste titulaire du Chœur de l'Opéra-Théâtre de l'Eurométropole de Metz.\n\nSur scène, elle a notamment chanté la Mère dans Les Contes d'Hoffmann d'Offenbach à Metz, où Ôlyrix a salué « sa voix somptueuse et généreuse », et Madame de Quimper-Karadec dans La Vie parisienne, à Metz puis à l'Opéra de Massy. Elle a travaillé sous la direction de José Miguel Pérez-Sierra, Claude Schnitzler et Aurélien Azan Zielinski, et dans des mises en scène de Jérôme Savary et Paul-Émile Fourny.\n\nEn récital, elle aborde le lied allemand, des Wesendonck-Lieder de Wagner aux Kindertotenlieder de Mahler. Lauréate du Prix Talent d'Outre-Mer 2017 (CASODOM), elle mène aussi une activité de cheffe de chœur et de professeure de chant.",
+    "copy": "Copier",
+    "copied": "Copié",
+    "fullBio": "Biographie complète",
+    "rolesTitle": "Rôles marquants",
+    "allRepertoire": "Tout le répertoire",
+    "pressTitle": "Ce que dit la presse",
+    "allPress": "Toutes les critiques",
+    "photosTitle": "Photos",
+    "photosNote": "Crédit à mentionner. Pour tout autre usage, ou pour un fichier en haute définition, écrivez-nous.",
+    "download": "Télécharger",
+    "videosTitle": "Vidéos",
+    "videosText": "Extraits de concerts et de productions, sur le site et sur sa chaîne YouTube.",
+    "seeVideos": "Voir les vidéos",
+    "contactTitle": "Engagement et presse",
+    "contactText": "Concert, récital, oratorio, demande d'interview : écrivez directement à Marie-Émeraude Alcime.",
+    "contactButton": "Prendre contact",
+    "elsewhere": "Retrouvez-la aussi sur"
   }
 }

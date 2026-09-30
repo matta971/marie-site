@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { languages } from '../i18n'
 
 export default function Footer() {
@@ -16,6 +17,7 @@ export default function Footer() {
         <div className="footer-brand">
           <h3 className="footer-name">Marie-Émeraude Alcime</h3>
           <p className="footer-tagline">{t('footer.tagline')}</p>
+          <Link to="/espace-pro" className="footer-pro-link">{t('footer.proLink')}</Link>
         </div>
 
         <div className="footer-social">

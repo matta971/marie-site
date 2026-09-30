@@ -4,6 +4,7 @@ import { getConcerts } from '../services/notionService';
 import { formatDate, getMonth, getYear } from '../utils/dateUtils';
 import { useTranslation } from 'react-i18next';
 import { useTranslatedArray } from '../hooks/useTranslatedContent';
+import ConcertsJsonLd from '../components/ConcertsJsonLd';
 
 
 
@@ -167,7 +168,8 @@ export default function Agenda() {
 
   return (
     <div className="agenda-page">
-      
+      <ConcertsJsonLd concerts={concerts} />
+
       {/* Hero Section */}
       <section className="agenda-hero">
         <div className="section-container">

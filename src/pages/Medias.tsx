@@ -362,8 +362,8 @@ export default function Medias(): React.JSX.Element {
                     <div>
                       <div className="medias-contact-label">{t('media.emailLabel')}</div>
                       <div className="medias-contact-value">
-                        <a href="mailto:medias@marie-emeraude.com" className="medias-contact-link">
-                          medias@marie-emeraude.com
+                        <a href="mailto:contact@marie-emeraude.com" className="medias-contact-link">
+                          contact@marie-emeraude.com
                         </a>
                       </div>
                     </div>
