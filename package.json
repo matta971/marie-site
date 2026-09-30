@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -p tsconfig.app.json && vite build && node scripts/prerender.mjs && node scripts/sitemap.mjs",
+    "build": "tsc -p tsconfig.app.json && vite build && node scripts/routage-spa.mjs coquille && node scripts/prerender.mjs && node scripts/routage-spa.mjs regles && node scripts/sitemap.mjs",
     "build:spa": "tsc -p tsconfig.app.json && vite build && node scripts/sitemap.mjs",
     "lint": "eslint .",
     "preview": "vite preview"

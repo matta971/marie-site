@@ -116,7 +116,7 @@ export default function Home(): React.JSX.Element {
         <div className="container">
           <div className="hero-content">
             <h1 className="hero-title">
-              {homeContent.hero.name}<br />{homeContent.hero.surname}
+              {homeContent.hero.name}{' '}<br />{homeContent.hero.surname}
             </h1>
             <p className="hero-subtitle">{t('home.heroTitle')}</p>
           </div>

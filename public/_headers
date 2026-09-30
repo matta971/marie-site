@@ -12,3 +12,12 @@
 
 /favicon.ico
   Cache-Control: public, max-age=2592000
+
+# L'ancienne adresse du projet sert encore le site (Pages ne sait pas la
+# rediriger, index.html le fait en JavaScript). Elle ne doit pas être indexée
+# en double de marie-emeraude.com, ni ses déploiements de prévisualisation.
+https://marie-site.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.marie-site.pages.dev/*
+  X-Robots-Tag: noindex

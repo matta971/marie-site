@@ -158,7 +158,7 @@ npx wrangler secret list    # Lister les secrets
 - **Contenu Notion** : traduction dynamique via `useTranslatedContent` / `useTranslatedArray` → appelle `POST /api/translate`
 - **Backend** : MyMemory API avec cache Cloudflare KV (namespace `TRANSLATIONS`, TTL 30 jours)
 - **Sélecteur de langue** : drapeaux SVG dans le Header, dropdown au clic
-- **Détection** : i18next-browser-languagedetector, normalisation `fr-FR` → `fr`
+- **Détection** : français par défaut pour tous. Seul le choix fait aux drapeaux (mémorisé en localStorage) change la langue ; la langue du navigateur n’est plus lue, sinon Googlebot (navigateur en anglais) indexait la version anglaise traduite à la machine
 - **Langues supportées par MyMemory** : `{ en: 'en-GB', de: 'de-DE', it: 'it-IT', es: 'es-ES', pt: 'pt-BR', ru: 'ru-RU' }`
 
 ## SEO
@@ -187,7 +187,7 @@ npx wrangler secret list    # Lister les secrets
 ## Déploiement
 - **Frontend** : Cloudflare Pages, connecté au repo GitHub `matta971/marie-site` (build auto sur push main)
 - **Backend** : Cloudflare Worker `backend-site-marie-emeraude`, déployé via `npx wrangler deploy` depuis `marie-site-backend/`
-- **SPA routing** : fichier `public/_redirects` (`/* /index.html 200`) pour que toutes les routes passent par React Router
+- **SPA routing** : `scripts/routage-spa.mjs` écrit au build `dist/_redirects` (seules les routes réelles de `scripts/routes.mjs` et `/admin` sont réécrites vers l'application) et `dist/404.html`, servie avec un vrai statut 404. Pas de `/*` : une adresse inexistante répondait 200, une « soft 404 » pour Google
 - **Secrets Cloudflare** : configurés sans préfixe `VITE_` (le `.env` backend utilise `VITE_` mais les secrets Worker non)
 
 ## Notes importantes

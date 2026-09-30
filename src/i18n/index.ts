@@ -37,8 +37,14 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    // Le français est la langue par défaut, pour tout le monde : la langue du
+    // navigateur n'est plus consultée. Googlebot navigue en anglais américain ;
+    // en suivant son navigateur, le site lui servait l'interface anglaise et la
+    // traduction automatique du contenu Notion, et c'est cette version que
+    // Google indexait (lang="en-US" dans la page explorée, Search Console, 30/09/2026).
+    // Seul un choix fait avec les drapeaux, mémorisé, change la langue.
     detection: {
-      order: ['localStorage', 'navigator'],
+      order: ['localStorage'],
       caches: ['localStorage'],
     },
   })
