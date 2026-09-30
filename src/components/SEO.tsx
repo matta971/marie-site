@@ -67,16 +67,11 @@ export default function SEO() {
       <meta name="description" content={description} />
       <link rel="canonical" href={canonicalUrl} />
 
-      {/* Hreflang alternate links for multilingual SEO */}
-      {SUPPORTED_LANGS.map((l) => (
-        <link
-          key={l}
-          rel="alternate"
-          hrefLang={l}
-          href={canonicalUrl}
-        />
-      ))}
-      <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+      {/*
+        Pas de hreflang : ces balises annonçaient sept langues à la même
+        adresse, ce que Google tient pour une erreur. Une langue ne peut être
+        déclarée que si elle a sa propre URL (voir l'issue #5).
+      */}
 
       {/* Open Graph */}
       <meta property="og:site_name" content={SITE_NAME} />
